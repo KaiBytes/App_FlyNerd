@@ -6,16 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    var me = 0
-    var r = 7
-    val tag = "hello"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var me = 5 + r
 
-        Log.d(tag, me.toString())
+        // Created new barnh & checking branching
 
 
 
