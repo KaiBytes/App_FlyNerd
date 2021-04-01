@@ -43,4 +43,11 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //fuel
+    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
+    implementation 'com.github.kittinunf.fuel:fuel-coroutines:2.3.1'
+
+    //csv reader library
+    implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.15.1'
 }
