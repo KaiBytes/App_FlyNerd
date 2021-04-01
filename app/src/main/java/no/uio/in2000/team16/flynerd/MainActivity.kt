@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             exit(0)
         }
 
-        //using couroutinScope make http requsting and get data from flight API provider as json format
+        //using couroutinScope & feul make http requsting and get data from flight API provider as json format
         lifecycleScope.launch {
 
             val jsonString = Fuel.get(flightUrl).awaitString()
