@@ -3,16 +3,10 @@ package no.uio.in2000.team16.flynerd
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import no.uio.in2000.team16.flynerd.api.FlightStatusService
-import no.uio.in2000.team16.flynerd.util.registerLocalDateTime
-import no.uio.in2000.team16.flynerd.util.registerZonedDateTime
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
+import okhttp3.HttpUrl
 import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
@@ -36,35 +30,16 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val gson = GsonBuilder().registerLocalDateTime().registerZonedDateTime().create()
-
-        val service = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(
-                OkHttpClient.Builder()
-                    .addInterceptor { chain ->
-                        val url = chain.request()
-                            .url()
-                            .newBuilder()
-                            .addQueryParameter("appId", appId)
-                            .addQueryParameter("appKey", appKey)
-                            .build()
-                        chain.proceed(chain.request().newBuilder().url(url).build())
-                    }
-                    .build()
-            )
-            .build()
-            .create<FlightStatusService>()
+        val repository = FlightStatusRepository(baseUrl, appId, appKey)
 
         //using couroutinScope & feul make http requsting and get data from flight API provider as json format
         runBlocking(Dispatchers.IO) {
-            val response = service.byFlightNumberArrivingOn(
-                flightId.airlineCode, flightId.flightNumber,
-                date.year, date.month.value, date.dayOfMonth,
-                null,
-            )
-            Log.i(TAG, "$response")
+            try {
+                val flights = repository.byFlightIdArrivingOn(flightId, date)
+                Log.i(TAG, "$flights")
+            } catch (e: Exception) {
+                Log.i(TAG, "$e")
+            }
         }
     }
 
