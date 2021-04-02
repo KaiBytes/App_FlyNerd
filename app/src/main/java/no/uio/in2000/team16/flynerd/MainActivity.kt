@@ -25,14 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // input the flight number as string
-        val carrierStr = "AA"
-        val flightNum = 100
+        val flightNumberStr = "AA100"
         val date = LocalDate.now().plusDays(0)
-        val flightNumberStr = carrierStr + flightNum
 
-        // checking if the flight number is valid withcheckFlightNumber function and use the flight
-        // number else exit the system if flight number is not valid
-        if (!checkFlightNumber_IATA(flightNumberStr) && !checkFlightNumber_ICAO(flightNumberStr)) {
+        // checking if the flight number is valid and use the flight number, else exit the system if
+        // flight number is not valid
+        val flightId = FlightId.parse(flightNumberStr)
+        if (flightId == null) {
             Log.i(TAG, "The flight number is invalid")
             return
         }
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         //using couroutinScope & feul make http requsting and get data from flight API provider as json format
         runBlocking(Dispatchers.IO) {
             val response = service.byFlightNumberArrivingOn(
-                carrierStr, flightNum,
+                flightId.airlineCode, flightId.flightNumber,
                 date.year, date.month.value, date.dayOfMonth,
                 null,
             )
@@ -72,43 +71,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
     }
-}
-
-// Flight number should have 2 first characters as carrier and followed a number, ex: AF100
-//In the aviation industry, a flight number or flight designator is a code for an airline service
-// consisting of two-character airline designator and a 1 to 4 digit number for IATA Flight No.
-private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
-    if (flightNumberStr.length < 3) {
-        return false
-    }
-    if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1])) {
-        return false
-    }
-    for (i in 2 until flightNumberStr.length) {
-        if (!Character.isDigit(flightNumberStr[i])) {
-            return false
-        }
-    }
-    return true
-}
-
-// Flight number should have 2 first characters as carrier and followed a number, ex: AF100
-//In the aviation industry, a flight number or flight designator is a code for an airline service
-// consisting of two-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
-private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
-    if (flightNumberStr.length < 4) {
-        return false
-    }
-    if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(
-            flightNumberStr[2]
-        )
-    ) {
-        return false
-    }
-    for (i in 3 until flightNumberStr.length) {
-        if (!Character.isDigit(flightNumberStr[i])) {
-            return false
-        }
-    }
-    return true
 }

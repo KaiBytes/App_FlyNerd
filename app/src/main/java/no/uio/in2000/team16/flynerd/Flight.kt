@@ -87,7 +87,57 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
 }
 
 internal class FlightIdIATA(airlineIATA: String, flightNumber: Int) :
-    FlightId(airlineIATA, flightNumber)
+    FlightId(airlineIATA, flightNumber) {
+    init {
+        if (airlineIATA.length != 2 || !airlineIATA.all(Char::isLetterOrDigit)) {
+            throw IllegalArgumentException("invalid airline IATA: $airlineIATA")
+        }
+        if (flightNumber !in 1..9999) {
+            throw IllegalArgumentException("invalid flight number: $flightNumber")
+        }
+    }
+
+    companion object {
+        fun parse(string: String): FlightIdIATA? {
+            return try {
+                val airlineIATA = string.substring(0 until 2)
+                val flightNumber = string.substring(2).toInt()
+                FlightIdIATA(airlineIATA, flightNumber)
+            } catch (e: StringIndexOutOfBoundsException) {
+                null
+            } catch (e: NumberFormatException) {
+                null
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+    }
+}
 
 internal class FlightIdICAO(airlineICAO: String, flightNumber: Int) :
-    FlightId(airlineICAO, flightNumber)
+    FlightId(airlineICAO, flightNumber) {
+    init {
+        if (airlineICAO.length != 3 || !airlineICAO.all(Char::isLetter)) {
+            throw IllegalArgumentException("invalid airline ICAO: $airlineICAO")
+        }
+        if (flightNumber !in 1..9999) {
+            throw IllegalArgumentException("invalid flight number: $flightNumber")
+        }
+    }
+
+    companion object {
+        fun parse(string: String): FlightIdICAO? {
+            return try {
+                val airlineICAO = string.substring(0 until 3)
+                val flightNumber = string.substring(3).toInt()
+                FlightIdICAO(airlineICAO, flightNumber)
+            } catch (e: StringIndexOutOfBoundsException) {
+                null
+            } catch (e: NumberFormatException) {
+                null
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+    }
+}
