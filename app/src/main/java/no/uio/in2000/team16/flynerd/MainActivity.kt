@@ -3,62 +3,75 @@ package no.uio.in2000.team16.flynerd
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.coroutines.awaitString
-import kotlinx.coroutines.launch
-import java.lang.System.exit
-import java.text.SimpleDateFormat
-import java.util.Calendar
-
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import no.uio.in2000.team16.flynerd.api.FlightStatusService
+import no.uio.in2000.team16.flynerd.util.registerLocalDateTime
+import no.uio.in2000.team16.flynerd.util.registerZonedDateTime
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = "FlightInfo"
-    private val AppID = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
-    private val AppKey = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
-    private val flightApi = "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/"
-    private  var flightUrl = ""
-
-    private var calendar: Calendar? = null
-    private var dateFormat: SimpleDateFormat? = null
-    private var userCurrentDate: String? = null
-
+    private val baseUrl = "https://api.flightstats.com/flex/flightstatus/rest/"
+    private val appId = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
+    private val appKey = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // get current date from system
-        calendar = Calendar.getInstance()
-        dateFormat = SimpleDateFormat("yyyy/MM/dd")
-        userCurrentDate = dateFormat!!.format(calendar?.getTime())
-
         // input the flight number as string
-        var carrierStr = "AA"
-        var flightNum = "100"
-        var flightNumberStr = carrierStr + flightNum
+        val carrierStr = "AA"
+        val flightNum = 100
+        val date = LocalDate.now().plusDays(0)
+        val flightNumberStr = carrierStr + flightNum
 
-        // checking if the flight number is valid withcheckFlightNumber function and use the flight number
-        // else exit the system if flight number is not valid
-        if(checkFlightNumber_IATA(flightNumberStr) || checkFlightNumber_ICAO(flightNumberStr)){
-            // construct flight url from user api key, api-id , current date, and base url from api provider
-            flightUrl = (flightApi + carrierStr+"/" + flightNum+ "/" + "arr/"+ userCurrentDate +"?appId=" + AppID + "&appKey=" + AppKey + "&utc=false")
-
-            Log.i(TAG, flightUrl)
-        }
-        else{
+        // checking if the flight number is valid withcheckFlightNumber function and use the flight
+        // number else exit the system if flight number is not valid
+        if (!checkFlightNumber_IATA(flightNumberStr) && !checkFlightNumber_ICAO(flightNumberStr)) {
             Log.i(TAG, "The flight number is invalid")
-            exit(0)
+            return
         }
+
+        val gson = GsonBuilder().registerLocalDateTime().registerZonedDateTime().create()
+
+        val service = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor { chain ->
+                        val url = chain.request()
+                            .url()
+                            .newBuilder()
+                            .addQueryParameter("appId", appId)
+                            .addQueryParameter("appKey", appKey)
+                            .build()
+                        chain.proceed(chain.request().newBuilder().url(url).build())
+                    }
+                    .build()
+            )
+            .build()
+            .create<FlightStatusService>()
 
         //using couroutinScope & feul make http requsting and get data from flight API provider as json format
-        lifecycleScope.launch {
-
-            val jsonString = Fuel.get(flightUrl).awaitString()
-            Log.d(TAG,"The Json data is :\n\n " +jsonString)
+        runBlocking(Dispatchers.IO) {
+            val response = service.byFlightNumberArrivingOn(
+                carrierStr, flightNum,
+                date.year, date.month.value, date.dayOfMonth,
+                null,
+            )
+            Log.i(TAG, "$response")
         }
     }
 
+    companion object {
+        const val TAG = "MainActivity"
+    }
 }
 
 // Flight number should have 2 first characters as carrier and followed a number, ex: AF100
@@ -86,7 +99,10 @@ private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
     if (flightNumberStr.length < 4) {
         return false
     }
-    if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(flightNumberStr[2])) {
+    if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(
+            flightNumberStr[2]
+        )
+    ) {
         return false
     }
     for (i in 3 until flightNumberStr.length) {
@@ -96,4 +112,3 @@ private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
     }
     return true
 }
-
