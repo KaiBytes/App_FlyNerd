@@ -82,7 +82,27 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
     }
 
     companion object {
-        fun parse(string: String) = FlightIdIATA.parse(string) ?: FlightIdICAO.parse(string)
+        /**
+         * Normalize and parse input string as a flight id.
+         *
+         * @return The first subclass of [FlightId] whose format the input string conforms to.
+         *
+         * @throws IllegalArgumentException The input string is not a valid flight id.
+         */
+        fun parse(string: CharSequence): FlightId {
+            val normalized = normalize(string)
+            return FlightIdIATA.parseNormalized(normalized)
+                ?: FlightIdICAO.parseNormalized(normalized)
+                ?: throw IllegalArgumentException("not valid IATA or ICAO flight id: $string")
+        }
+
+        private fun normalize(string: CharSequence): CharSequence =
+            string.asSequence()
+                .filterNot(Char::isWhitespace)
+                .map(Char::toUpperCase)
+                .toList()
+                .toCharArray()
+                .let(::String)
     }
 }
 
@@ -98,7 +118,7 @@ internal class FlightIdIATA(airlineIATA: String, flightNumber: Int) :
     }
 
     companion object {
-        fun parse(string: String): FlightIdIATA? {
+        fun parseNormalized(string: CharSequence): FlightIdIATA? {
             return try {
                 val airlineIATA = string.substring(0 until 2)
                 val flightNumber = string.substring(2).toInt()
@@ -126,7 +146,7 @@ internal class FlightIdICAO(airlineICAO: String, flightNumber: Int) :
     }
 
     companion object {
-        fun parse(string: String): FlightIdICAO? {
+        fun parseNormalized(string: CharSequence): FlightIdICAO? {
             return try {
                 val airlineICAO = string.substring(0 until 3)
                 val flightNumber = string.substring(3).toInt()
