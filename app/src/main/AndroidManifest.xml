@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="no.uio.in2000.team16.flynerd">
 
-    <uses-permission android:name="android.permission.INTERNET">
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    </uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

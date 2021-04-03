@@ -3,6 +3,12 @@ package no.uio.in2000.team16.flynerd
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.coroutines.awaitString
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import java.io.InputStream
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +18,36 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Getting API request for TAF
+        val baseUrL = "https://api.met.no/weatherapi/tafmetar/1.0/tafmetar.xml?icao="
+        val airportIcao = "ENGM"
+        val requestUrl = "https://api.met.no/weatherapi/tafmetar/1.0/tafmetar.xml?icao=ENGM"
+
+        suspend fun getData(): String {
+            return Fuel.get(requestUrl).header("User-Agent", "tafmarApp gjchocopasta@gmail.com").awaitString()
+        }
+
+        CoroutineScope(IO).launch {
+            val responseAPI = getData()
+//            Log.d("API response: ", responseAPI)
+
+            runOnUiThread{
+                val inputStream: InputStream = responseAPI.byteInputStream()
+                val listOfForecasts = ForecastParser().parse(inputStream)
+
+                for (forecast in listOfForecasts) {
+                    forecast as Forecast // I do this casting to be able to address objects of this class
+                    println(forecast.forecastString)
+                }
+                
+//                Log.d("List of Forecasts: ", listOfForecasts.toString())
+                Log.d("Sie of the list: ", listOfForecasts.size.toString())
+            }
+        }
+
+        // --------------------------------------------------------------
+
 
         val tsvReader = csvReader {
             charset = "UTF-8"
@@ -26,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        for (airport in domesticAirportList){
-//            println(airport.toString())
-        }
+//        for (airport in domesticAirportList){
+////            println(airport.toString())
+//        }
     }
 
     fun append_to_domesticAirportList(airportObject : Airport?) {
