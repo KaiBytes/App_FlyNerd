@@ -77,6 +77,12 @@ internal enum class FlightStatus {
 }
 
 internal abstract class FlightId(val airlineCode: String, val flightNumber: Int) {
+    init {
+        if (flightNumber !in 1..9999) {
+            throw IllegalArgumentException("invalid flight id number: $flightNumber")
+        }
+    }
+
     override fun toString(): String {
         return "$airlineCode$flightNumber"
     }
@@ -85,24 +91,40 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
         /**
          * Normalize and parse input string as a flight id.
          *
-         * @return The first subclass of [FlightId] whose format the input string conforms to.
+         * @return A subclass of [FlightId] whose format the input string conforms to.
          *
-         * @throws IllegalArgumentException The input string is not a valid flight id.
+         * @throws IllegalArgumentException (With suitable error message.)  The input string is not
+         *   a valid flight id .
          */
         fun parse(string: CharSequence): FlightId {
             val normalized = normalize(string)
-            return FlightIdIATA.parseNormalized(normalized)
-                ?: FlightIdICAO.parseNormalized(normalized)
-                ?: throw IllegalArgumentException("not valid IATA or ICAO flight id: $string")
+            val (init, flightNumberStart) = normalized.getOrNull(2)?.let {
+                if (it.isDigit()) {
+                    ::FlightIdIATA to 2
+                } else {
+                    ::FlightIdICAO to 3
+                }
+            } ?: throw IllegalArgumentException("flight id is too short: '$string'")
+            val airlineCode = normalized.substring(0 until flightNumberStart)
+            val flightNumberStr = normalized.substring(flightNumberStart)
+            val flightNumber = try {
+                flightNumberStr.toInt()
+            } catch (e: NumberFormatException) {
+                throw IllegalArgumentException("invalid flight id number: '$flightNumberStr'")
+            }
+            return init(airlineCode, flightNumber)
         }
 
-        private fun normalize(string: CharSequence): CharSequence =
-            string.asSequence()
+        private fun normalize(string: CharSequence): CharSequence {
+            return string.asSequence()
+                // Remove any whitespace.
                 .filterNot(Char::isWhitespace)
+                // Convert all to uppercase.
                 .map(Char::toUpperCase)
                 .toList()
                 .toCharArray()
                 .let(::String)
+        }
     }
 }
 
@@ -110,26 +132,7 @@ internal class FlightIdIATA(airlineIATA: String, flightNumber: Int) :
     FlightId(airlineIATA, flightNumber) {
     init {
         if (airlineIATA.length != 2 || !airlineIATA.all(Char::isLetterOrDigit)) {
-            throw IllegalArgumentException("invalid airline IATA: $airlineIATA")
-        }
-        if (flightNumber !in 1..9999) {
-            throw IllegalArgumentException("invalid flight number: $flightNumber")
-        }
-    }
-
-    companion object {
-        fun parseNormalized(string: CharSequence): FlightIdIATA? {
-            return try {
-                val airlineIATA = string.substring(0 until 2)
-                val flightNumber = string.substring(2).toInt()
-                FlightIdIATA(airlineIATA, flightNumber)
-            } catch (e: StringIndexOutOfBoundsException) {
-                null
-            } catch (e: NumberFormatException) {
-                null
-            } catch (e: IllegalArgumentException) {
-                null
-            }
+            throw IllegalArgumentException("invalid flight id IATA code: '$airlineIATA'")
         }
     }
 }
@@ -138,26 +141,7 @@ internal class FlightIdICAO(airlineICAO: String, flightNumber: Int) :
     FlightId(airlineICAO, flightNumber) {
     init {
         if (airlineICAO.length != 3 || !airlineICAO.all(Char::isLetter)) {
-            throw IllegalArgumentException("invalid airline ICAO: $airlineICAO")
-        }
-        if (flightNumber !in 1..9999) {
-            throw IllegalArgumentException("invalid flight number: $flightNumber")
-        }
-    }
-
-    companion object {
-        fun parseNormalized(string: CharSequence): FlightIdICAO? {
-            return try {
-                val airlineICAO = string.substring(0 until 3)
-                val flightNumber = string.substring(3).toInt()
-                FlightIdICAO(airlineICAO, flightNumber)
-            } catch (e: StringIndexOutOfBoundsException) {
-                null
-            } catch (e: NumberFormatException) {
-                null
-            } catch (e: IllegalArgumentException) {
-                null
-            }
+            throw IllegalArgumentException("invalid flight id ICAO code: '$airlineICAO'")
         }
     }
 }
