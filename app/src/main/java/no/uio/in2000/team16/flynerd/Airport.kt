@@ -5,7 +5,9 @@ class Airport(val ICAO : String,
               val country : String,
               val latitude : Double,
               val longtitude : Double,
-              val currentMETAR : String? = null){
+              val currentMETAR : String? = null,
+              var forecastString: String?)
+{
 
     override fun toString(): String {
         return  "ICAO" + ":".padStart(10) + "$ICAO\n" +
@@ -14,5 +16,6 @@ class Airport(val ICAO : String,
                 "latitude" + ":".padStart(6) + "$latitude\n" +
                 "longtitude" + ":".padStart(4) + "$longtitude\n";
     }
+
 
 }
