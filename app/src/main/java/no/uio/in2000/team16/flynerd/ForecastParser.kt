@@ -89,4 +89,7 @@ class ForecastParser {
 }
 
 data class Forecast(val forecastString: String?) {
+    override fun toString(): String {
+        return forecastString.toString()
+    }
 }

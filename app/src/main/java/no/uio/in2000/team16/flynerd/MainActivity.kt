@@ -11,6 +11,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,37 +23,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         context = this
 
-        // Getting API request for TAF
-        val baseUrL = "https://api.met.no/weatherapi/tafmetar/1.0/tafmetar.xml?icao="
-        val airportIcao = "ENGM"
-        val requestUrl = "https://api.met.no/weatherapi/tafmetar/1.0/tafmetar.xml?icao=ENGM"
-
-//        suspend fun getData(): String {
-//            return Fuel.get(requestUrl).header("User-Agent", "tafmarApp gjchocopasta@gmail.com")
-//                .awaitString()
-//        }
-//
-//        CoroutineScope(IO).launch {
-//            val responseAPI = getData()
-////            Log.d("API response: ", responseAPI)
-//
-//            runOnUiThread {
-//                val inputStream: InputStream = responseAPI.byteInputStream()
-//                val listOfForecasts = ForecastParser().parse(inputStream)
-//
-//                for (forecast in listOfForecasts) {
-//                    forecast as Forecast // I do this casting to be able to address objects of this class
-//                    println(forecast.forecastString)
-//                }
-//
-////                Log.d("List of Forecasts: ", listOfForecasts.toString())
-//                Log.d("Size of the list: ", listOfForecasts.size.toString())
-//            }
-//        }
-
-        // --------------------------------------------------------------
         val initializer = AirportsList()
         initializer.readAirports()
+
+        runBlocking {
+            initializer.callAPI()
+        }
+
+        // I tell the program to wait 2 s so the above thread can finish before it prints out all airports.
+        Thread.sleep(2000)
+        initializer.printAirports()
 
 //
 //        val tsvReader = csvReader {
