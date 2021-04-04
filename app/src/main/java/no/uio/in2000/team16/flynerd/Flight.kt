@@ -116,7 +116,7 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
         }
 
         private fun normalize(string: CharSequence): CharSequence {
-            return string.asSequence()
+            val normalized = string.asSequence()
                 // Remove any whitespace.
                 .filterNot(Char::isWhitespace)
                 // Convert all to uppercase.
@@ -124,6 +124,12 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
                 .toList()
                 .toCharArray()
                 .let(::String)
+            // Remove any operational suffix.
+            return if (normalized.lastOrNull()?.isLetter() == true) {
+                normalized.dropLast(1)
+            } else {
+                normalized
+            }
         }
     }
 }
