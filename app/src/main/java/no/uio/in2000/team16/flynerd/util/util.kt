@@ -2,9 +2,11 @@ package no.uio.in2000.team16.flynerd.util
 
 import com.google.gson.*
 import java.lang.reflect.Type
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 internal fun GsonBuilder.registerLocalDateTime() = registerTypeAdapter(
     LocalDateTime::class.java,
@@ -45,3 +47,11 @@ internal fun GsonBuilder.registerZonedDateTime() = registerTypeAdapter(
         ) = JsonPrimitive(src.format(DateTimeFormatter.ISO_ZONED_DATE_TIME))
     }
 )
+
+internal object CalendarUtil {
+    fun of(localDate: LocalDate): Calendar =
+        Calendar.getInstance().apply {
+            clear()
+            set(localDate.year, localDate.month.value - 1, localDate.dayOfMonth)
+        }
+}

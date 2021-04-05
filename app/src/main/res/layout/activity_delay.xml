@@ -7,28 +7,30 @@
     tools:context=".DelayActivity">
 
     <EditText
-        android:id="@+id/flight_id_input"
+        android:id="@+id/flight_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:autofillHints=""
+        android:hint="XY 123 / XYZ 123"
+        android:imeOptions="actionDone"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@id/flight_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/flights_fetch"
-        android:layout_width="wrap_content"
+        android:id="@+id/flight_date"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:text="fetch flights"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flight_id_input" />
+        app:layout_constraintStart_toEndOf="@id/flight_id"
+        tools:text="apr 14, 1994" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
