@@ -104,7 +104,7 @@ internal class FlightStatusErrorException(
 }
 
 private fun FlightStatusFlightStatus.toFlight(appendix: FlightStatusAppendix): Flight? {
-    val airline = appendix.findAirline(carrierFsCode)
+    val airline = appendix.findAirline(carrierFsCode).toAirline() ?: return null
     val airportDeparture = appendix.findAirport(departureAirportFsCode)
     val airportArrival = appendix.findAirport(arrivalAirportFsCode)
 
@@ -124,16 +124,14 @@ private fun FlightStatusFlightStatus.toFlight(appendix: FlightStatusAppendix): F
         }
     }
 
-    val airlineIATA = airline.iata ?: return null
     val flightIdIATA = try {
-        FlightIdIATA(airlineIATA, flightNumberInt)
+        FlightIdIATA(airline.iata, flightNumberInt)
     } catch (e: java.lang.IllegalArgumentException) {
         throw FlightStatusContentsException(cause = e)
     }
 
-    val airlineICAO = airline.icao ?: return null
     val flightIdICAO = try {
-        FlightIdICAO(airlineICAO, flightNumberInt)
+        FlightIdICAO(airline.icao, flightNumberInt)
     } catch (e: java.lang.IllegalArgumentException) {
         throw FlightStatusContentsException(cause = e)
     }
@@ -145,7 +143,14 @@ private fun FlightStatusFlightStatus.toFlight(appendix: FlightStatusAppendix): F
     val departure = operationalTimes.toJunctureDeparture(airportDeparture, delays) ?: return null
     val arrival = operationalTimes.toJunctureArrival(airportArrival, delays) ?: return null
 
-    return Flight(flightIdIATA, flightIdICAO, status, departure, arrival)
+    return Flight(flightIdIATA, flightIdICAO, airline, status, departure, arrival)
+}
+
+private fun FlightStatusAirline.toAirline(): Airline? {
+    val iata = this.iata ?: return null
+    val icao = this.icao ?: return null
+    val name = this.name
+    return Airline(iata, icao, name)
 }
 
 private fun FlightStatusOperationalTimes.toJunctureDeparture(
@@ -177,12 +182,21 @@ private fun toJuncture(
     estimatedTimes: FlightStatusTimes?,
     actualTimes: FlightStatusTimes?,
 ): FlightJuncture? {
-    val airportIATA = airport.iata ?: return null
+    val airport = airport.toAirport() ?: return null
     val published = publishedTimes?.toFlightTime() ?: return null
     val estimated = estimatedTimes?.toFlightTime()
     val actual = actualTimes?.toFlightTime()
     val delay = delayMinutes?.let(Int::toLong)?.let(Duration::ofMinutes)
-    return FlightJuncture(airportIATA, published, estimated, actual, delay)
+    return FlightJuncture(airport, published, estimated, actual, delay)
+}
+
+private fun FlightStatusAirport.toAirport(): Airport? {
+    val iata = this.iata ?: return null
+    val name = this.name
+    val city = this.city
+    val country = this.countryCode
+    return Airport(iata, name, city, country)
+
 }
 
 private fun FlightStatusTimes.toFlightTime(): FlightTime? {

@@ -8,6 +8,7 @@ import java.time.ZonedDateTime
 internal class Flight(
     val flightIdIATA: FlightIdIATA,
     val flightIdICAO: FlightIdICAO,
+    val airline: Airline,
     val status: FlightStatus,
     val departure: FlightJuncture,
     val arrival: FlightJuncture,
@@ -24,7 +25,7 @@ internal class Flight(
 }
 
 internal class FlightJuncture(
-    val airportIATA: String,
+    val airport: Airport,
     val published: FlightTime,
     val estimated: FlightTime?,
     val actual: FlightTime?,
@@ -32,7 +33,7 @@ internal class FlightJuncture(
 ) {
     override fun toString(): String {
         return "FlightJuncture(" +
-                "airportIATA='$airportIATA', " +
+                "airport='$airport', " +
                 "published=$published, " +
                 "estimated=$estimated, " +
                 "actual=$actual, " +
@@ -44,6 +45,18 @@ internal class FlightJuncture(
 internal class FlightTime(val local: LocalDateTime, val utc: ZonedDateTime) {
     override fun toString(): String {
         return "FlightTime(local=$local, utc=$utc)"
+    }
+}
+
+internal class Airline(val iata: String, val icao: String, val name: String) {
+    override fun toString(): String {
+        return "Airline(iata='$iata', icao='$icao', name='$name')"
+    }
+}
+
+internal class Airport(val iata: String, val name: String?, val city: String, val country: String) {
+    override fun toString(): String {
+        return "Airport(iata='$iata', name=$name, city='$city', country='$country')"
     }
 }
 

@@ -107,15 +107,32 @@ internal class FlightStatusAppendix(
     }
 }
 
-internal class FlightStatusAirline(val fs: String, val iata: String?, val icao: String?) {
+internal class FlightStatusAirline(
+    val fs: String,
+    val iata: String?,
+    val icao: String?,
+    val name: String,
+) {
     override fun toString(): String {
-        return "FlightStatusAirline(fs='$fs', iata=$iata, icao=$icao)"
+        return "FlightStatusAirline(fs='$fs', iata=$iata, icao=$icao, name='$name')"
     }
 }
 
-internal class FlightStatusAirport(val fs: String, val iata: String?) {
+internal class FlightStatusAirport(
+    val fs: String,
+    val iata: String?,
+    val name: String?,
+    val city: String,
+    val countryCode: String,
+) {
     override fun toString(): String {
-        return "FlightStatusAirport(fs='$fs', iata=$iata)"
+        return "FlightStatusAirport(" +
+                "fs='$fs', " +
+                "iata=$iata, " +
+                "name=$name, " +
+                "city='$city', " +
+                "countryCode='$countryCode'" +
+                ")"
     }
 }
 
