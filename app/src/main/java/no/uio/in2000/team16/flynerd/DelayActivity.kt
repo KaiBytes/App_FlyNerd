@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,9 +44,18 @@ class DelayActivity : AppCompatActivity() {
             onFlightDateSet()
         }
 
+    private lateinit var flightsAdapter: FlightsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_delay)
+
+
+        flightsAdapter = FlightsAdapter()
+        findViewById<RecyclerView>(R.id.flights).run {
+            adapter = flightsAdapter
+            layoutManager = LinearLayoutManager(this@DelayActivity)
+        }
 
         _flightDate = LocalDate.now()
 
@@ -104,24 +112,24 @@ class DelayActivity : AppCompatActivity() {
                 }
                 return@launch
             }
-            for (flight in flights) {
-                val from = flight.departure.airportIATA
-                val to = flight.arrival.airportIATA
-                val status = flight.status
-                val delay = flight.arrival.delay?.let { "${it.toMinutes()} min" } ?: "not delayed"
-                val scheduledLocal = flight.arrival.published.local
-                    .format(DateTimeFormatter.ISO_TIME)
-                val scheduledUtc = flight.arrival.published.utc
-                    .format(DateTimeFormatter.ISO_TIME)
-                Log.i(
-                    TAG,
-                    "flight $from -> $to, status: $status, delay: $delay, " +
-                            "scheduled at $scheduledLocal ($scheduledUtc)"
-                )
+            Log.i(TAG, "fetched ${flights.size} flights")
+            withContext(Dispatchers.Main) {
+                updateSummary(flights)
+                flightsAdapter.flights = flights
             }
-            if (flights.isEmpty()) {
-                Log.i(TAG, "no flights")
-            }
+        }
+    }
+
+    private fun updateSummary(flights: List<Flight>) {
+        val flight = flights.firstOrNull()
+        if (flight != null) {
+            findViewById<TextView>(R.id.flights_summary_id_iata).text =
+                flight.flightIdIATA.toString()
+            findViewById<TextView>(R.id.flights_summary_id_icao).text =
+                flight.flightIdICAO.toString()
+            findViewById<TextView>(R.id.flights_summary_airline_name).text = flight.airline.name
+        } else {
+            findViewById<TextView>(R.id.flights_summary_airline_name).text = "no flights found"
         }
     }
 

@@ -86,7 +86,20 @@ internal enum class FlightStatus {
     SCHEDULED,
 
     @SerializedName("U")
-    UNKNOWN,
+    UNKNOWN;
+
+    val description: String
+        get() = when (this) {
+            ACTIVE -> "in air"
+            CANCELLED -> "canceled"
+            DIVERTED -> "diverted"
+            DATA_SOURCE_NEEDED -> "(data source needed)"
+            LANDED -> "landed"
+            NOT_OPERATIONAL -> "not operational"
+            REDIRECTED -> "redirected"
+            SCHEDULED -> "scheduled"
+            UNKNOWN -> "(unknown)"
+        }
 }
 
 internal abstract class FlightId(val airlineCode: String, val flightNumber: Int) {

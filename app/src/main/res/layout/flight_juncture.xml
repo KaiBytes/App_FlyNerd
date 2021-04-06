@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/flight_juncture_iata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="NRT" />
+
+    <TextView
+        android:id="@+id/flight_juncture_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_juncture_iata"
+        tools:text="Narita International Airport" />
+
+    <TextView
+        android:id="@+id/flight_juncture_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_juncture_name"
+        tools:text="Tokyo, " />
+
+    <TextView
+        android:id="@+id/flight_juncture_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_city"
+        app:layout_constraintStart_toEndOf="@id/flight_juncture_city"
+        tools:text="JP" />
+
+    <TextView
+        android:id="@+id/flight_juncture_expected_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="scheduled:"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_juncture_city" />
+
+    <TextView
+        android:id="@+id/flight_juncture_expected_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_expected_label"
+        app:layout_constraintStart_toEndOf="@+id/flight_juncture_expected_label"
+        tools:text="16:30 " />
+
+    <TextView
+        android:id="@+id/flight_juncture_expected_utc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_expected_local"
+        app:layout_constraintStart_toEndOf="@id/flight_juncture_expected_local"
+        tools:text="(11:30 UTC)" />
+
+    <TextView
+        android:id="@+id/flight_juncture_actual_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_juncture_expected_label"
+        tools:text="estimated" />
+
+    <TextView
+        android:id="@+id/flight_juncture_actual_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_actual_label"
+        app:layout_constraintStart_toEndOf="@id/flight_juncture_actual_label"
+        tools:text="16:43 " />
+
+    <TextView
+        android:id="@+id/flight_juncture_actual_utc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_actual_local"
+        app:layout_constraintStart_toEndOf="@id/flight_juncture_actual_local"
+        tools:text="(11:43 UTC)" />
+
+    <TextView
+        android:id="@+id/flight_juncture_delay_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delay: "
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_juncture_actual_local" />
+
+    <TextView
+        android:id="@+id/flight_juncture_delay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_juncture_delay_label"
+        app:layout_constraintStart_toEndOf="@id/flight_juncture_delay_label"
+        tools:text="13 min" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
