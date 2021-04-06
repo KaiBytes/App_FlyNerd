@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         initializer.readAirports()
 
         runBlocking {
-            initializer.callAPI()
+            initializer.airports[0]?.getData()
         }
 
-        // I tell the program to wait 2 s so the above thread can finish before it prints out all airports.
-        Thread.sleep(2000)
-        initializer.printAirports()
+//        // I tell the program to wait 2 s so the above thread can finish before it prints out all airports.
+//        Thread.sleep(2000)
+//        initializer.printAirports()
 
 //
 //        val tsvReader = csvReader {

@@ -51,6 +51,9 @@ dependencies {
     //csv reader library
     implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.15.1'
 
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
     // XML API
     implementation ('khttp:khttp:1.0.0') {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
