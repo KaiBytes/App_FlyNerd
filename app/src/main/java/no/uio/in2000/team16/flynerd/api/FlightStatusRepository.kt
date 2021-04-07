@@ -256,6 +256,7 @@ private fun FlightStatusOperationalTimes.toJunctureTimesDeparture(
 ) = toJunctureTimes(
     delays?.departureGateDelayMinutes,
     publishedDeparture,
+    scheduledGateDeparture,
     estimatedGateDeparture,
     actualGateDeparture,
 )
@@ -265,6 +266,7 @@ private fun FlightStatusOperationalTimes.toJunctureTimesArrival(
 ) = toJunctureTimes(
     delays?.arrivalGateDelayMinutes,
     publishedArrival,
+    scheduledGateArrival,
     estimatedGateArrival,
     actualGateArrival,
 )
@@ -272,14 +274,15 @@ private fun FlightStatusOperationalTimes.toJunctureTimesArrival(
 private fun toJunctureTimes(
     delayMinutes: Int?,
     publishedTimes: FlightStatusTimes?,
+    scheduledTimes: FlightStatusTimes?,
     estimatedTimes: FlightStatusTimes?,
     actualTimes: FlightStatusTimes?,
 ): FlightJunctureTimes? {
-    val published = publishedTimes?.toFlightTime() ?: return null
+    val scheduled = (scheduledTimes ?: publishedTimes)?.toFlightTime() ?: return null
     val estimated = estimatedTimes?.toFlightTime()
     val actual = actualTimes?.toFlightTime()
     val delay = delayMinutes?.let(Int::toLong)?.let(Duration::ofMinutes)
-    return FlightJunctureTimes(published, estimated, actual, delay)
+    return FlightJunctureTimes(scheduled, estimated, actual, delay)
 }
 
 private fun FlightStatusAirport.toAirport(): FlightAirport? {

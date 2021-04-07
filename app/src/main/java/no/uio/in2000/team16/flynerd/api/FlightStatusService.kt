@@ -59,18 +59,22 @@ internal class FlightStatusFlightStatus(
 
 internal class FlightStatusOperationalTimes(
     val publishedDeparture: FlightStatusTimes?,
+    val scheduledGateDeparture: FlightStatusTimes?,
     val estimatedGateDeparture: FlightStatusTimes?,
     val actualGateDeparture: FlightStatusTimes?,
     val publishedArrival: FlightStatusTimes?,
+    val scheduledGateArrival: FlightStatusTimes?,
     val estimatedGateArrival: FlightStatusTimes?,
     val actualGateArrival: FlightStatusTimes?,
 ) {
     override fun toString(): String {
         return "FlightStatusOperationalTimes(" +
                 "publishedDeparture=$publishedDeparture, " +
+                "scheduledGateDeparture=$scheduledGateDeparture, " +
                 "estimatedGateDeparture=$estimatedGateDeparture, " +
                 "actualGateDeparture=$actualGateDeparture, " +
                 "publishedArrival=$publishedArrival, " +
+                "scheduledGateArrival=$scheduledGateArrival, " +
                 "estimatedGateArrival=$estimatedGateArrival, " +
                 "actualGateArrival=$actualGateArrival" +
                 ")"

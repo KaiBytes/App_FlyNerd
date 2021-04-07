@@ -43,14 +43,14 @@ internal interface FlightJunctureArrival : FlightJuncture {
 internal interface FlightJunctureMid : FlightJunctureArrival, FlightJunctureDeparture
 
 internal class FlightJunctureTimes(
-    val published: FlightTime,
+    val scheduled: FlightTime,
     val estimated: FlightTime?,
     val actual: FlightTime?,
     val delay: Duration?,
 ) {
     override fun toString(): String {
         return "FlightJunctureTimes(" +
-                "published=$published, " +
+                "scheduled=$scheduled, " +
                 "estimated=$estimated, " +
                 "actual=$actual, " +
                 "delay=$delay" +
