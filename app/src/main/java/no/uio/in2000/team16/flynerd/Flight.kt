@@ -8,32 +8,48 @@ import java.time.ZonedDateTime
 internal class Flight(
     val flightIdIATA: FlightIdIATA,
     val flightIdICAO: FlightIdICAO,
-    val airline: Airline,
-    val status: FlightStatus,
-    val departure: FlightJuncture,
-    val arrival: FlightJuncture,
+    val airline: FlightAirline,
+
+    val departure: FlightJunctureDeparture,
+    val mids: Array<FlightJunctureMid>,
+    val arrival: FlightJunctureArrival,
 ) {
     override fun toString(): String {
         return "Flight(" +
                 "flightIdIATA=$flightIdIATA, " +
                 "flightIdICAO=$flightIdICAO, " +
-                "status=$status, " +
+                "airline=$airline, " +
                 "departure=$departure, " +
+                "mids=${mids.contentToString()}, " +
                 "arrival=$arrival" +
                 ")"
     }
 }
 
-internal class FlightJuncture(
-    val airport: Airport,
+internal interface FlightJuncture {
+    val airport: FlightAirport
+}
+
+internal interface FlightJunctureDeparture : FlightJuncture {
+    val departureStatus: FlightStatus
+    val departureTimes: FlightJunctureTimes
+}
+
+internal interface FlightJunctureArrival : FlightJuncture {
+    val arrivalStatus: FlightStatus
+    val arrivalTimes: FlightJunctureTimes
+}
+
+internal interface FlightJunctureMid : FlightJunctureArrival, FlightJunctureDeparture
+
+internal class FlightJunctureTimes(
     val published: FlightTime,
     val estimated: FlightTime?,
     val actual: FlightTime?,
     val delay: Duration?,
 ) {
     override fun toString(): String {
-        return "FlightJuncture(" +
-                "airport='$airport', " +
+        return "FlightJunctureTimes(" +
                 "published=$published, " +
                 "estimated=$estimated, " +
                 "actual=$actual, " +
@@ -48,15 +64,20 @@ internal class FlightTime(val local: LocalDateTime, val utc: ZonedDateTime) {
     }
 }
 
-internal class Airline(val iata: String, val icao: String, val name: String) {
+internal class FlightAirline(val iata: String, val icao: String, val name: String) {
     override fun toString(): String {
-        return "Airline(iata='$iata', icao='$icao', name='$name')"
+        return "FlightAirline(iata='$iata', icao='$icao', name='$name')"
     }
 }
 
-internal class Airport(val iata: String, val name: String?, val city: String, val country: String) {
+internal class FlightAirport(
+    val iata: String,
+    val name: String?,
+    val city: String,
+    val country: String,
+) {
     override fun toString(): String {
-        return "Airport(iata='$iata', name=$name, city='$city', country='$country')"
+        return "FlightAirport(iata='$iata', name=$name, city='$city', country='$country')"
     }
 }
 
