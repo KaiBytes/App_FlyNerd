@@ -14,6 +14,13 @@ import java.time.Duration
 import java.time.LocalDate
 import java.util.*
 
+/**
+ * @param baseUrl Flightstats flight status API base URL, up to but not including the version, with
+ *   a trailing slash.  E.g. <code>"https://api.flightstats.com/flex/flightstatus/rest/"</code>.
+ * @param appId Application ID as provided by flightstats.  E.g. <code>"0a1b2c3d"</code>.
+ * @param appKey Application key as provided by flightstats.  E.g.
+ *   <code>"0a1b2c3d4f5a6b7c8d9e0f1a2b3c4d5e"</code>.
+ */
 internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: String) {
     private val gson = GsonBuilder()
         .registerLocalDateTime()
