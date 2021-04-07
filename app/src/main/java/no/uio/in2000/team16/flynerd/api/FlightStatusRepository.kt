@@ -59,12 +59,14 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
      * @param date Arrival date, local to the arrival airport.
      * @param airportIATA IATA code of arrival airport.  If null, all arrival airports are accepted.
      *
-     * @return The flight matching the criteria.  If no such flight is found, or the flight does not
-     *   have all the information needed for the returned datastructures, then return null.
+     * @return The flight matching the criteria.  Null if no such flight is found.
      *
      * @throws IOException An I/O error occurred talking to the API server.
-     * @throws FlightStatusContentsException  The API server's response contents were invalid.
      * @throws FlightStatusErrorException The API server responded with a non-I/O error.
+     * @throws FlightStatusIllegalException  The API server's response's format was illegal.
+     * @throws FlightStatusInsufficientException The API server's response does not have all the
+     *   information needed for the returned datastructures.  This is not a serious error; it may be
+     *   handled identically to the null returned case.
      * @throws RuntimeException Some other kind of error occured decoding the API server's response.
      */
     suspend fun byFlightIdArrivingOn(
@@ -77,17 +79,29 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
             throw it.toException()
         }
         if (response.flightStatuses == null || response.appendix == null) {
-            throw FlightStatusContentsException("both error and OK response elements are absent")
+            throw FlightStatusIllegalException("neither error nor OK response elements present")
         }
         return response.flightStatuses.toFlight(response.appendix)
     }
 }
 
-internal open class FlightStatusContentsException(
-    message: String? = null,
-    cause: Throwable? = null
-) :
+internal open class FlightStatusException(message: String? = null, cause: Throwable? = null) :
     RuntimeException(message, cause)
+
+internal class FlightStatusInsufficientException(val msg: String) : FlightStatusException() {
+    override val message
+        get() = "missing data: $msg"
+}
+
+internal class FlightStatusIllegalException(
+    val msg: String,
+    cause: Throwable? = null,
+) : FlightStatusException(cause = cause) {
+    constructor(cause: Throwable) : this(cause.localizedMessage ?: cause.toString(), cause)
+
+    override val message
+        get() = "illegal API response: $msg"
+}
 
 internal class FlightStatusErrorException(
     val statusCode: Int,
@@ -95,9 +109,9 @@ internal class FlightStatusErrorException(
     val errorMessage: String,
     val id: UUID?,
     cause: Throwable? = null,
-) : RuntimeException(cause) {
+) : FlightStatusException(cause = cause) {
     override val message
-        get() = "$errorCode ($statusCode): $errorMessage"
+        get() = "API error $errorCode ($statusCode): $errorMessage"
 }
 
 private class FlightJunctureDepartureImpl(
@@ -152,35 +166,37 @@ private fun Array<FlightStatusFlightStatus>.toFlight(appendix: FlightStatusAppen
     if (!sorted.hasNext()) {
         return null
     }
-
     val first = sorted.next()
-    val airline = appendix.findAirline(first.carrierFsCode).toAirline() ?: return null
 
-    val departure = first.toJunctureDeparture(appendix) ?: return null
+    val airline = appendix.findAirline(first.carrierFsCode).toAirline()
+
+    val departure = first.toJunctureDeparture(appendix)
 
     val flightNumberInt = first.flightNumberInt
 
     val flightIdIATA = try {
         FlightIdIATA(airline.iata, flightNumberInt)
     } catch (e: java.lang.IllegalArgumentException) {
-        throw FlightStatusContentsException(cause = e)
+        throw FlightStatusIllegalException(e)
     }
 
-    val flightIdICAO = try {
-        FlightIdICAO(airline.icao, flightNumberInt)
-    } catch (e: java.lang.IllegalArgumentException) {
-        throw FlightStatusContentsException(cause = e)
+    val flightIdICAO = airline.icao?.let { airlineICAO ->
+        try {
+            FlightIdICAO(airlineICAO, flightNumberInt)
+        } catch (e: java.lang.IllegalArgumentException) {
+            throw FlightStatusIllegalException(e)
+        }
     }
 
     var flightStatusPrev = first
     val mids = mutableListOf<FlightJunctureMid>()
     for (flightStatus in sorted) {
-        val mid = toJunctureMid(flightStatusPrev, flightStatus, appendix) ?: return null
+        val mid = toJunctureMid(flightStatusPrev, flightStatus, appendix)
         mids.add(mid)
         flightStatusPrev = flightStatus
     }
 
-    val arrival = flightStatusPrev.toJunctureArrival(appendix) ?: return null
+    val arrival = flightStatusPrev.toJunctureArrival(appendix)
 
     return Flight(flightIdIATA, flightIdICAO, airline, departure, mids.toTypedArray(), arrival)
 }
@@ -198,27 +214,27 @@ private val FlightStatusFlightStatus.flightNumberInt
         try {
             flightNumber.substring(0 until index).toInt()
         } catch (e: NumberFormatException) {
-            throw FlightStatusContentsException("invalid flight number: $flightNumber", e)
+            throw FlightStatusIllegalException("invalid flight number: $flightNumber", cause = e)
         }
     }
 
 private fun FlightStatusFlightStatus.toJunctureDeparture(appendix: FlightStatusAppendix):
-        FlightJunctureDeparture? {
-    val airport = appendix.findAirport(departureAirportFsCode).toAirport() ?: return null
+        FlightJunctureDeparture {
+    val airport = appendix.findAirport(departureAirportFsCode).toAirport()
     if (status == null) {
-        throw FlightStatusContentsException("flight status is absent")
+        throw FlightStatusIllegalException("no flight status")
     }
-    val departureTimes = this.operationalTimes.toJunctureTimesDeparture(delays) ?: return null
+    val departureTimes = this.operationalTimes.toJunctureTimesDeparture(delays)
     return FlightJunctureDepartureImpl(airport, status, departureTimes)
 }
 
 private fun FlightStatusFlightStatus.toJunctureArrival(appendix: FlightStatusAppendix):
-        FlightJunctureArrival? {
-    val airport = appendix.findAirport(arrivalAirportFsCode).toAirport() ?: return null
+        FlightJunctureArrival {
+    val airport = appendix.findAirport(arrivalAirportFsCode).toAirport()
     if (status == null) {
-        throw FlightStatusContentsException("flight status is absent")
+        throw FlightStatusIllegalException("no flight status")
     }
-    val arrivalTimes = this.operationalTimes.toJunctureTimesArrival(delays) ?: return null
+    val arrivalTimes = this.operationalTimes.toJunctureTimesArrival(delays)
     return FlightJunctureArrivalImpl(airport, status, arrivalTimes)
 }
 
@@ -226,12 +242,12 @@ private fun toJunctureMid(
     prev: FlightStatusFlightStatus,
     next: FlightStatusFlightStatus,
     appendix: FlightStatusAppendix
-): FlightJunctureMid? {
-    val junctureArrival = prev.toJunctureArrival(appendix) ?: return null
-    val junctureDeparture = next.toJunctureDeparture(appendix) ?: return null
+): FlightJunctureMid {
+    val junctureArrival = prev.toJunctureArrival(appendix)
+    val junctureDeparture = next.toJunctureDeparture(appendix)
     if (junctureDeparture.airport.iata != junctureArrival.airport.iata) {
-        throw FlightStatusContentsException(
-            "invalid flight juncture: arrival ${junctureArrival.airport.iata} != " +
+        throw FlightStatusIllegalException(
+            "mismatched flight juncture: arrival ${junctureArrival.airport.iata} != " +
                     "departure ${junctureDeparture.airport.iata}"
         )
     }
@@ -244,9 +260,10 @@ private fun toJunctureMid(
     )
 }
 
-private fun FlightStatusAirline.toAirline(): FlightAirline? {
-    val iata = this.iata ?: return null
-    val icao = this.icao ?: return null
+private fun FlightStatusAirline.toAirline(): FlightAirline {
+    val iata = this.iata
+        ?: throw FlightStatusInsufficientException("no IATA code in airline: $this")
+    val icao = this.icao
     val name = this.name
     return FlightAirline(iata, icao, name)
 }
@@ -277,35 +294,38 @@ private fun toJunctureTimes(
     scheduledTimes: FlightStatusTimes?,
     estimatedTimes: FlightStatusTimes?,
     actualTimes: FlightStatusTimes?,
-): FlightJunctureTimes? {
-    val scheduled = (scheduledTimes ?: publishedTimes)?.toFlightTime() ?: return null
+): FlightJunctureTimes {
+    val scheduled = (scheduledTimes ?: publishedTimes)?.toFlightTime()
     val estimated = estimatedTimes?.toFlightTime()
     val actual = actualTimes?.toFlightTime()
     val delay = delayMinutes?.let(Int::toLong)?.let(Duration::ofMinutes)
     return FlightJunctureTimes(scheduled, estimated, actual, delay)
 }
 
-private fun FlightStatusAirport.toAirport(): FlightAirport? {
-    val iata = this.iata ?: return null
+private fun FlightStatusAirport.toAirport(): FlightAirport {
+    val iata = this.iata
+        ?: throw FlightStatusInsufficientException("no IATA code in airport: $this")
     val name = this.name
     val city = this.city
     val country = this.countryCode
     return FlightAirport(iata, name, city, country)
 }
 
-private fun FlightStatusTimes.toFlightTime(): FlightTime? {
-    val local = dateLocal ?: return null
-    val utc = dateUtc ?: return null
+private fun FlightStatusTimes.toFlightTime(): FlightTime {
+    val local = dateLocal
+        ?: throw FlightStatusInsufficientException("no local time in times: $this")
+    val utc = dateUtc
+        ?: throw FlightStatusInsufficientException("no UTC time in times: $this")
     return FlightTime(local, utc)
 }
 
 private fun FlightStatusAppendix.findAirline(fsCode: String) =
     airlines.find { it.fs == fsCode }
-        ?: throw FlightStatusContentsException("airline not in appendix: fs code $fsCode")
+        ?: throw FlightStatusIllegalException("airline not in appendix: fs code $fsCode")
 
 private fun FlightStatusAppendix.findAirport(fsCode: String) =
     airports.find { it.fs == fsCode }
-        ?: throw FlightStatusContentsException("airport not in appendix: fs code $fsCode")
+        ?: throw FlightStatusIllegalException("airport not in appendix: fs code $fsCode")
 
 private fun FlightStatusError.toException(): FlightStatusErrorException {
     val id = try {
