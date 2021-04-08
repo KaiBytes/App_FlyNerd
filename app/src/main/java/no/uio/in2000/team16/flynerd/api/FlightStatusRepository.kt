@@ -159,10 +159,10 @@ private class FlightJunctureMidImpl(
     override fun toString(): String {
         return "FlightJunctureMid(" +
                 "airport=$airport, " +
-                "departureStatus=$departureStatus, " +
-                "departureTimes=$departureTimes, " +
                 "arrivalStatus=$arrivalStatus, " +
                 "arrivalTimes=$arrivalTimes" +
+                "departureStatus=$departureStatus, " +
+                "departureTimes=$departureTimes, " +
                 ")"
     }
 }

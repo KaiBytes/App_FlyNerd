@@ -18,7 +18,7 @@
         android:imeOptions="actionDone"
         android:inputType="text"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/flights_summary"
+        app:layout_constraintBottom_toTopOf="@id/flight_header"
         app:layout_constraintEnd_toStartOf="@id/flight_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,56 +36,74 @@
         tools:text="apr 14, 1994" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/flights_summary"
+        android:id="@+id/flight_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@id/flights"
+        app:layout_constraintBottom_toTopOf="@id/flight_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flight_id">
 
         <TextView
-            android:id="@+id/flights_summary_id_iata"
-            android:layout_width="0dp"
+            android:id="@+id/flight_header_id_iata"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
+            android:layout_marginEnd="16dp"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@id/flights_summary_id_icao"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/flight_header_id_sep"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="UA2822" />
 
         <TextView
-            android:id="@+id/flights_summary_id_icao"
-            android:layout_width="0dp"
+            android:id="@+id/flight_header_id_sep"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/flights_summary_id_iata"
+            android:text="/"
+            android:visibility="invisible"
+            app:layout_constraintBaseline_toBaselineOf="@id/flight_header_id_iata"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/flights_summary_id_iata"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/flight_header_id_icao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="18sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/flight_header_id_iata"
+            app:layout_constraintStart_toEndOf="@id/flight_header_id_sep"
             tools:text="UAL2822" />
 
         <TextView
-            android:id="@+id/flights_summary_airline_name"
-            android:layout_width="0dp"
+            android:id="@+id/flight_header_airline"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textAlignment="center"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/flights_summary_id_iata"
+            app:layout_constraintTop_toBottomOf="@+id/flight_header_id_iata"
             tools:text="United Airlines" />
+
+        <TextView
+            android:id="@+id/flight_header_no_flights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="no flights found"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/flights"
+        android:id="@+id/flight_display"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -94,6 +112,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flights_summary" />
+        app:layout_constraintTop_toBottomOf="@id/flight_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/flight_display_juncture_scheduled_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="scheduled"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_actual_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_display_juncture_scheduled_label"
+        tools:text="actual" />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_delay_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delay"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flight_display_juncture_actual_label" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/flight_display_juncture_times_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="flight_display_juncture_scheduled_label,flight_display_juncture_actual_label,flight_display_juncture_delay_label" />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_scheduled_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_display_juncture_scheduled_label"
+        app:layout_constraintStart_toEndOf="@id/flight_display_juncture_times_barrier"
+        tools:text="16:23 " />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_scheduled_utc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_display_juncture_scheduled_local"
+        app:layout_constraintStart_toEndOf="@id/flight_display_juncture_scheduled_local"
+        tools:text="(09:23 UTC)" />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_actual_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_display_juncture_actual_label"
+        app:layout_constraintStart_toStartOf="@id/flight_display_juncture_scheduled_local"
+        tools:text="16:40 " />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_actual_utc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_display_juncture_actual_local"
+        app:layout_constraintStart_toEndOf="@id/flight_display_juncture_actual_local"
+        tools:text="(09:40 UTC)" />
+
+    <TextView
+        android:id="@+id/flight_display_juncture_delay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@id/flight_display_juncture_delay_label"
+        app:layout_constraintStart_toStartOf="@id/flight_display_juncture_actual_local"
+        tools:text="17 min" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

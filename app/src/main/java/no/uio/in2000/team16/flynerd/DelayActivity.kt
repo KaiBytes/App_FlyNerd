@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -44,16 +45,15 @@ class DelayActivity : AppCompatActivity() {
             onFlightDateSet()
         }
 
-    private lateinit var flightsAdapter: FlightsAdapter
+    private lateinit var flightDisplayAdapter: FlightDisplayAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_delay)
 
-
-        flightsAdapter = FlightsAdapter()
-        findViewById<RecyclerView>(R.id.flights).run {
-            adapter = flightsAdapter
+        flightDisplayAdapter = FlightDisplayAdapter()
+        findViewById<RecyclerView>(R.id.flight_display).run {
+            adapter = flightDisplayAdapter
             layoutManager = LinearLayoutManager(this@DelayActivity)
         }
 
@@ -100,7 +100,7 @@ class DelayActivity : AppCompatActivity() {
 
         // get data from repository and print it to log, show toast on error
         CoroutineScope(Dispatchers.IO).launch {
-            val flights: List<Flight> = try {
+            val flight: Flight? = try {
                 repository.byFlightIdArrivingOn(flightId, date)
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -112,24 +112,41 @@ class DelayActivity : AppCompatActivity() {
                 }
                 return@launch
             }
-            Log.i(TAG, "fetched ${flights.size} flights")
             withContext(Dispatchers.Main) {
-                updateSummary(flights)
-                flightsAdapter.flights = flights
+                bindHeader(flight)
+                flightDisplayAdapter.flight = flight
+            }
+            if (flight != null) {
+                val airports = listOf(flight.departure.airport.iata) +
+                        flight.mids.map { it.airport.iata } +
+                        listOf(flight.arrival.airport.iata)
+                Log.i(
+                    TAG,
+                    "fetched flight: ${flight.flightIdIATA}, ${airports.joinToString(" -> ")}"
+                )
+                Log.d(TAG, "flight: $flight")
+            } else {
+                Log.i(TAG, "fetched flight: $flight")
+
             }
         }
     }
 
-    private fun updateSummary(flights: List<Flight>) {
-        val flight = flights.firstOrNull()
+    private fun bindHeader(flight: Flight?) {
         if (flight != null) {
-            findViewById<TextView>(R.id.flights_summary_id_iata).text =
-                flight.flightIdIATA.toString()
-            findViewById<TextView>(R.id.flights_summary_id_icao).text =
-                flight.flightIdICAO.toString()
-            findViewById<TextView>(R.id.flights_summary_airline_name).text = flight.airline.name
+            findViewById<TextView>(R.id.flight_header_id_iata).text = flight.flightIdIATA.toString()
+            findViewById<TextView>(R.id.flight_header_id_sep).visibility =
+                flight.flightIdICAO?.let { View.VISIBLE } ?: View.INVISIBLE
+            findViewById<TextView>(R.id.flight_header_id_icao).text =
+                flight.flightIdICAO?.toString() ?: ""
+            findViewById<TextView>(R.id.flight_header_airline).text = flight.airline.name
+            findViewById<TextView>(R.id.flight_header_no_flights).visibility = View.GONE
         } else {
-            findViewById<TextView>(R.id.flights_summary_airline_name).text = "no flights found"
+            findViewById<TextView>(R.id.flight_header_id_iata).text = ""
+            findViewById<TextView>(R.id.flight_header_id_sep).visibility = View.INVISIBLE
+            findViewById<TextView>(R.id.flight_header_id_icao).text = ""
+            findViewById<TextView>(R.id.flight_header_airline).text = ""
+            findViewById<TextView>(R.id.flight_header_no_flights).visibility = View.VISIBLE
         }
     }
 
