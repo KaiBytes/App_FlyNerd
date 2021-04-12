@@ -31,8 +31,6 @@ class AirportsList {
         }
     }
 
-
-    // TODO remove redundant function
     fun createAirport(ICAO : String, name : String, country : String, latitude : Double, longtitude : Double) : Airport? {
         val tmpAirport : Airport? = Airport(ICAO, name, country, latitude, longtitude)
         return tmpAirport
@@ -41,7 +39,6 @@ class AirportsList {
     fun appendDomesticAirportList(airportObject : Airport?) {
         airports.add(airportObject)
     }
-
 
     fun printAirports() {
         for (airport in airports){

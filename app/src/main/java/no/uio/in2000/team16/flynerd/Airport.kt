@@ -19,7 +19,8 @@ class Airport(val ICAO : String,
         val geoLocation = "lat=$latitude&lon=$longtitude"
         val requestUrl = "$baseURL$geoLocation"
 
-        val cockAss = "cock ass"
+        val assCockTheSecond = "cock ass"
+        val dickInMouth = "DIM"
 
         try {
             val response = Fuel.get(requestUrl).header("User-Agent", "FLyNerd gjchocopasta@gmail.com").awaitString()
