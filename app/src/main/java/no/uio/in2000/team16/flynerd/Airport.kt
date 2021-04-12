@@ -15,19 +15,16 @@ class Airport(val ICAO : String,
               val gson : Gson = Gson()) {
 
     suspend fun getData() {
-        val baseURL = "https://api.met.no/weatherapi/locationforecast/2.0/compact?"
+        val baseURL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/locationforecast/2.0/compact?"
         val geoLocation = "lat=$latitude&lon=$longtitude"
         val requestUrl = "$baseURL$geoLocation"
 
         try {
             val response = Fuel.get(requestUrl).header("User-Agent", "FLyNerd gjchocopasta@gmail.com").awaitString()
+            Log.d("output", response)
             val data = gson.fromJson(response, Forecast::class.java)
             weatherForecast = data
             forecastToString(weatherForecast!!)
-//            val response = Fuel.get(requestUrl).header("User-Agent", "FLyNerd gjchocopasta@gmail.com")
-//                .awaitString()
-//            Log.d("API Respons: ", response)
-//            return response
         }
         catch(exception: FuelError) {
             Log.d("Fuel", "ERROR FETCHING DATA")

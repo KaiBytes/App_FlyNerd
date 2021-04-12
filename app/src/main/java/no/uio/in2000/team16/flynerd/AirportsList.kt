@@ -26,7 +26,7 @@ class AirportsList {
 
         tsvReader.open(context?.resources!!.openRawResource(R.raw.domair)) {
             readAllAsSequence().forEach { row ->
-                appendDomesticAirportList(createAirport(row[0], row[2], row[1], row[4].toDouble(), row[3].toDouble()))
+                appendDomesticAirportList(createAirport(row[0], row[2], row[1], row[3].toDouble(), row[4].toDouble()))
             }
         }
     }
