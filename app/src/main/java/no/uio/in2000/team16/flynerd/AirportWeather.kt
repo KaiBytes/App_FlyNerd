@@ -1,19 +1,11 @@
 package no.uio.in2000.team16.flynerd
 
-import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 
-class MainActivity : AppCompatActivity() {
-
-    
+class AirportWeather : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-
-
-
-
+        setContentView(R.layout.activity_airport_weather)
     }
 }
