@@ -16,54 +16,15 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
-    var domesticAirportList : MutableList<Airport?> = mutableListOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        context = this
 
-        val initializer = AirportsList()
+        val initializer = AirportsList(this, R.raw.domair)
         initializer.readAirports()
 
         runBlocking {
-            initializer.airports[0]?.getData()
+            initializer.airports[0].getData()
         }
-
-//        // I tell the program to wait 2 s so the above thread can finish before it prints out all airports.
-//        Thread.sleep(2000)
-//        initializer.printAirports()
-
-//
-//        val tsvReader = csvReader {
-//            charset = "UTF-8"
-//            quoteChar = '"'
-//            delimiter = ';'
-//            escapeChar = '\\'
-//        }
-//
-//        tsvReader.open(resources.openRawResource(R.raw.domair)) {
-//            readAllAsSequence().forEach { row ->
-//                append_to_domesticAirportList(create_Airport(row[0], row[2], row[1], row[3].toDouble(), row[4].toDouble()))
-//            }
-//        }
-//
-////        for (airport in domesticAirportList){
-//////            println(airport.toString())
-////        }
-//    }
-//
-//    fun append_to_domesticAirportList(airportObject : Airport?) {
-//        domesticAirportList.add(airportObject)
-//    }
-//
-//    fun create_Airport(ICAO : String, name : String, country : String, latitude : Double, longtitude : Double) : Airport? {
-//        var tmpAirport : Airport? = Airport(ICAO, name, country, latitude, longtitude, null, null);
-//        return tmpAirport
-//    }
-    }
-    companion object {
-        var context: Context? = null
-            internal set
     }
 }
