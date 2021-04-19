@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         initializer.readAirports()
 
         runBlocking {
-            initializer.airports[0].getData()
+            initializer.airports[0].callForecastAPI()
         }
     }
 }
