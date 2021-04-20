@@ -1,3 +1,6 @@
+// Retrofit service acting as REST backend for flight status API, and associated response data
+// structures.
+
 package no.uio.in2000.team16.flynerd.api
 
 import no.uio.in2000.team16.flynerd.FlightStatus

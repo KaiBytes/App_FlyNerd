@@ -8,38 +8,15 @@ import java.time.ZonedDateTime
 /**
  * A flight identified by a flight id.
  *
- * Has a departure and an arrival airport, as well as zero or more intervening airports it lands at
- * and departs from on its route.
+ * Has a departure and an arrival juncture, as well as zero or more intervening junctures it both
+ * lands at and departs from, on its route.
  */
 internal class Flight(
-    /**
-     * IATA flight id.
-     */
     val flightIdIATA: FlightIdIATA,
-
-    /**
-     * ICAO flight id, if available.
-     */
     val flightIdICAO: FlightIdICAO?,
-
-    /**
-     * The operating carrier of the flight.
-     */
     val airline: FlightAirline,
-
-    /**
-     * Information about the initial departure.
-     */
     val departure: FlightJunctureDeparture,
-
-    /**
-     * Information about any intervening landings on the flight's route.
-     */
     val mids: Array<FlightJunctureMid>,
-
-    /**
-     * Information about the final arrival.
-     */
     val arrival: FlightJunctureArrival,
 ) {
     override fun toString(): String {
@@ -58,36 +35,28 @@ internal class Flight(
  * An arrival and/or departure, and associated information in relation to some flight.
  */
 internal interface FlightJuncture {
-    /**
-     * Place of arrival and/or departure.
-     */
     val airport: FlightAirport
 }
 
+/**
+ * A departure, and associated information.
+ */
 internal interface FlightJunctureDeparture : FlightJuncture {
-    /**
-     * Current status of departure.
-     */
     val departureStatus: FlightStatus
-
-    /**
-     * Time information for departure.
-     */
     val departureTimes: FlightJunctureTimes
 }
 
+/**
+ * An arrival, and associated information.
+ */
 internal interface FlightJunctureArrival : FlightJuncture {
-    /**
-     * Current status of arrival.
-     */
     val arrivalStatus: FlightStatus
-
-    /**
-     * Time information for arrival.
-     */
     val arrivalTimes: FlightJunctureTimes
 }
 
+/**
+ * An arrival *and* departure, and associated sets of information.
+ */
 internal interface FlightJunctureMid : FlightJunctureArrival, FlightJunctureDeparture
 
 /**
@@ -96,23 +65,17 @@ internal interface FlightJunctureMid : FlightJunctureArrival, FlightJunctureDepa
  * Note that any and all times may be null if they are unavailable.
  */
 internal class FlightJunctureTimes(
-    /**
-     * Scheduled time.
-     */
     val scheduled: FlightTime?,
-
     /**
-     * Estimated time, based on current observations.
+     * Based on current observations.
      */
     val estimated: FlightTime?,
-
     /**
-     * Actual time, as observed.
+     * As observed.
      */
     val actual: FlightTime?,
-
     /**
-     * Delay, as calculated based on the times.
+     * As calculated based on the times.
      *
      * Rounded to one minute granularity.
      */
@@ -133,12 +96,11 @@ internal class FlightJunctureTimes(
  */
 internal class FlightTime(
     /**
-     * Timestamp without timezone, local to the place of arrival or departure in question.
+     * Local to the place of arrival or departure in question.
      */
     val local: LocalDateTime,
-
     /**
-     * Timestamp with UTC timezone.
+     * With UTC timezone.
      */
     val utc: ZonedDateTime,
 ) {
@@ -151,19 +113,8 @@ internal class FlightTime(
  * An airline operating some flight.
  */
 internal class FlightAirline(
-    /**
-     * IATA code identifying the airline.
-     */
     val iata: String,
-
-    /**
-     * ICAO code identifying the airline, if available.
-     */
     val icao: String?,
-
-    /**
-     * Name of the airline.
-     */
     val name: String,
 ) {
     override fun toString(): String {
@@ -172,27 +123,13 @@ internal class FlightAirline(
 }
 
 /**
- * An airport some arrival or departure takes place at.
+ * An airport some arrival and/or departure takes place at.
  */
 internal class FlightAirport(
-    /**
-     * The IATA code identifying the airport.
-     */
     val iata: String,
-
-    /**
-     * The name of the airport, if available.
-     */
     val name: String?,
-
-    /**
-     * The city the airport is associated with.
-     */
     val city: String,
-
     /**
-     * Code for the country the airport is in.
-     *
      * Standardized two-letter code.
      */
     val country: String,
@@ -203,7 +140,7 @@ internal class FlightAirport(
 }
 
 /**
- * Status of flight segment connected to an arrival or departure.
+ * Status of flight segment to an arrival or from a departure.
  */
 internal enum class FlightStatus {
     @SerializedName("A")
@@ -234,7 +171,7 @@ internal enum class FlightStatus {
     UNKNOWN;
 
     /**
-     * Short natural language description of the status.
+     * Short natural language description of the status, for use in UI.
      */
     val description: String
         get() = when (this) {
@@ -253,7 +190,7 @@ internal enum class FlightStatus {
 /**
  * Identifier for flights.
  *
- * Consists of an IATA or ICAO airline code and a number.
+ * Consists of an IATA or ICAO airline code, and a number.
  */
 internal abstract class FlightId(val airlineCode: String, val flightNumber: Int) {
     init {
@@ -276,7 +213,9 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
          *   a valid flight id .
          */
         fun parse(string: CharSequence): FlightId {
+            // First, normalize (all uppercase, no whitespace, etc.).
             val normalized = normalize(string)
+            // Decide whether it is IATA or ICAO.
             val (init, flightNumberStart) = normalized.getOrNull(2)?.let {
                 if (it.isDigit()) {
                     ::FlightIdIATA to 2
@@ -284,7 +223,9 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
                     ::FlightIdICAO to 3
                 }
             } ?: throw IllegalArgumentException("flight id is too short: '$string'")
+            // Code part.
             val airlineCode = normalized.substring(0 until flightNumberStart)
+            // Number part.
             val flightNumberStr = normalized.substring(flightNumberStart)
             val flightNumber = try {
                 flightNumberStr.toInt()

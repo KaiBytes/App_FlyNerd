@@ -15,8 +15,10 @@ import java.time.LocalDate
 import java.util.*
 
 /**
- * @param baseUrl Flightstats flight status API base URL, up to but not including the version, with
- *   a trailing slash.  E.g. <code>"https://api.flightstats.com/flex/flightstatus/rest/"</code>.
+ * Repository frontend for flight status API.
+ *
+ * @param baseUrl API base URL, up to but not including the version, with trailing slash.  E.g.
+ *   <code>"https://api.flightstats.com/flex/flightstatus/rest/"</code>.
  * @param appId Application ID as provided by flightstats.  E.g. <code>"0a1b2c3d"</code>.
  * @param appKey Application key as provided by flightstats.  E.g.
  *   <code>"0a1b2c3d4f5a6b7c8d9e0f1a2b3c4d5e"</code>.
@@ -46,19 +48,6 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
         .build()
         .create<FlightStatusService>()
 
-    suspend fun byFlightIdArrivingOnResponse(
-        flightId: FlightId,
-        date: LocalDate,
-        airportIATA: String? = null,
-    ): FlightStatusResponse = service.byFlightNumberArrivingOn(
-        flightId.airlineCode,
-        flightId.flightNumber,
-        date.year,
-        date.month.value,
-        date.dayOfMonth,
-        airportIATA,
-    )
-
     /**
      * Fetch flight with given flight id arriving on given date.
      *
@@ -69,11 +58,7 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
      * @return The flight matching the criteria.  Null if no such flight is found.
      *
      * @throws IOException An I/O error occurred talking to the API server.
-     * @throws FlightStatusErrorException The API server responded with a non-I/O error.
-     * @throws FlightStatusIllegalException  The API server's response's format was illegal.
-     * @throws FlightStatusInsufficientException The API server's response does not have all the
-     *   information needed for the returned datastructures.  This is not a serious error; it may be
-     *   handled identically to the null returned case.
+     * @throws FlightStatusException (Appropriate subclass.) A non-I/O error occured.
      * @throws RuntimeException Some other kind of error occured decoding the API server's response.
      */
     suspend fun byFlightIdArrivingOn(
@@ -81,7 +66,14 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
         date: LocalDate,
         airportIATA: String? = null,
     ): Flight? {
-        val response = byFlightIdArrivingOnResponse(flightId, date, airportIATA)
+        val response = service.byFlightNumberArrivingOn(
+            flightId.airlineCode,
+            flightId.flightNumber,
+            date.year,
+            date.month.value,
+            date.dayOfMonth,
+            airportIATA,
+        )
         response.error?.let {
             throw it.toException()
         }
@@ -92,14 +84,26 @@ internal class FlightStatusRepository(baseUrl: HttpUrl, appId: String, appKey: S
     }
 }
 
-internal open class FlightStatusException(message: String? = null, cause: Throwable? = null) :
+/**
+ * Non-I/O error concerning the API response.
+ */
+internal abstract class FlightStatusException(message: String? = null, cause: Throwable? = null) :
     RuntimeException(message, cause)
 
+/**
+ * The API server's response does not have all the information needed for the returned
+ * datastructures.
+ *
+ * This is not a serious error; it may be handled identically to the null returned case.
+ */
 internal class FlightStatusInsufficientException(val msg: String) : FlightStatusException() {
     override val message
         get() = "missing data: $msg"
 }
 
+/**
+ * The API server's response's format was illegal.
+ */
 internal class FlightStatusIllegalException(
     val msg: String,
     cause: Throwable? = null,
@@ -110,6 +114,11 @@ internal class FlightStatusIllegalException(
         get() = "illegal API response: $msg"
 }
 
+/**
+ * The API server responded with an error.
+ *
+ * Contains the details of the response error.
+ */
 internal class FlightStatusErrorException(
     val statusCode: Int,
     val errorCode: String,
@@ -167,6 +176,9 @@ private class FlightJunctureMidImpl(
     }
 }
 
+/**
+ * Convert service backend datastructures to repository frontend datastructures.
+ */
 private fun Array<FlightStatusFlightStatus>.toFlight(appendix: FlightStatusAppendix): Flight? {
     val sorted = this.sortedBy { it.operationalTimes.publishedDeparture?.dateUtc }.iterator()
 

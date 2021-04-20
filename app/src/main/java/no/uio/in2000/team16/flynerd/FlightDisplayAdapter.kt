@@ -14,14 +14,19 @@ import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAccessor
 import java.time.temporal.TemporalAmount
 
-internal class FlightDisplayAdapter() :
-    RecyclerView.Adapter<FlightDisplayAdapter.ViewHolder>() {
+/**
+ * For displaying the junctures and progress of a [Flight] in a [RecyclerView].
+ */
+internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapter.ViewHolder>() {
     internal var flight: Flight? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
+    /**
+     * Type of item at given position in the recycler view; see [ViewType].
+     */
     override fun getItemViewType(position: Int): Int =
         if (position % 2 == 0) {
             ViewType.JUNCTURE
@@ -29,8 +34,14 @@ internal class FlightDisplayAdapter() :
             ViewType.PROGRESS
         }.ordinal
 
+    /**
+     * Number of items in recycler view; 0 if [flight] is null.
+     */
     override fun getItemCount(): Int = flight?.let { (it.mids.size + 2) * 2 - 1 } ?: 0
 
+    /**
+     * Create [ViewHolder] subclass of the appropriate type.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewTypeInt: Int): ViewHolder {
         val (init, resource) = when (ViewType.values()[viewTypeInt]) {
             ViewType.JUNCTURE -> ::JunctureHolder to R.layout.flight_display_juncture
@@ -39,6 +50,9 @@ internal class FlightDisplayAdapter() :
         return init(LayoutInflater.from(parent.context).inflate(resource, parent, false))
     }
 
+    /**
+     * Bind item information extracted from flight to given view holder.
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val flight = this.flight!!
         when (val index = position / 2) {
@@ -51,12 +65,32 @@ internal class FlightDisplayAdapter() :
         }
     }
 
+    /**
+     * Holds an individual item in the recycler view.
+     *
+     * Either a [JunctureHolder] with juncture information, or a [ProgressHolder] with information
+     * about progress between two junctures.
+     */
     internal abstract class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        /**
+         * Fill underlying view with information from departure juncture.
+         */
         abstract fun bind(junctureDeparture: FlightJunctureDeparture, next: FlightJunctureArrival)
+
+        /**
+         * Fill underlying view with information from arrival juncture.
+         */
         abstract fun bind(junctureArrival: FlightJunctureArrival)
+
+        /**
+         * Fill underlying view with information from mid juncture.
+         */
         abstract fun bind(junctureMid: FlightJunctureMid, next: FlightJunctureArrival)
     }
 
+    /**
+     * Holds view containing information about a juncture: airport and times.
+     */
     internal class JunctureHolder(view: View) : ViewHolder(view) {
         private val airportIATA: TextView = view.findViewById(R.id.flight_display_airport_iata)
         private val airportName: TextView = view.findViewById(R.id.flight_display_airport_name)
@@ -114,6 +148,9 @@ internal class FlightDisplayAdapter() :
             }
         }
 
+        /**
+         * Holds view containing actual and scheduled times and delay.
+         */
         private class Times(val view: View) {
             val actualLabel: TextView = view.findViewById(R.id.flight_display_juncture_actual_label)
             val scheduledLocal: TextView =
@@ -146,6 +183,10 @@ internal class FlightDisplayAdapter() :
         }
     }
 
+    /**
+     * Holds view containing information about progress between two junctures: status and any
+     * remaining time.
+     */
     internal class ProgressHolder(view: View) : ViewHolder(view) {
         private val status: TextView = view.findViewById(R.id.flight_display_status)
         private val remainingLabel: TextView =
@@ -188,6 +229,10 @@ internal class FlightDisplayAdapter() :
         }
     }
 
+    /**
+     * Used to distinguish between the types of view holders when interfacing with the recycler
+     * view.
+     */
     private enum class ViewType {
         JUNCTURE,
         PROGRESS,
