@@ -26,9 +26,9 @@ import java.time.format.FormatStyle
 import java.util.*
 
 class DelayActivity : AppCompatActivity() {
-    private val baseUrl = HttpUrl.get("https://api.flightstats.com/flex/flightstatus/rest/")
-    private val appId = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
-    private val appKey = "" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
+    private val baseUrl = HttpUrl.get(getString(R.string.flightstats_base_url))
+    private val appId = getString(R.string.flightstats_app_id)
+    private val appKey = getString(R.string.flightstats_app_key)
 
     private var _flightDate: LocalDate = LocalDate.ofEpochDay(0)
         set(value) {
