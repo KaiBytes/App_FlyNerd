@@ -83,7 +83,7 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@HomepageBoard , Functionality4::class.java)
+                val intent = Intent(this@HomepageBoard , MapActivity::class.java)
                 startActivity(intent)
             }
 
@@ -117,7 +117,7 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     fun goToFunctionality4(view: View?) {
-        val intent = Intent(this, Functionality4::class.java)
+        val intent = Intent(this, MapActivity::class.java)
         startActivity(intent)
     }
 

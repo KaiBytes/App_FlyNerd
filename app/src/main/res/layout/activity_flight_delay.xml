@@ -15,6 +15,19 @@
         android:layout_height="match_parent"
         android:background="#880015">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:minHeight="?attr/actionBarSize"
+            android:src="@drawable/ic_baseline_menu_24"
+
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,15 +46,6 @@
 
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:src="@drawable/ic_baseline_menu_24"
-
-        android:theme="?attr/actionBarTheme" />
 
 
     <com.google.android.material.navigation.NavigationView

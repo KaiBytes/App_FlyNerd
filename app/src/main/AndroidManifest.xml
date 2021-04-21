@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="no.uio.in2000.team16.flynerd">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,15 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
-        <activity android:name=".Functionality6"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".Functionality6" />
         <activity android:name=".Functionality5" />
         <activity android:name=".Functionality4" />
         <activity android:name=".FlightDelay" />
         <activity android:name=".FlightStatus" />
         <activity android:name=".AirportWeather" />
-
-        <activity android:name=".HomepageBoard"/>
-
+        <activity android:name=".HomepageBoard" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
