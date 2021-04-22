@@ -17,13 +17,15 @@
 
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/titleFlightStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:fontFamily="sans-serif-light"
             android:text="Flight Status"
-            android:textColor="#08207C"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,160 +33,181 @@
             app:layout_constraintVertical_bias="0.046" />
 
         <EditText
-            android:id="@+id/flightNumber"
-            android:layout_width="250dp"
+            android:id="@+id/searchFstatus"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="600dp"
-            android:background="#DCD4D4"
-            android:hint="Enter flight Number"
+            android:layout_below="@+id/titleFlightStatus"
+            android:layout_marginBottom="604dp"
+            android:background="@drawable/roundcorner"
+            android:hint="Enter flight number"
+            android:padding="10dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.094"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonSearchFStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="592dp"
-            android:background="#FFFFFF"
-            android:text="Check flight"
-            android:textColor="#000000"
+            android:layout_below="@+id/titleFlightStatus"
+
+            android:layout_marginStart="52dp"
+            android:layout_marginBottom="604dp"
+            android:background="@drawable/roundcorner"
+            android:fontFamily="sans-serif-light"
+            android:text="Search"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/flightNumber" />
+            app:layout_constraintStart_toEndOf="@+id/searchFstatus" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="The Flight Number: "
-            android:textColor="#000"
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationLoading2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/flightNumber" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/butt1"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:text="1"
-            android:textColor="#000"
-            android:background="#2196F3"
-            app:cornerRadius="28dp"
-            app:layout_constraintStart_toEndOf="@+id/flightstatustext"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/butt2"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:text="2"
-            android:background="#2196F3"
-            android:textColor="#000"
-            app:cornerRadius="28dp"
-            app:layout_constraintStart_toEndOf="@+id/butt1"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/butt3"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:background="#2196F3"
-            android:text="3"
-            android:textColor="#000"
-            app:cornerRadius="28dp"
-            app:layout_constraintStart_toEndOf="@+id/butt2"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <TextView
-            android:id="@+id/in_air"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/result"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
-            android:layout_marginTop="16dp"
-            android:text="In Air"
-            android:textColor="#000"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/butt1" />
+            app:layout_constraintTop_toBottomOf="@+id/searchFstatus">
 
-        <TextView
-            android:id="@+id/plan_Landed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="216dp"
-            android:layout_marginTop="16dp"
-            android:text="Landed"
-            android:textColor="#000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/butt2" />
 
-        <TextView
-            android:id="@+id/plan_delayed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="304dp"
-            android:layout_marginTop="16dp"
-            android:text="Delay"
-            android:textColor="#000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/butt3" />
+            <TextView
+                android:id="@+id/flightnumbertxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="40dp"
+                android:text="The Flight Number: "
+                android:textColor="#000"
 
-        <TextView
-            android:id="@+id/flightstatustext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="36dp"
-            android:text="Flight Status"
-            android:textColor="#000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                />
 
-        <TextView
-            android:id="@+id/delay_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="84dp"
-            android:text="Flight Delay Info: "
-            android:textColor="#000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/flightstatustext" />
 
-        <TextView
-            android:id="@+id/dep_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:text="Deprature Infomation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/delay_info" />
+            <TextView
+                android:id="@+id/flightstatustext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/arrv_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:text="Arrival Infomation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dep_info" />
+                android:layout_below="@id/flightnumbertxt"
+
+                android:layout_marginStart="25dp"
+
+                android:layout_marginTop="50dp"
+
+                android:text="Flight Status: "
+                android:textColor="#000" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/butt1"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_below="@id/flightnumbertxt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/flightstatustext"
+
+                android:background="#2196F3"
+                android:text="in Air"
+                android:textColor="#000"
+                app:cornerRadius="28dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/butt2"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_below="@id/flightnumbertxt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/butt1"
+
+                android:background="#2196F3"
+                android:text="Landed"
+                android:textColor="#000"
+                app:cornerRadius="28dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/butt3"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_below="@id/flightnumbertxt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/butt2"
+
+                android:background="#2196F3"
+                android:text="Delayed"
+                android:textColor="#000"
+                app:cornerRadius="28dp" />
+
+
+            <TextView
+                android:id="@+id/flightDelayInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/flightstatustext"
+
+                android:layout_marginStart="25dp"
+
+                android:layout_marginTop="30dp"
+
+                android:text="Flight Delay Info"
+                android:textColor="#000" />
+
+
+            <TextView
+                android:id="@+id/flightdepInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/flightDelayInfo"
+
+                android:layout_marginStart="25dp"
+
+                android:layout_marginTop="30dp"
+
+                android:text="Flight Departure Info"
+                android:textColor="#000" />
+
+
+            <TextView
+                android:id="@+id/flightarrvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/flightdepInfo"
+
+                android:layout_marginStart="25dp"
+
+                android:layout_marginTop="30dp"
+
+                android:text="Flight Arrival Info"
+                android:textColor="#000" />
+
+
+        </RelativeLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

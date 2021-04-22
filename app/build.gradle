@@ -87,4 +87,6 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.5'
 
+    implementation 'com.airbnb.android:lottie:3.4.0'
+
 }
