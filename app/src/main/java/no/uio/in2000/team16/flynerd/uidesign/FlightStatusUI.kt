@@ -16,7 +16,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
-import no.uio.in2000.team16.flynerd.HomepageBoard
 import no.uio.in2000.team16.flynerd.R
 
 class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -30,7 +29,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_flight_status)
+        setContentView(R.layout.flight_status_new)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)

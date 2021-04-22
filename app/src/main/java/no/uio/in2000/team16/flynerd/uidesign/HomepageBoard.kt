@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import no.uio.in2000.team16.flynerd.MapActivity
+import no.uio.in2000.team16.flynerd.R
 import no.uio.in2000.team16.flynerd.uidesign.*
 
 class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

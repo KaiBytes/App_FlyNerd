@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import no.uio.in2000.team16.flynerd.HomepageBoard
 import no.uio.in2000.team16.flynerd.R
 
 class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

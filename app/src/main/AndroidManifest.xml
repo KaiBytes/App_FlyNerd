@@ -16,19 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
+        <activity android:name=".FlightStatusInfo"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".uidesign.Functionality6" />
         <activity android:name=".uidesign.Functionality5" />
         <activity android:name=".uidesign.Functionality4" />
         <activity android:name=".uidesign.FlightDelayUI" />
         <activity android:name=".uidesign.FlightStatusUI" />
         <activity android:name=".uidesign.AirportWeatherUI" />
-        <activity android:name=".HomepageBoard" />
+        <activity android:name=".uidesign.HomepageBoard" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
