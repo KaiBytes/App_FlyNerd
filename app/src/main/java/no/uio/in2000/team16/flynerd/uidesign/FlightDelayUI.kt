@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +11,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import no.uio.in2000.team16.flynerd.HomepageBoard
+import no.uio.in2000.team16.flynerd.R
 
-class AirportWeather : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -23,7 +25,7 @@ class AirportWeather : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_airport_weather)
+        setContentView(R.layout.activity_flight_delay)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -66,38 +68,36 @@ class AirportWeather : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@AirportWeather, HomepageBoard::class.java)
+                val intent = Intent(this@FlightDelayUI, HomepageBoard::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@AirportWeather, FlightStatus::class.java)
+                val intent = Intent(this@FlightDelayUI, FlightStatusUI::class.java)
                 startActivity(intent)
 
             }
 
             R.id.flightDelay -> {
 
-                val intent = Intent(this@AirportWeather, FlightDelay::class.java)
-                startActivity(intent)
-
             }
 
             R.id.airportweather -> {
-
+                val intent = Intent(this@FlightDelayUI, AirportWeatherUI::class.java)
+                startActivity(intent)
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@AirportWeather, Functionality4::class.java)
+                val intent = Intent(this@FlightDelayUI, Functionality4::class.java)
                 startActivity(intent)
             }
 
             R.id.func5 -> {
-                val intent = Intent(this@AirportWeather, Functionality5::class.java)
+                val intent = Intent(this@FlightDelayUI, Functionality5::class.java)
                 startActivity(intent)
             }
 
             R.id.func6 -> {
-                val intent = Intent(this@AirportWeather, Functionality6::class.java)
+                val intent = Intent(this@FlightDelayUI, Functionality6::class.java)
                 startActivity(intent)
             }
         }

@@ -22,12 +22,12 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapActivity"></activity>
-        <activity android:name=".Functionality6" />
-        <activity android:name=".Functionality5" />
-        <activity android:name=".Functionality4" />
-        <activity android:name=".FlightDelay" />
-        <activity android:name=".FlightStatus" />
-        <activity android:name=".AirportWeather" />
+        <activity android:name=".uidesign.Functionality6" />
+        <activity android:name=".uidesign.Functionality5" />
+        <activity android:name=".uidesign.Functionality4" />
+        <activity android:name=".uidesign.FlightDelayUI" />
+        <activity android:name=".uidesign.FlightStatusUI" />
+        <activity android:name=".uidesign.AirportWeatherUI" />
         <activity android:name=".HomepageBoard" />
         <activity android:name=".SplashScreen">
             <intent-filter>

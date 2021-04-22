@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Context
 import android.content.Intent
@@ -16,8 +16,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
+import no.uio.in2000.team16.flynerd.HomepageBoard
+import no.uio.in2000.team16.flynerd.R
 
-class FlightStatus : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -107,7 +109,7 @@ class FlightStatus : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@FlightStatus, HomepageBoard::class.java)
+                val intent = Intent(this@FlightStatusUI, HomepageBoard::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
@@ -115,27 +117,27 @@ class FlightStatus : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.flightDelay -> {
-                val intent = Intent(this@FlightStatus, FlightDelay::class.java)
+                val intent = Intent(this@FlightStatusUI, FlightDelayUI::class.java)
                 startActivity(intent)
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatus, AirportWeather::class.java)
+                val intent = Intent(this@FlightStatusUI, AirportWeatherUI::class.java)
                 startActivity(intent)
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@FlightStatus, Functionality4::class.java)
+                val intent = Intent(this@FlightStatusUI, Functionality4::class.java)
                 startActivity(intent)
             }
 
             R.id.func5 -> {
-                val intent = Intent(this@FlightStatus, Functionality5::class.java)
+                val intent = Intent(this@FlightStatusUI, Functionality5::class.java)
                 startActivity(intent)
             }
 
             R.id.func6 -> {
-                val intent = Intent(this@FlightStatus, Functionality6::class.java)
+                val intent = Intent(this@FlightStatusUI, Functionality6::class.java)
                 startActivity(intent)
             }
         }

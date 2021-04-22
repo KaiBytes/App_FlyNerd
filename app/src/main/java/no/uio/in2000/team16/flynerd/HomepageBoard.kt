@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import no.uio.in2000.team16.flynerd.uidesign.*
 
 class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,17 +69,17 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@HomepageBoard , FlightStatus::class.java)
+                val intent = Intent(this@HomepageBoard , FlightStatusUI::class.java)
                 startActivity(intent)
             }
 
             R.id.flightDelay -> {
-                val intent = Intent(this@HomepageBoard , FlightDelay::class.java)
+                val intent = Intent(this@HomepageBoard , FlightDelayUI::class.java)
                 startActivity(intent)
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@HomepageBoard , AirportWeather::class.java)
+                val intent = Intent(this@HomepageBoard , AirportWeatherUI::class.java)
                 startActivity(intent)
             }
 
@@ -102,17 +103,17 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     fun goToFlightStatus(view: View?) {
-        val intent = Intent(this, FlightStatus::class.java)
+        val intent = Intent(this, FlightStatusUI::class.java)
         startActivity(intent)
     }
 
     fun goToFlightDelay(view: View?) {
-        val intent = Intent(this, FlightDelay::class.java)
+        val intent = Intent(this, FlightDelayUI::class.java)
         startActivity(intent)
     }
 
     fun goToAirportWeather(view: View?) {
-        val intent = Intent(this, AirportWeather::class.java)
+        val intent = Intent(this, AirportWeatherUI::class.java)
         startActivity(intent)
     }
 

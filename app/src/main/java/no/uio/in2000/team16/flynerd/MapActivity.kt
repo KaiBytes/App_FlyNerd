@@ -26,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
+import no.uio.in2000.team16.flynerd.uidesign.*
 import java.time.Instant
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback,
@@ -178,21 +179,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@MapActivity, HomepageBoard::class.java)
-                startActivity(intent)
+
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@MapActivity, FlightStatus::class.java)
+                val intent = Intent(this@MapActivity, FlightStatusUI::class.java)
                 startActivity(intent)
 
             }
 
             R.id.flightDelay -> {
+                val intent = Intent(this@MapActivity, FlightDelayUI::class.java)
+                startActivity(intent)
 
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@MapActivity, AirportWeather::class.java)
+                val intent = Intent(this@MapActivity, AirportWeatherUI::class.java)
                 startActivity(intent)
             }
 
