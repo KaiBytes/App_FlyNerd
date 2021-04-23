@@ -94,7 +94,7 @@ class DelayActivity : AppCompatActivity() {
         } catch (e: IllegalArgumentException) {
             Toast.makeText(this, e.localizedMessage ?: "$e", Toast.LENGTH_LONG).show()
             return
-        }
+        }// 
 
         val repository = FlightStatusRepository(baseUrl, appId, appKey)
 
