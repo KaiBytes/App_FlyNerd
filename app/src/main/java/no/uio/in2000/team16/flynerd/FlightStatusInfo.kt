@@ -1,24 +1,37 @@
 package no.uio.in2000.team16.flynerd
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.TextView
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.RelativeLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.LottieAnimationView
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.google.gson.Gson
 import no.uio.in2000.team16.flynerd.flightData.Appendix
 import no.uio.in2000.team16.flynerd.flightData.FlightData
+import no.uio.in2000.team16.flynerd.uidesign.*
 
-class FlightStatusInfo : AppCompatActivity() {
+class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private  val TAG = "FlightInfo"
     private val AppID = "25891f46" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
@@ -30,6 +43,11 @@ class FlightStatusInfo : AppCompatActivity() {
     lateinit var flightDelayResult: TextView // display delay result
     lateinit var SubmitToCheckFlight: Button
     lateinit var flightNumberRes: TextView
+
+    //navigation drawer
+    var drawerLayout: DrawerLayout? = null
+    var navigationView: NavigationView? = null
+    var toolbar: Toolbar? = null
 
 
     // Departure
@@ -53,11 +71,40 @@ class FlightStatusInfo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_flight_status_info)
+        setContentView(R.layout.flight_status_new)
+
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+        //textView = findViewById(R.id.textView)
+        toolbar = findViewById(R.id.toolbar)
+
+
+        // toolbar
+        setSupportActionBar(toolbar)
+
+        // navigation
+
+        // navigationbar
+        navigationView?.bringToFront()
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        drawerLayout?.addDrawerListener(toggle)
+        toggle.syncState()
+        navigationView?.setNavigationItemSelectedListener(this)
+        navigationView?.setCheckedItem(R.id.nav_home)
+
+
 
         // Intialize the buttons and textView and editText for simple UI user intereaction
-        flightNumberStr = findViewById<EditText>(R.id.flightNumber)  // EditTxt // accept from user
-        SubmitToCheckFlight = findViewById<Button>(R.id.flightNumberButton) // Button
+        //flightNumberStr = findViewById<EditText>(R.id.flightNumber)  // EditTxt // accept from user
+        //SubmitToCheckFlight = findViewById<Button>(R.id.flightNumberButton) // Button
         flightStatus = findViewById<TextView>(R.id.flightStatus)
         flightDelayResult = findViewById<TextView>(R.id.flightResult)
         flightNumberRes = findViewById<TextView>(R.id.flightNumberText)
@@ -81,11 +128,27 @@ class FlightStatusInfo : AppCompatActivity() {
 
 
 
+        val search = findViewById<EditText>(R.id.searchFstatus)
+        val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
+        val result = findViewById<RelativeLayout>(R.id.result)
+        val loading = findViewById<LottieAnimationView>(R.id.animationLoading2)
+
+        result.setVisibility(View.GONE)
+        loading.setVisibility(View.GONE)
+
+
+
 
         // implementation of on clicklistener for check flight button
-        SubmitToCheckFlight.setOnClickListener(View.OnClickListener {
+        searchButton.setOnClickListener(View.OnClickListener {
 
-            val flightStr = flightNumberStr.text.toString()
+            loading.setVisibility(View.VISIBLE)
+            val inputManager: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(currentFocus!!.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS)
+
+            val flightStr = search.text.toString()
 
             // condition for checking flight number and user iput string
             if (flightStr.isEmpty()) {
@@ -301,6 +364,17 @@ class FlightStatusInfo : AppCompatActivity() {
                 }//end for flightnumber type  ICOA
 
 
+                //handler
+
+                Handler().postDelayed(
+                    {
+                        loading.setVisibility(View.GONE)
+                        result.setVisibility(View.VISIBLE)
+                    },
+                    5000 // value in milliseconds
+                )
+
+
             }
         }) // end of onclickListener
     }
@@ -378,6 +452,60 @@ class FlightStatusInfo : AppCompatActivity() {
             }
         }
 
+    }
+
+
+
+    // navigations
+
+
+
+    override fun onBackPressed() {
+        if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout!!.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.nav_home -> {
+                val intent = Intent(this@FlightStatusInfo, HomepageBoard::class.java)
+                startActivity(intent)
+            }
+            R.id.flightStatus -> {
+
+            }
+
+            R.id.flightDelay -> {
+                val intent = Intent(this@FlightStatusInfo, FlightDelayUI::class.java)
+                startActivity(intent)
+            }
+
+            R.id.airportweather -> {
+                val intent = Intent(this@FlightStatusInfo, AirportWeatherUI::class.java)
+                startActivity(intent)
+            }
+
+            R.id.func4 -> {
+                val intent = Intent(this@FlightStatusInfo, Functionality4::class.java)
+                startActivity(intent)
+            }
+
+            R.id.func5 -> {
+                val intent = Intent(this@FlightStatusInfo, Functionality5::class.java)
+                startActivity(intent)
+            }
+
+            R.id.func6 -> {
+                val intent = Intent(this@FlightStatusInfo, Functionality6::class.java)
+                startActivity(intent)
+            }
+        }
+        drawerLayout!!.closeDrawer(GravityCompat.START)
+        return true
     }
 
 }

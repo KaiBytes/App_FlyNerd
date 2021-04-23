@@ -13,7 +13,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#DDDDDD"
         >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:minHeight="?attr/actionBarSize"
+            android:src="@drawable/ic_baseline_menu_24"
+
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -30,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.046" />
+            app:layout_constraintVertical_bias="0.07" />
 
         <EditText
             android:id="@+id/searchFstatus"
@@ -88,10 +101,19 @@
 
 
             <TextView
-                android:id="@+id/flightStatus"
+                android:id="@+id/flightNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/flightNumberButton"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/flightStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightNumberText"
                 android:layout_marginTop="15dp"
                 android:text="" />
 
@@ -233,6 +255,17 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu" >
+
+    </com.google.android.material.navigation.NavigationView>
 
 
 

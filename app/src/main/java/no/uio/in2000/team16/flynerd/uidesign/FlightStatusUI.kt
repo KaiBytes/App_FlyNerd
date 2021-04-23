@@ -23,8 +23,6 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
-    var menu: Menu? = null
-    var textView: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

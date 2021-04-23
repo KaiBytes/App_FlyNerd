@@ -7,6 +7,6 @@ import no.uio.in2000.team16.flynerd.R
 class Functionality4 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_functionality4)
+        setContentView(R.layout.activity_flight_status)
     }
 }
