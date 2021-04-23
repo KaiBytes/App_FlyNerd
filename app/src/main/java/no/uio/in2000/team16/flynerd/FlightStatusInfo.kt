@@ -71,7 +71,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.flight_status_new)
+        setContentView(R.layout.flight_status_main)
 
 
         drawerLayout = findViewById(R.id.drawer_layout)
