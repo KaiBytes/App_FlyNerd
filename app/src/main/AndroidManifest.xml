@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
-        <activity android:name=".FlightStatusInfo"></activity>
+        <activity android:name=".DelayActivity"></activity>
+        <activity android:name=".FlightStatusInfo" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

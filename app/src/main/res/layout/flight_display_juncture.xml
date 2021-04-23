@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/flight_display_mid_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/flight_display_mid_h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/flight_display_airport_iata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/flight_display_mid_h"
+        app:layout_constraintEnd_toStartOf="@id/flight_display_mid_v"
+        app:layout_constraintTop_toTopOf="@id/flight_display_mid_h"
+        tools:text="NRT" />
+
+    <TextView
+        android:id="@+id/flight_display_airport_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/flight_display_airport_iata"
+        app:layout_constraintEnd_toEndOf="@id/flight_display_airport_iata"
+        tools:text="Narita International Airport" />
+
+    <TextView
+        android:id="@+id/flight_display_airport_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/flight_display_airport_iata"
+        app:layout_constraintTop_toBottomOf="@id/flight_display_airport_iata"
+        tools:text="Tokyo, JP" />
+
+    <ImageView
+        android:id="@+id/flight_display_endpoint_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/flight_display_endpoint"
+        app:layout_constraintEnd_toEndOf="@id/flight_display_mid_v"
+        app:layout_constraintStart_toStartOf="@id/flight_display_mid_v"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/flight_display_endpoint_departure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/flight_display_endpoint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/flight_display_mid_v"
+        app:layout_constraintStart_toStartOf="@id/flight_display_mid_v" />
+
+    <include
+        android:id="@+id/flight_display_times_arrival"
+        layout="@layout/flight_display_juncture_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/flight_display_mid_h"
+        app:layout_constraintStart_toEndOf="@id/flight_display_mid_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <include
+        android:id="@+id/flight_display_times_departure"
+        layout="@layout/flight_display_juncture_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/flight_display_mid_v"
+        app:layout_constraintTop_toBottomOf="@id/flight_display_mid_h"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
