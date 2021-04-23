@@ -199,7 +199,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@MapActivity, Functionality4::class.java)
+                val intent = Intent(this@MapActivity, DelayActivity::class.java)
                 startActivity(intent)
             }
 

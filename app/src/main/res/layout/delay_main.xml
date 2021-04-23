@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".uidesign.FlightStatusUI"
+    tools:openDrawer="start">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DDDDDD"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:minHeight="?attr/actionBarSize"
+            android:src="@drawable/ic_baseline_menu_24"
+
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/titleFlightStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:fontFamily="sans-serif-light"
+            android:text="Flight Status"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.07" />
+
+        <EditText
+            android:id="@+id/searchFstatus"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleFlightStatus"
+            android:layout_marginBottom="604dp"
+            android:background="@drawable/roundcorner"
+            android:hint="Enter flight number"
+            android:padding="10dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/buttonSearchFStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleFlightStatus"
+
+            android:layout_marginStart="52dp"
+            android:layout_marginBottom="604dp"
+            android:background="@drawable/roundcorner"
+            android:fontFamily="sans-serif-light"
+            android:text="Search"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchFstatus" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationLoading2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/flight_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/flight_display"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchFstatus">
+
+            <TextView
+                android:id="@+id/flight_header_id_iata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/flight_header_id_sep"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="UA2822" />
+
+            <TextView
+                android:id="@+id/flight_header_id_sep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:visibility="invisible"
+                app:layout_constraintBaseline_toBaselineOf="@id/flight_header_id_iata"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/flight_header_id_icao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/flight_header_id_iata"
+                app:layout_constraintStart_toEndOf="@id/flight_header_id_sep"
+                tools:text="UAL2822" />
+
+            <TextView
+                android:id="@+id/flight_header_airline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flight_header_id_iata"
+                tools:text="United Airlines" />
+
+            <TextView
+                android:id="@+id/flight_header_no_flights"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="no flights found"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/flight_display"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flight_header" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu" >
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
