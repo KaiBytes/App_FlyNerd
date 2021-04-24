@@ -166,7 +166,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
 
-
     override fun onBackPressed() {
         if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
             drawerLayout!!.closeDrawer(GravityCompat.START)
@@ -182,7 +181,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
 
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@MapActivity, FlightStatusInfo::class.java)
+                val intent = Intent(this@MapActivity, FlightStatusUI::class.java)
                 startActivity(intent)
 
             }
@@ -199,7 +198,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@MapActivity, DelayActivity::class.java)
+                val intent = Intent(this@MapActivity, Functionality4::class.java)
                 startActivity(intent)
             }
 
