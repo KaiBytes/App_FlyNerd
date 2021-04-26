@@ -2,6 +2,8 @@ package no.uio.in2000.team16.flynerd
 
 import android.content.Context
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class AirportsList (val context : Context, var resourceId : Int, var airports : MutableList<Airport> = mutableListOf()){
 
@@ -15,13 +17,15 @@ class AirportsList (val context : Context, var resourceId : Int, var airports : 
 
         tsvReader.open(context.resources.openRawResource(resourceId)) {
             readAllAsSequence().forEach { row ->
-                appendToList(createAirport(row[0], row[2], row[1], row[3].toDouble(), row[4].toDouble()))
+                appendToList(createAirport(row[0], row[1], row[2], row[3], row[4].toDouble(), row[5].toDouble()))
             }
         }
     }
 
-    fun createAirport(ICAO : String, name : String, country : String, latitude : Double, longtitude : Double) : Airport {
-        return Airport(ICAO, name, country, latitude, longtitude)
+    fun createAirport(ICAO : String, city : String?,  name : String, country : String, latitude : Double, longtitude : Double) : Airport {
+        val tmp = Airport(ICAO,city, name, country, latitude, longtitude)
+        println(tmp)
+        return tmp
     }
 
     fun appendToList(airportObject : Airport) {

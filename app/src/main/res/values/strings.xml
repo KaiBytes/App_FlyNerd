@@ -1,3 +1,71 @@
 <resources>
     <string name="app_name">Flynerd</string>
+    <string-array name="cities">
+        <item>Ålesund</item>
+        <item>Alta</item>
+        <item>Andøya</item>
+        <item>Bardufoss</item>
+        <item>Båtsfjord</item>
+        <item>Bergen</item>
+        <item>Berlevåg</item>
+        <item>Bodø</item>
+        <item>Brønnøysund</item>
+        <item>Engeløy</item>
+        <item>Fagernes</item>
+        <item>Farsund</item>
+        <item>Florø</item>
+        <item>Frya</item>
+        <item>Geilo</item>
+        <item>Hamar</item>
+        <item>Hammerfest</item>
+        <item>Harstad/Narvik</item>
+        <item>Hasvik</item>
+        <item>Haugesund</item>
+        <item>Honningsvag</item>
+        <item>Jan Mayen</item>
+        <item>Kautokeino</item>
+        <item>Kirkenes</item>
+        <item>Kjeller</item>
+        <item>Kristiansand</item>
+        <item>Kristiansund</item>
+        <item>Lakselv</item>
+        <item>Leknes</item>
+        <item>Mehamn</item>
+        <item>Mo i Rana</item>
+        <item>Molde</item>
+        <item>Mosjøen</item>
+        <item>Namsos</item>
+        <item>Narvik</item>
+        <item>Notodden</item>
+        <item>Ørland</item>
+        <item>Ørsta-Volda</item>
+        <item>Oslo</item>
+        <item>Pyramiden</item>
+        <item>Rakkestad</item>
+        <item>Rorøs</item>
+        <item>Rygge</item>
+        <item>Rørvik</item>
+        <item>Røst</item>
+        <item>Sandane</item>
+        <item>Sandefjord</item>
+        <item>Sandnessjøen</item>
+        <item>Skien</item>
+        <item>Sogndal</item>
+        <item>Sørkjosen</item>
+        <item>Stavanger</item>
+        <item>Stokmarknes</item>
+        <item>Stord</item>
+        <item>Svalbard</item>
+        <item>Svolvær</item>
+        <item>Tromsø</item>
+        <item>Trondheim</item>
+        <item>Vadsø</item>
+        <item>Vardø</item>
+        <item>Voss</item>
+        <item>Værøy</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="city_name">City Name</string>
+    <string name="Search">Search</string>
+
 </resources>
