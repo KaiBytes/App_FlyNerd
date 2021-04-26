@@ -29,7 +29,7 @@ import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
 import no.uio.in2000.team16.flynerd.uidesign.*
 import java.time.Instant
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback,
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
     NavigationView.OnNavigationItemSelectedListener {
     private val viewModel: MapViewModel by viewModels {
         MapViewModelFactory(OpenSkyRepository("https://opensky-network.org/api/"), BOUNDS_NORWAY)
@@ -161,8 +161,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    override fun onMarkerClick(marker: Marker): Boolean {
+        Log.i(TAG, marker.title)
+        val intent = Intent(this, FlightStatusUI::class.java).apply {
+            putExtra(FLIGHT_NUMBER, marker.title)
+        }
+        startActivity(intent)
+        return false
+    }
+
     companion object {
         const val TAG = "MapActivity"
+        const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.uidesign.FLIGHT_NUMBER"
     }
 
 
@@ -236,7 +246,7 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
 
         for (state in states.states) {
             val marker = markers[state.icao24]
-                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.icao24)))
+                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.callsign)))
                     .also { markers[state.icao24] = it }
 
             marker.stationary.run {

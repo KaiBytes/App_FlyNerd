@@ -77,6 +77,7 @@ internal class MapAircraftStates(val states: Array<MapAircraftState>)
 
 internal class MapAircraftState(
     val icao24: String,
+    val callsign: String?,
     val position: LatLng,
     val altitudeM: Float,
     val rotation: Float,
@@ -132,7 +133,7 @@ private fun AircraftState.toState(): MapAircraftState? {
     val altitudeM = altitudeGeometricM?.toFloat() ?: altitudeBarometricM?.toFloat() ?: 0.0F
     val rotation = trueTrackDeg?.toFloat() ?: 0.0F
     val movement = toMovement()
-    return MapAircraftState(icao24, position, altitudeM, rotation, movement)
+    return MapAircraftState(icao24,callsign, position, altitudeM, rotation, movement)
 }
 
 private fun AircraftState.toMovement(): MapAircraftMovement? {

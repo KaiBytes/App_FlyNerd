@@ -235,5 +235,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     companion object {
         const val TAG = "FlightStatusUI"
+        const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.uidesign.FLIGHT_NUMBER"
+
     }
 }
