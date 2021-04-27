@@ -1,15 +1,21 @@
 package no.uio.in2000.team16.flynerd
 
-import android.content.ClipData
-import android.content.Context
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+
+
+/**
+ * Needed for recyclerview in main activity.
+ * https://developer.android.com/guide/topics/ui/layout/recyclerview#kotlin
+ *
+ * Used in: MainActivity.kt
+ *
+ * @param dataSet - passed from main activity. contains all airports that service a user specified city
+ */
 
 class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<AirportAdapter.ViewHolder>() {
 
@@ -34,6 +40,7 @@ class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<A
             }
         })
     }
+
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 

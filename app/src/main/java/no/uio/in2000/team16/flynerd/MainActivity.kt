@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         val cities: Array<out String> = resources.getStringArray(R.array.cities)
         val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
 
-        //setting up recyclerview
+        //Setting up recyclerview
         val layoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(this)
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = layoutManager
 
@@ -50,11 +50,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchButton.setOnClickListener {
-
             //capitalizes all words in string
             val input : String? = userInput.text.toString().capitalizeFirstLetter()
+
+            //clear results previous search
             matchedAirports.clear()
+
             CoroutineScope(IO).launch {
+                //search for airports servicing user specified city
                 for (airport in initializer.airports){
                     if (input == airport.city){
                         matchedAirports.add(airport)
@@ -62,16 +65,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 runOnUiThread{
-//                Log.d("partyList populated?", partyList.toString())
+                    //show search results
                     recycleAdapter = AirportAdapter(matchedAirports)
                     findViewById<RecyclerView>(R.id.recyclerView).adapter = recycleAdapter
                 }
             }
             dismissKeyboard(this)
-
         }
     }
 
+    //function that capitalizes all words in a string. Needed in city names.
     private fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
 
     private fun dismissKeyboard(activity: Activity) {

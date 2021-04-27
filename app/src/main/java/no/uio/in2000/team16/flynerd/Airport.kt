@@ -10,8 +10,8 @@ import com.google.gson.Gson
 /**
  * Airport class
  * class creation warranted by expert principle
- * responsible for creation of airport objects and contains
- * methods for fetching and manipulation of data concerning this object.
+ * responsible for creation of forecast objects and contains
+ * methods for fetching and manipulation of forecast related data.
  *
  * Used in: AirportsList.kt
  *
@@ -50,16 +50,10 @@ class Airport(val ICAO : String,
             val response = Fuel.get(requestURL).header("User-Agent", "FLyNerd gjchocopasta@gmail.com").awaitString()
             Log.d("output", response)
             weatherForecast = gson.fromJson(response, Forecast::class.java)
-            println(forecastToString()) //for testing purposes
         }
         catch(exception: FuelError) {
             Log.d("Fuel", "ERROR FETCHING DATA")
         }
-    }
-
-    fun emptyWeatherForecast(): Boolean{
-        if (weatherForecast == null) return true
-        return false
     }
 
     /**
@@ -83,57 +77,6 @@ class Airport(val ICAO : String,
         return "${weatherForecast!!.properties.timeseries[0].data.next_1_hours.details.precipitation_amount} ${weatherForecast!!.properties.meta.units.precipitation_amount}"
     }
 
-    /**
-     * Getter method section
-     * all gather methods using the Airport object reference
-     * all data is returned as a string.
-     */
-
-    internal fun getIcao() : String {
-        return "$ICAO\n"
-    }
-
-    internal fun getCity() : String? {
-        return "$city\n"
-    }
-
-    internal fun getCountry() : String {
-        return "$country\n"
-    }
-
-    internal fun getAirportName() : String {
-        return "$name\n"
-    }
-
-    internal fun getLatitude() : Double {
-        return latitude
-    }
-
-    internal fun getLongtitude() : Double {
-        return longtitude
-    }
-
-    fun forecastToString() : String{
-        if (emptyWeatherForecast()) Log.d("Forecast Data", "Forecast property empty, unable to execute function")
-        return "Time: ${weatherForecast!!.properties.timeseries[0].time.padStart(10)}\n" +
-                "Sky: ${getCurrentWeather().padStart(11)}\n" +
-                "Temp: ${getTemperature().padStart(10)}\n" +
-                "Wind: ${getWindForce().padStart(10)}\n" +
-                "Precipation: ${getPrecipationAmount().padStart(3)}"
-    }
-
-    //Helper Mmethod for displaying Airport data
-    override fun toString(): String {
-        return  "ICAO" + ":".padStart(10) + "$ICAO\n" +
-                "city" + ":".padStart(10) + "$city\n" +
-                "name" + ":".padStart(10) + "$name\n" +
-                "country" + ":".padStart(7) + "$country\n" +
-                "latitude" + ":".padStart(6) + "$latitude\n" +
-                "longtitude" + ":".padStart(4) + "$longtitude\n" +
-                "weather" + ":".padStart(5) + "$weatherForecast"
-//        +
-//                "forecast" + ":".padStart(6) + "$";
-    }
 
 
 }

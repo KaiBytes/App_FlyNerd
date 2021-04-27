@@ -12,58 +12,92 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginStart="16dp"
+            android:text="wind"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/precipation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/airport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginStart="16dp"
+            android:text="airport"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/latitude"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/city_name" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/longtitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="hello"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/latitude" />
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="130dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="16dp"
+            android:text="latitude"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/longtitude"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/airport" />
+
+        <TextView
+            android:id="@+id/city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="city_name"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/airport"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/temperature"
             android:layout_width="126dp"
             android:layout_height="18dp"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginStart="16dp"
+            android:text="temperature"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/wind"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/longtitude" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/precipation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginStart="16dp"
+            android:text="precipation"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/weather"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/wind" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginStart="16dp"
+            android:text="weather"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/precipation" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
