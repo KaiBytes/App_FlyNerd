@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import no.uio.in2000.team16.flynerd.FlightStatusInfo
 import no.uio.in2000.team16.flynerd.R
 
 class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -86,7 +87,7 @@ class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@FlightDelayUI, Functionality4::class.java)
+                val intent = Intent(this@FlightDelayUI, FlightStatusInfo::class.java)
                 startActivity(intent)
             }
 

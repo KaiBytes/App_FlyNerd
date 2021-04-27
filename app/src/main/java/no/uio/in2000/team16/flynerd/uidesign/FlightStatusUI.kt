@@ -20,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
+import no.uio.in2000.team16.flynerd.*
 import no.uio.in2000.team16.flynerd.Flight
 import no.uio.in2000.team16.flynerd.FlightDisplayAdapter
 import no.uio.in2000.team16.flynerd.FlightId
-import no.uio.in2000.team16.flynerd.R
 import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
 import java.time.LocalDate
@@ -215,7 +215,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@FlightStatusUI, Functionality4::class.java)
+                val intent = Intent(this@FlightStatusUI, FlightStatusInfo::class.java)
                 startActivity(intent)
             }
 
