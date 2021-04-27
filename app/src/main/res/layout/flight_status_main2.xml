@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".FlightStatusInfo"
+    tools:openDrawer="start">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DDDDDD"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:minHeight="?attr/actionBarSize"
+            android:src="@drawable/ic_baseline_menu_24"
+
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/titleFlightStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="sans-serif-light"
+            android:text="Flight Status"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <EditText
+            android:id="@+id/searchFstatus"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleFlightStatus"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/roundcorner"
+            android:hint="Enter flight number"
+            android:padding="10dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/buttonSearchFStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleFlightStatus" />
+
+        <Button
+            android:id="@+id/buttonSearchFStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundcorner"
+            android:fontFamily="sans-serif-light"
+            android:text="Search"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/searchFstatus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchFstatus" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationLoading2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchFstatus">
+
+
+            <TextView
+                android:id="@+id/flightNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightNumberButton"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/flightStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightNumberText"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/flightResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightStatus"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/depAirportInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightResult"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrAirportInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/depAirportInfo"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/airLineInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrAirportInfo"
+                android:layout_marginTop="15dp"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/departureLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flightResult"
+                android:text="Departure:"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/departureAirport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureLabel"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/departureDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureAirport"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/departureAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureDate"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/departureAirportCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureAirportName"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/departureAirportCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureAirportCity"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/departureAirportLonLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureAirportCountry"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/departureAirportLonLat"
+                android:text="Arrival:"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/arrivalAirport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalLabel"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalAirport"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalAirportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalDate"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalAirportCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalAirportName"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalAirportCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalAirportCity"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/arrivalAirportLonLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/arrivalAirportCountry"
+                android:text="" />
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu" >
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

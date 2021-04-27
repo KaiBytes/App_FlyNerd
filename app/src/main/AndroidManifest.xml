@@ -28,6 +28,7 @@
         <activity android:name=".uidesign.FlightDelayUI" />
         <activity android:name=".uidesign.FlightStatusUI" />
         <activity android:name=".uidesign.AirportWeatherUI" />
+        <activity android:name=".FlightStatusInfo" />
         <activity android:name=".uidesign.HomepageBoard" />
         <activity android:name=".SplashScreen">
             <intent-filter>

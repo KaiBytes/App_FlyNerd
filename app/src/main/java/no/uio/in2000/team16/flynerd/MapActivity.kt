@@ -163,7 +163,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     override fun onMarkerClick(marker: Marker): Boolean {
         Log.i(TAG, marker.title)
-        val intent = Intent(this, FlightStatusUI::class.java).apply {
+        val intent = Intent(this, FlightStatusInfo::class.java).apply {
             putExtra(FLIGHT_NUMBER, marker.title)
         }
         startActivity(intent)
@@ -172,7 +172,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     companion object {
         const val TAG = "MapActivity"
-        const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.uidesign.FLIGHT_NUMBER"
+        const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.FLIGHT_NUMBER"
     }
 
 
@@ -208,7 +208,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             }
 
             R.id.func4 -> {
-                val intent = Intent(this@MapActivity, Functionality4::class.java)
+                val intent = Intent(this@MapActivity, FlightStatusInfo::class.java)
                 startActivity(intent)
             }
 

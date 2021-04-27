@@ -27,7 +27,7 @@
             <item
                 android:id="@+id/func4"
                 android:icon="@drawable/functionality4"
-                android:title="Functionality 4" />
+                android:title="flightstatus2" />
             <item
                 android:id="@+id/func5"
                 android:icon="@drawable/functionality5"
