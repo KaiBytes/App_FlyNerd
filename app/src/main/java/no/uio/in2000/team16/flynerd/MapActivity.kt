@@ -246,7 +246,7 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
 
         for (state in states.states) {
             val marker = markers[state.icao24]
-                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.callsign)))
+                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.icao24)))  
                     .also { markers[state.icao24] = it }
 
             marker.stationary.run {
