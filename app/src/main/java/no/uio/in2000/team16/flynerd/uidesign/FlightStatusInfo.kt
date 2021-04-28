@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Context
 import android.content.Intent
@@ -27,6 +27,9 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.google.gson.Gson
+import no.uio.in2000.team16.flynerd.MapActivity
+import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.WeatherActivity
 import no.uio.in2000.team16.flynerd.flightData.Appendix
 import no.uio.in2000.team16.flynerd.flightData.FlightData
 import no.uio.in2000.team16.flynerd.uidesign.*
@@ -488,7 +491,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusInfo, AirportWeatherUI::class.java)
+                val intent = Intent(this@FlightStatusInfo, WeatherActivity::class.java)
                 startActivity(intent)
             }
 

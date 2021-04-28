@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
+        <activity android:name=".WeatherActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -27,8 +28,7 @@
         <activity android:name=".uidesign.Functionality4" />
         <activity android:name=".uidesign.FlightDelayUI" />
         <activity android:name=".uidesign.FlightStatusUI" />
-        <activity android:name=".uidesign.AirportWeatherUI" />
-        <activity android:name=".FlightStatusInfo" />
+        <activity android:name=".uidesign.FlightStatusInfo" />
         <activity android:name=".uidesign.HomepageBoard" />
         <activity android:name=".SplashScreen">
             <intent-filter>

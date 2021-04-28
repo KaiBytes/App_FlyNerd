@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.WeatherActivity
 import no.uio.in2000.team16.flynerd.uidesign.*
 
 class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -81,7 +82,7 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@HomepageBoard , AirportWeatherUI::class.java)
+                val intent = Intent(this@HomepageBoard , WeatherActivity::class.java)
                 startActivity(intent)
             }
 
@@ -115,7 +116,7 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     fun goToAirportWeather(view: View?) {
-        val intent = Intent(this, AirportWeatherUI::class.java)
+        val intent = Intent(this, WeatherActivity::class.java)
         startActivity(intent)
     }
 

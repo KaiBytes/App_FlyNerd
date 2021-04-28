@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
 import no.uio.in2000.team16.flynerd.*
 import no.uio.in2000.team16.flynerd.Flight
-import no.uio.in2000.team16.flynerd.FlightDisplayAdapter
+import no.uio.in2000.team16.flynerd.adapter.FlightDisplayAdapter
 import no.uio.in2000.team16.flynerd.FlightId
 import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
@@ -197,7 +197,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@FlightStatusUI, HomepageBoard::class.java)
+                val intent = Intent(this@FlightStatusUI, MapActivity::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
@@ -210,7 +210,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusUI, AirportWeatherUI::class.java)
+                val intent = Intent(this@FlightStatusUI, WeatherActivity::class.java)
                 startActivity(intent)
             }
 

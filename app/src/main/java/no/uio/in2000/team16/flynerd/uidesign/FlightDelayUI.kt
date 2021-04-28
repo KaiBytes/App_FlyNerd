@@ -11,8 +11,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import no.uio.in2000.team16.flynerd.FlightStatusInfo
+import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.WeatherActivity
 
 class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,7 +69,7 @@ class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@FlightDelayUI, HomepageBoard::class.java)
+                val intent = Intent(this@FlightDelayUI, MapActivity::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
@@ -82,7 +83,7 @@ class FlightDelayUI : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightDelayUI, AirportWeatherUI::class.java)
+                val intent = Intent(this@FlightDelayUI, WeatherActivity::class.java)
                 startActivity(intent)
             }
 

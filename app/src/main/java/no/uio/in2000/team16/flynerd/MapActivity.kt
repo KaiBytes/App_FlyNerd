@@ -203,7 +203,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@MapActivity, AirportWeatherUI::class.java)
+                val intent = Intent(this@MapActivity, WeatherActivity::class.java)
                 startActivity(intent)
             }
 

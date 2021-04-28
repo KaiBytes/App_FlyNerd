@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import no.uio.in2000.team16.flynerd.*
+import no.uio.in2000.team16.flynerd.Flight
+import no.uio.in2000.team16.flynerd.FlightAirport
+import no.uio.in2000.team16.flynerd.FlightJunctureArrival
+import no.uio.in2000.team16.flynerd.FlightJunctureDeparture
+import no.uio.in2000.team16.flynerd.FlightJunctureMid
+import no.uio.in2000.team16.flynerd.FlightJunctureTimes
+import no.uio.in2000.team16.flynerd.FlightStatus
 import java.time.Duration
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -44,8 +52,8 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewTypeInt: Int): ViewHolder {
         val (init, resource) = when (ViewType.values()[viewTypeInt]) {
-            ViewType.JUNCTURE -> ::JunctureHolder to R.layout.flight_display_juncture
-            ViewType.PROGRESS -> ::ProgressHolder to R.layout.flight_display_progress
+            ViewType.JUNCTURE -> FlightDisplayAdapter::JunctureHolder to R.layout.flight_display_juncture
+            ViewType.PROGRESS -> FlightDisplayAdapter::ProgressHolder to R.layout.flight_display_progress
         }
         return init(LayoutInflater.from(parent.context).inflate(resource, parent, false))
     }
