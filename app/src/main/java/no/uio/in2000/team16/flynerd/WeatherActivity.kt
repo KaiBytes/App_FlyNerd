@@ -92,7 +92,7 @@ class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             dismissKeyboard(this)
         }
 
-        // Navigation main menu
+        // Navigation main menu you find for navigation menus
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
