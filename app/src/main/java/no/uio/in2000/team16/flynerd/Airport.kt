@@ -8,10 +8,8 @@ import com.google.gson.Gson
 
 
 /**
- * Airport class
- * class creation warranted by expert principle
- * responsible for creation of forecast objects and contains
- * methods for fetching and manipulation of forecast related data.
+ * Airport class responsible for creation of forecast objects
+ * contains methods for fetching and manipulation of forecast related data.
  *
  * Used in: AirportsList.kt
  *
