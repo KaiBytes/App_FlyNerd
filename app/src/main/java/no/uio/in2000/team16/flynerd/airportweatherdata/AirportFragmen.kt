@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
 
 import kotlinx.coroutines.launch
@@ -33,7 +35,8 @@ class AirportFragment(item : Airport) : Fragment() {
     var precipationView: TextView? = null
     var windView: TextView? = null
     var skyView: TextView? = null
-
+    var result :CardView?=null
+    var loading: LottieAnimationView?=null
 
 
     //called before on view created
@@ -48,7 +51,8 @@ class AirportFragment(item : Airport) : Fragment() {
         windView = view.findViewById(R.id.precipation)
         skyView = view.findViewById(R.id.weather)
         temperatureView = view.findViewById(R.id.wind)
-
+        result = view.findViewById(R.id.weatherCard)
+       loading = view.findViewById(R.id.animationLoading)
 
 
 
@@ -72,16 +76,22 @@ class AirportFragment(item : Airport) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
+            result?.setVisibility(View.GONE)
+
+            loading?.setVisibility(View.VISIBLE)
             airportObject.callForecastAPI()
-            nameView!!.text = airportObject.name
-            cityName!!.text = airportObject.city
-            longitude!!.text = airportObject.longtitude.toString()
-            latitude!!.text = airportObject.latitude.toString()
-            temperatureView!!.text = airportObject.getTemperature()
+            nameView!!.text = "Airport: "+ airportObject.name
+            cityName!!.text = "City: "+airportObject.city
+            longitude!!.text ="Longitude: "+ airportObject.longtitude.toString()
+            latitude!!.text = "Latitude: "+airportObject.latitude.toString()
+            temperatureView!!.text = "Temperature: "+ airportObject.getTemperature()
             precipationView!!.text = airportObject.getPrecipationAmount()
-            windView!!.text = airportObject.getWindForce()
-            skyView!!.text = airportObject.getCurrentWeather()
+            windView!!.text = "Wind: "+airportObject.getWindForce()
+            skyView!!.text = "Weather: "+airportObject.getCurrentWeather()
+            loading?.setVisibility(View.GONE)
+            result?.setVisibility(View.VISIBLE)
         }
     }
+
 
 }
