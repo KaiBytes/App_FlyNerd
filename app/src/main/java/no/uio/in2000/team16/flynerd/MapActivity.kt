@@ -212,15 +212,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 startActivity(intent)
             }
 
-            R.id.func5 -> {
-                val intent = Intent(this@MapActivity, Functionality5::class.java)
-                startActivity(intent)
-            }
 
-            R.id.func6 -> {
-                val intent = Intent(this@MapActivity, Functionality6::class.java)
-                startActivity(intent)
-            }
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true

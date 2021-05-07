@@ -499,15 +499,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             }
 
-            R.id.func5 -> {
-                val intent = Intent(this@FlightStatusInfo, Functionality5::class.java)
-                startActivity(intent)
-            }
 
-            R.id.func6 -> {
-                val intent = Intent(this@FlightStatusInfo, Functionality6::class.java)
-                startActivity(intent)
-            }
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true

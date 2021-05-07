@@ -91,15 +91,7 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 startActivity(intent)
             }
 
-            R.id.func5 -> {
-                val intent = Intent(this@HomepageBoard , Functionality5::class.java)
-                startActivity(intent)
-            }
 
-            R.id.func6 -> {
-                val intent = Intent(this@HomepageBoard , Functionality6::class.java)
-                startActivity(intent)
-            }
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true
@@ -125,13 +117,6 @@ class HomepageBoard : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         startActivity(intent)
     }
 
-    fun goToFunctionality5(view: View?) {
-        val intent = Intent(this, Functionality5::class.java)
-        startActivity(intent)
-    }
-    fun goToFunctionality6(view: View?) {
-        val intent = Intent(this, Functionality4::class.java)
-        startActivity(intent)
-    }
+
 
 }

@@ -28,14 +28,7 @@
                 android:id="@+id/func4"
                 android:icon="@drawable/functionality4"
                 android:title="flightstatus2" />
-            <item
-                android:id="@+id/func5"
-                android:icon="@drawable/functionality5"
-                android:title="Functionality5" />
-            <item
-                android:id="@+id/func6"
-                android:icon="@drawable/functionality6"
-                android:title="Functionality 6" />
+
         </group>
 
 
