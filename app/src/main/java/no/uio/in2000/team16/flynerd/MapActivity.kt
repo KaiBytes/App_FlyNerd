@@ -93,6 +93,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         }
     }
 
+    /**
+     * Called on global layout of the viewtree, possibly multiple times.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onMapLayout() {
         if (mapLayout) {
@@ -104,6 +107,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         }
     }
 
+    /**
+     * Called once both the map is ready, and layout is done.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onMapReadyAndLayout() {
         map.uiSettings.run {
@@ -127,6 +133,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         }
     }
 
+    /**
+     * Attempt to enable the my-location feature of the map.
+     *
+     * In case of any ungranted necessary permission, request them from the user.
+     */
     private fun enableMyLocation() {
         when (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             PackageManager.PERMISSION_GRANTED -> {
@@ -151,6 +162,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         }
     }
 
+    /**
+     * Called if a location permission request has yielded a result.
+     */
     private fun onRequestLocationResult(permissions: Array<out String>, grantResults: IntArray) {
         val results = permissions.asSequence().zip(grantResults.asSequence())
         val result = Manifest.permission.ACCESS_FINE_LOCATION to PackageManager.PERMISSION_GRANTED
@@ -229,9 +243,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
 }
 
+/**
+ * Manages the aircraft markers of the map.
+ */
 private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bitmap) {
+    /**
+     * Maps ICAO-24 numbers to individual marker objects.
+     */
     private val markers = hashMapOf<String, AircraftMarker>()
 
+    /**
+     * Update the markers with the given aircraft states.
+     *
+     * Modify positions, animations, and so on.  Remove and create markers only as necessary.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun update(states: MapAircraftStates) {
         for (marker in markers.values) {
@@ -246,7 +271,7 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
 
         for (state in states.states) {
             val marker = markers[state.icao24]
-                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.icao24)))  
+                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.icao24)))
                     .also { markers[state.icao24] = it }
 
             marker.stationary.run {
@@ -295,6 +320,10 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
         }
     }
 
+    /**
+     * A stationary marker, and optional corresponding animated marker and animator, and whether
+     * this pair of markers is marked as up to date.
+     */
     private class AircraftMarker(val stationary: Marker) {
         var animated: Marker? = null
         var animator: TimeAnimator? = null
@@ -302,8 +331,14 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
     }
 }
 
+/**
+ * Used to distinguish between different kinds of permission requests.
+ */
 private enum class RequestCode {
     LOCATION,
 }
 
+/**
+ * Bounding box encompassing all of Norway (and consequently most of Sweden and Denmark, too).
+ */
 val BOUNDS_NORWAY: LatLngBounds = LatLngBounds(LatLng(54.45, 4.08), LatLng(71.39, 31.77))

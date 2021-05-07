@@ -130,6 +130,9 @@ internal class FlightStatusErrorException(
         get() = "API error $errorCode ($statusCode): $errorMessage"
 }
 
+/**
+ * Concrete implementation of [FlightJunctureDeparture].
+ */
 private class FlightJunctureDepartureImpl(
     override val airport: FlightAirport,
     override val departureStatus: FlightStatus,
@@ -144,6 +147,9 @@ private class FlightJunctureDepartureImpl(
     }
 }
 
+/**
+ * Concrete implementation of [FlightJunctureArrival].
+ */
 private class FlightJunctureArrivalImpl(
     override val airport: FlightAirport,
     override val arrivalStatus: FlightStatus,
@@ -158,6 +164,9 @@ private class FlightJunctureArrivalImpl(
     }
 }
 
+/**
+ * Concrete implementation of [FlightJunctureMid].
+ */
 private class FlightJunctureMidImpl(
     override val airport: FlightAirport,
     override val departureStatus: FlightStatus,
@@ -177,7 +186,7 @@ private class FlightJunctureMidImpl(
 }
 
 /**
- * Convert service backend datastructures to repository frontend datastructures.
+ * Convert service [FlightStatusFlightStatus] array to repository [Flight].
  */
 private fun Array<FlightStatusFlightStatus>.toFlight(appendix: FlightStatusAppendix): Flight? {
     val sorted = this.sortedBy { it.operationalTimes.publishedDeparture?.dateUtc }.iterator()
@@ -220,6 +229,9 @@ private fun Array<FlightStatusFlightStatus>.toFlight(appendix: FlightStatusAppen
     return Flight(flightIdIATA, flightIdICAO, airline, departure, mids.toTypedArray(), arrival)
 }
 
+/**
+ * Retrieve flight number as integer from service [FlightStatusFlightStatus].
+ */
 private val FlightStatusFlightStatus.flightNumberInt
     get() = flightNumber.indexOfFirst { char ->
         !char.isDigit()
@@ -237,6 +249,9 @@ private val FlightStatusFlightStatus.flightNumberInt
         }
     }
 
+/**
+ * Extract the departure juncture of service [FlightStatusFlightStatus].
+ */
 private fun FlightStatusFlightStatus.toJunctureDeparture(appendix: FlightStatusAppendix):
         FlightJunctureDeparture {
     val airport = appendix.findAirport(departureAirportFsCode).toAirport()
@@ -247,6 +262,9 @@ private fun FlightStatusFlightStatus.toJunctureDeparture(appendix: FlightStatusA
     return FlightJunctureDepartureImpl(airport, status, departureTimes)
 }
 
+/**
+ * Extract the arrival juncture of service [FlightStatusFlightStatus].
+ */
 private fun FlightStatusFlightStatus.toJunctureArrival(appendix: FlightStatusAppendix):
         FlightJunctureArrival {
     val airport = appendix.findAirport(arrivalAirportFsCode).toAirport()
@@ -257,6 +275,9 @@ private fun FlightStatusFlightStatus.toJunctureArrival(appendix: FlightStatusApp
     return FlightJunctureArrivalImpl(airport, status, arrivalTimes)
 }
 
+/**
+ * Extract the mid juncture between two service [FlightStatusFlightStatus] objects.
+ */
 private fun toJunctureMid(
     prev: FlightStatusFlightStatus,
     next: FlightStatusFlightStatus,
@@ -279,6 +300,9 @@ private fun toJunctureMid(
     )
 }
 
+/**
+ * Convert service [FlightStatusAirline] to repository [FlightAirline].
+ */
 private fun FlightStatusAirline.toAirline(): FlightAirline {
     val iata = this.iata
         ?: throw FlightStatusInsufficientException("no IATA code in airline: $this")
@@ -287,6 +311,9 @@ private fun FlightStatusAirline.toAirline(): FlightAirline {
     return FlightAirline(iata, icao, name)
 }
 
+/**
+ * Extract departure times from service [FlightStatusOperationalTimes] and [FlightStatusDelays].
+ */
 private fun FlightStatusOperationalTimes.toJunctureTimesDeparture(
     delays: FlightStatusDelays?
 ) = toJunctureTimes(
@@ -297,6 +324,9 @@ private fun FlightStatusOperationalTimes.toJunctureTimesDeparture(
     actualGateDeparture,
 )
 
+/**
+ * Extract arrival times from service [FlightStatusOperationalTimes] and [FlightStatusDelays].
+ */
 private fun FlightStatusOperationalTimes.toJunctureTimesArrival(
     delays: FlightStatusDelays?
 ) = toJunctureTimes(
@@ -307,6 +337,9 @@ private fun FlightStatusOperationalTimes.toJunctureTimesArrival(
     actualGateArrival,
 )
 
+/**
+ * Construct [FlightJunctureTimes] from service [FlightStatusTimes] objects and delay.
+ */
 private fun toJunctureTimes(
     delayMinutes: Int?,
     publishedTimes: FlightStatusTimes?,
@@ -321,6 +354,9 @@ private fun toJunctureTimes(
     return FlightJunctureTimes(scheduled, estimated, actual, delay)
 }
 
+/**
+ * Convert service [FlightStatusAirport] to repository [FlightAirport].
+ */
 private fun FlightStatusAirport.toAirport(): FlightAirport {
     val iata = this.iata
         ?: throw FlightStatusInsufficientException("no IATA code in airport: $this")
@@ -330,6 +366,9 @@ private fun FlightStatusAirport.toAirport(): FlightAirport {
     return FlightAirport(iata, name, city, country)
 }
 
+/**
+ * Convert service [FlightStatusTimes] to repository [FlightTime].
+ */
 private fun FlightStatusTimes.toFlightTime(): FlightTime {
     val local = dateLocal
         ?: throw FlightStatusInsufficientException("no local time in times: $this")
@@ -338,14 +377,23 @@ private fun FlightStatusTimes.toFlightTime(): FlightTime {
     return FlightTime(local, utc)
 }
 
+/**
+ * Find airline in service appendix.
+ */
 private fun FlightStatusAppendix.findAirline(fsCode: String) =
     airlines.find { it.fs == fsCode }
         ?: throw FlightStatusIllegalException("airline not in appendix: fs code $fsCode")
 
+/**
+ * Find airport in service appendix.
+ */
 private fun FlightStatusAppendix.findAirport(fsCode: String) =
     airports.find { it.fs == fsCode }
         ?: throw FlightStatusIllegalException("airport not in appendix: fs code $fsCode")
 
+/**
+ * Convert service [FlightStatusError] to appropriate repository exception.
+ */
 private fun FlightStatusError.toException(): FlightStatusErrorException {
     val id = try {
         UUID.fromString(errorId)

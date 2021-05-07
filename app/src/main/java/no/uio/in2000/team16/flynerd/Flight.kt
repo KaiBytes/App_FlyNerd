@@ -254,6 +254,11 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
     }
 }
 
+/**
+ * IATA-based identifier for flights.
+ *
+ * @throws IllegalArgumentException The IATA code or flight number is illegal.
+ */
 internal class FlightIdIATA(airlineIATA: String, flightNumber: Int) :
     FlightId(airlineIATA, flightNumber) {
     init {
@@ -263,6 +268,11 @@ internal class FlightIdIATA(airlineIATA: String, flightNumber: Int) :
     }
 }
 
+/**
+ * ICAO-based identifier for flights.
+ *
+ * @throws IllegalArgumentException The ICAO code or flight number is illegal.
+ */
 internal class FlightIdICAO(airlineICAO: String, flightNumber: Int) :
     FlightId(airlineICAO, flightNumber) {
     init {

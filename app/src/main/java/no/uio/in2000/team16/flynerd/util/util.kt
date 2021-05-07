@@ -8,6 +8,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+/**
+ * Register custom type adapter to allow parsing ISO-8601 local datetimes from JSON.
+ */
 internal fun GsonBuilder.registerLocalDateTime() = registerTypeAdapter(
     LocalDateTime::class.java,
     object : JsonDeserializer<LocalDateTime>, JsonSerializer<LocalDateTime> {
@@ -28,6 +31,9 @@ internal fun GsonBuilder.registerLocalDateTime() = registerTypeAdapter(
     }
 )
 
+/**
+ * Register custom type adapter to allow parsing ISO-8601 zoned datetimes from JSON.
+ */
 internal fun GsonBuilder.registerZonedDateTime() = registerTypeAdapter(
     ZonedDateTime::class.java,
     object : JsonDeserializer<ZonedDateTime>, JsonSerializer<ZonedDateTime> {

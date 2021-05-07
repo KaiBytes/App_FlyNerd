@@ -34,8 +34,14 @@ internal class OpenSkyRepository(
         .build()
         .create<OpenSkyService>()
 
+    /**
+     * Cache for statesAll requests.
+     */
     private val statesAllCache = mutableMapOf<Pair<Array<String>?, LatLngBounds?>, AircraftStates>()
 
+    /**
+     * Get cached response to given input arguments, if one is cached and it is not out of date.
+     */
     private fun statesAllCached(
         icao24: Array<String>? = null,
         bounds: LatLngBounds? = null
@@ -134,22 +140,34 @@ internal class OpenSkyRepository(
          */
         val statesAllResolution: Duration = Duration.ofSeconds(10)
 
+        /**
+         * Most recent update before or at given instant.
+         */
         private fun statesAllUpdatePrev(instant: Instant): Instant =
             instant.epochSecond.let { sec ->
                 Instant.ofEpochSecond(sec - (sec % statesAllResolution.seconds))
             }
 
+        /**
+         * Earliest update at or after given instant.
+         */
         private fun statesAllUpdateNext(instant: Instant): Instant =
             statesAllUpdatePrev(instant) + statesAllResolution
     }
 }
 
+/**
+ * The API server's response's format was illegal.
+ */
 internal class OpenSkyException(val msg: String, cause: Throwable? = null) :
     RuntimeException(cause) {
     override val message
         get() = "illegal API response: $msg"
 }
 
+/**
+ * Convert service [OpenSkyStatesResponse] to repository [AircraftStates].
+ */
 private fun OpenSkyStatesResponse.toStates(): AircraftStates {
     val time = this.time.let(Instant::ofEpochSecond)
     val states = try {
@@ -162,6 +180,9 @@ private fun OpenSkyStatesResponse.toStates(): AircraftStates {
     return AircraftStates(time, states)
 }
 
+/**
+ * Convert raw state vector from service [OpenSkyStatesResponse] to repository [AircraftState].
+ */
 private fun Array<Any>.toState(): AircraftState {
     val icao24 = this[0] as String
     val callsign = this[1] as String?
@@ -203,6 +224,9 @@ private fun Array<Any>.toState(): AircraftState {
     )
 }
 
+/**
+ * Convert lat/lon pair to position iff both are non-null.
+ */
 private fun toPosition(lat: Double?, lon: Double?): LatLng? =
     lat?.let { latitude ->
         lon?.let { longitude ->
@@ -210,6 +234,10 @@ private fun toPosition(lat: Double?, lon: Double?): LatLng? =
         }
     }
 
+/**
+ * Convert raw integer constant from service [OpenSkyStatesResponse] to repository
+ * [AircraftPositionSource].
+ */
 private fun Int.toPositionSource(): AircraftPositionSource =
     try {
         AircraftPositionSource.values()[this]

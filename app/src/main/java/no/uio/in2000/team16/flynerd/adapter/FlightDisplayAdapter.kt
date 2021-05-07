@@ -8,13 +8,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import no.uio.in2000.team16.flynerd.*
-import no.uio.in2000.team16.flynerd.Flight
-import no.uio.in2000.team16.flynerd.FlightAirport
-import no.uio.in2000.team16.flynerd.FlightJunctureArrival
-import no.uio.in2000.team16.flynerd.FlightJunctureDeparture
-import no.uio.in2000.team16.flynerd.FlightJunctureMid
-import no.uio.in2000.team16.flynerd.FlightJunctureTimes
-import no.uio.in2000.team16.flynerd.FlightStatus
 import java.time.Duration
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -169,6 +162,9 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
             val actualUtc: TextView = view.findViewById(R.id.flight_display_juncture_actual_utc)
             val delay: TextView = view.findViewById(R.id.flight_display_juncture_delay)
 
+            /**
+             * Fill underlying view with given times and delay information.
+             */
             fun bind(times: FlightJunctureTimes) {
                 actualLabel.text = times.actual?.let { "actual" } ?: "estimated"
                 scheduledLocal.text = times.scheduled?.local?.let(this::formatTime)
