@@ -68,8 +68,7 @@
         <item>Voss</item>
         <item>Værøy</item>
     </string-array>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="city_name">City Name</string>
     <string name="Search">Search</string>
-    <string name="airport_name" />
+    <string name="appDescription">An app that can assist you with your flights 😆 It can give you information about flight status, airport weather and more🔥</string>
 </resources>

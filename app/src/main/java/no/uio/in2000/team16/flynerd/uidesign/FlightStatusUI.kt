@@ -204,20 +204,13 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
             }
 
-            R.id.flightDelay -> {
-                val intent = Intent(this@FlightStatusUI, FlightDelayUI::class.java)
-                startActivity(intent)
-            }
 
             R.id.airportweather -> {
                 val intent = Intent(this@FlightStatusUI, WeatherActivity::class.java)
                 startActivity(intent)
             }
 
-            R.id.func4 -> {
-                val intent = Intent(this@FlightStatusUI, FlightStatusInfo::class.java)
-                startActivity(intent)
-            }
+
 
 
         }

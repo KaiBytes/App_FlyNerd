@@ -27,11 +27,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
             android:minHeight="?attr/actionBarSize"
             android:src="@drawable/ic_baseline_menu_24"
-
-            android:theme="?attr/actionBarTheme"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

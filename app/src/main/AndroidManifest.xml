@@ -23,13 +23,12 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".uidesign.Functionality6" />
-        <activity android:name=".uidesign.Functionality5" />
+
         <activity android:name=".uidesign.Functionality4" />
         <activity android:name=".uidesign.FlightDelayUI" />
         <activity android:name=".uidesign.FlightStatusUI" />
         <activity android:name=".uidesign.FlightStatusInfo" />
-        <activity android:name=".uidesign.HomepageBoard" />
+
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

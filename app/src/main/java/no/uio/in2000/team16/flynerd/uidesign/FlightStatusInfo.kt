@@ -485,19 +485,13 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             }
 
-            R.id.flightDelay -> {
-                val intent = Intent(this@FlightStatusInfo, FlightDelayUI::class.java)
-                startActivity(intent)
-            }
+
 
             R.id.airportweather -> {
                 val intent = Intent(this@FlightStatusInfo, WeatherActivity::class.java)
                 startActivity(intent)
             }
 
-            R.id.func4 -> {
-
-            }
 
 
         }

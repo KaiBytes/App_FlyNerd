@@ -196,21 +196,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
             }
 
-            R.id.flightDelay -> {
-                val intent = Intent(this@MapActivity, FlightDelayUI::class.java)
-                startActivity(intent)
 
-            }
 
             R.id.airportweather -> {
                 val intent = Intent(this@MapActivity, WeatherActivity::class.java)
                 startActivity(intent)
             }
 
-            R.id.func4 -> {
-                val intent = Intent(this@MapActivity, FlightStatusInfo::class.java)
-                startActivity(intent)
-            }
 
 
         }

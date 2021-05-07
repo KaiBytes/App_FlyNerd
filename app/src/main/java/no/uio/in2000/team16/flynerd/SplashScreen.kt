@@ -21,6 +21,6 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this@SplashScreen, MapActivity::class.java)
             startActivity(intent)
             finish()
-        }, 3000)
+        }, 4000)
     }
 }
