@@ -37,8 +37,8 @@ import no.uio.in2000.team16.flynerd.uidesign.*
 class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private  val TAG = "FlightInfo"
-    private val AppID = "25891f46" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
-    private  val AppKey = "10cad6d6fa38acdc48fc9f1a6b7b5adb" //  USE YOUR OWN API-key FROM YOUR SIGN UP ACCOUNT
+    private val AppID = "1738962c" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
+    private  val AppKey = "165179280d479dabbc4596b0269189aa" //  USE YOUR OWN API-key FROM YOUR SIGN UP ACCOUNT
     private  val flightApi = "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/"
 
 

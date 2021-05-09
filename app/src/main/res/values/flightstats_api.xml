@@ -1,5 +1,5 @@
 <resources>
-    <string name="flightstats_app_id" templateMergeStrategy="preserve" translatable="false">5df10a1e</string>
-    <string name="flightstats_app_key" templateMergeStrategy="preserve" translatable="false">056a82fd82f0b5109302dca04c0eb6db</string>
+    <string name="flightstats_app_id" templateMergeStrategy="preserve" translatable="false">1738962c</string>
+    <string name="flightstats_app_key" templateMergeStrategy="preserve" translatable="false">165179280d479dabbc4596b0269189aa</string>
     <string name="flightstats_base_url">https://api.flightstats.com/flex/flightstatus/rest/</string>
 </resources>
