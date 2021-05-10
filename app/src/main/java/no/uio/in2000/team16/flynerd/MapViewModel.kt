@@ -14,15 +14,24 @@ import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * Manages data of [MapActivity] in a way that is independent of activity lifecycle.
+ */
 internal class MapViewModel(repository: OpenSkyRepository, bounds: LatLngBounds) : ViewModel() {
     private val _states by lazy {
         StatesLiveData(viewModelScope, repository, bounds)
     }
 
+    /**
+     * Aircraft states backed by repository providing live updates to observers.
+     */
     val states: LiveData<MapAircraftStates>
         get() = _states
 }
 
+/**
+ * Custom view model factory, needed to be able to use view models that take constructor arguments.
+ */
 internal class MapViewModelFactory(
     private val repository: OpenSkyRepository,
     private val bounds: LatLngBounds,
@@ -32,6 +41,13 @@ internal class MapViewModelFactory(
         MapViewModel(repository, bounds) as T
 }
 
+/**
+ * Live data that runs live-update loop getting aircraft states from backing repository.
+ *
+ * Automatically (re-)starts and cancels loop based on whether there are any active observers.
+ *
+ * @param scope Scope to run update loop coroutine in.
+ */
 private class StatesLiveData(
     private val scope: CoroutineScope,
     private val repository: OpenSkyRepository,
@@ -73,8 +89,14 @@ private class StatesLiveData(
     }
 }
 
+/**
+ * Map-specific sequence of aircraft states.
+ */
 internal class MapAircraftStates(val states: Array<MapAircraftState>)
 
+/**
+ * Map-specific aircraft state.
+ */
 internal class MapAircraftState(
     val icao24: String,
     val callsign: String?,
@@ -84,6 +106,9 @@ internal class MapAircraftState(
     val movement: MapAircraftMovement?,
 )
 
+/**
+ * Map-specific aircraft state movement information.
+ */
 internal class MapAircraftMovement(
     private val lastPosition: Instant,
     position: LatLng,
@@ -98,6 +123,11 @@ internal class MapAircraftMovement(
     private val trueTrackCos = cos(trueTrackRad)
     private val trueTrackSin = sin(trueTrackRad)
 
+    /**
+     * Calculate projected position at given instant, assuming constant velocity.
+     *
+     * Based on last position and movement parameters and last update time.
+     */
     fun calculatePosition(instant: Instant): LatLng {
         // Algorithm adapted from: https://www.edwilliams.org/avform147.htm#LL
 
@@ -116,6 +146,9 @@ internal class MapAircraftMovement(
     }
 }
 
+/**
+ * Convert repository [AircraftStates] to map-specific [MapAircraftStates].
+ */
 private fun AircraftStates.toStates(): MapAircraftStates {
     val states = this.states.asSequence()
         .map(AircraftState::toState)
@@ -125,6 +158,9 @@ private fun AircraftStates.toStates(): MapAircraftStates {
     return MapAircraftStates(states)
 }
 
+/**
+ * Convert repository [AircraftState] to map-specific [MapAircraftState].
+ */
 private fun AircraftState.toState(): MapAircraftState? {
     if (onGround) {
         return null
@@ -133,9 +169,12 @@ private fun AircraftState.toState(): MapAircraftState? {
     val altitudeM = altitudeGeometricM?.toFloat() ?: altitudeBarometricM?.toFloat() ?: 0.0F
     val rotation = trueTrackDeg?.toFloat() ?: 0.0F
     val movement = toMovement()
-    return MapAircraftState(icao24,callsign, position, altitudeM, rotation, movement)
+    return MapAircraftState(icao24, callsign, position, altitudeM, rotation, movement)
 }
 
+/**
+ * Extract map-specific movement information [MapAircraftMovement] from repository [AircraftState].
+ */
 private fun AircraftState.toMovement(): MapAircraftMovement? {
     val lastPosition = this.lastPosition ?: return null
     val position = this.position ?: return null
@@ -144,4 +183,7 @@ private fun AircraftState.toMovement(): MapAircraftMovement? {
     return MapAircraftMovement(lastPosition, position, trueTrackDeg, velocityMPerS)
 }
 
-const val EARTH_RADIUS_M = 6_366_710.0
+/**
+ * Approximate radius of Earth in m, used in coordinate calculations.
+ */
+private const val EARTH_RADIUS_M = 6_366_710.0

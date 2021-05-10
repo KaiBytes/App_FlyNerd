@@ -21,9 +21,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
 import no.uio.in2000.team16.flynerd.*
-import no.uio.in2000.team16.flynerd.Flight
 import no.uio.in2000.team16.flynerd.adapter.FlightDisplayAdapter
-import no.uio.in2000.team16.flynerd.FlightId
 import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
 import java.time.LocalDate
@@ -96,6 +94,9 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
+    /**
+     * Extract flight id from UI input fields, get flight from repository, and display it in layout.
+     */
     private fun flightsFetch() {
         val header = findViewById<ConstraintLayout>(R.id.flight_header)
         val display = findViewById<RecyclerView>(R.id.flight_display)
@@ -167,6 +168,9 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
+    /**
+     * Fill header views with relevant information from flight object.
+     */
     private fun bindHeader(flight: Flight?) {
         if (flight != null) {
             findViewById<TextView>(R.id.flight_header_id_iata).text = flight.flightIdIATA.toString()

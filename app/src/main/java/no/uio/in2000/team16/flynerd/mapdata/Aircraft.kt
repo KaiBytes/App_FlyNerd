@@ -3,6 +3,9 @@ package no.uio.in2000.team16.flynerd
 import com.google.android.gms.maps.model.LatLng
 import java.time.Instant
 
+/**
+ * A sequence of retreived aircraft states.
+ */
 internal class AircraftStates(
     /**
      * Timestamp the states are associated with.
@@ -132,6 +135,9 @@ internal class AircraftState(
     }
 }
 
+/**
+ * Origin of the position.
+ */
 internal enum class AircraftPositionSource {
     ADSB,
     ASTERIX,
