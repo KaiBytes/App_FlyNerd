@@ -329,6 +329,7 @@ private enum class RequestCode {
 }
 
 /**
- * Bounding box encompassing all of Norway (and consequently most of Sweden and Denmark, too).
+ * Bounding box encompassing all of continental Norway (and consequently most of Sweden, Finland,
+ * and Estonia, too).
  */
-val BOUNDS_NORWAY: LatLngBounds = LatLngBounds(LatLng(54.45, 4.08), LatLng(71.39, 31.77))
+val BOUNDS_NORWAY: LatLngBounds = LatLngBounds(LatLng(57.75, 4.08), LatLng(71.39, 31.77))
