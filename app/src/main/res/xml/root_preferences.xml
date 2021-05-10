@@ -14,15 +14,18 @@
 
         <SwitchPreferenceCompat
             app:key="sync"
-            app:title="@string/sync_title" />
+            app:summaryOff="Normal Text "
+            app:summaryOn="Larger Text"
+            app:title="Enlarge Fontsize" />
 
         <SwitchPreferenceCompat
-            app:dependency="sync"
+
             app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:summaryOff="Normal Text"
+            app:summaryOn="Bold Text"
+            app:title="Bold" />
 
     </PreferenceCategory>
+
 
 </PreferenceScreen>
