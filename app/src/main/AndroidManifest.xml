@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
-        <activity android:name=".uidesign.ForecastActivity"></activity>
+        <activity
+            android:name=".uidesign.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".uidesign.ForecastActivity" />
         <activity android:name=".uidesign.WeatherActivity" />
 
         <meta-data
@@ -24,7 +27,6 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapActivity" />
-
         <activity android:name=".uidesign.FlightStatusUI" />
         <activity android:name=".uidesign.FlightStatusInfo" />
         <activity android:name=".SplashScreen">

@@ -209,6 +209,10 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 val intent = Intent(this@FlightStatusUI, WeatherActivity::class.java)
                 startActivity(intent)
             }
+            R.id.Setting -> {
+                val intent = Intent(this@FlightStatusUI, SettingsActivity::class.java)
+                startActivity(intent)
+            }
 
 
 
