@@ -160,6 +160,10 @@ class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.id.airportweather -> {
 
             }
+            R.id.Setting -> {
+                val intent = Intent(this@WeatherActivity, SettingsActivity::class.java)
+                startActivity(intent)
+            }
 
 
 

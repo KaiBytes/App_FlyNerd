@@ -31,6 +31,7 @@ import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
 import no.uio.in2000.team16.flynerd.uidesign.FlightStatusInfo
 
 import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
+import no.uio.in2000.team16.flynerd.uidesign.SettingsActivity
 import no.uio.in2000.team16.flynerd.uidesign.WeatherActivity
 
 import java.time.Instant
@@ -223,6 +224,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 val intent = Intent(this@MapActivity, WeatherActivity::class.java)
                 startActivity(intent)
             }
+
+            R.id.Setting -> {
+                val intent = Intent(this@MapActivity, SettingsActivity::class.java)
+                startActivity(intent)
+            }
+
 
 
         }
