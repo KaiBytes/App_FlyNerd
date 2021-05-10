@@ -42,45 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <EditText
-            android:id="@+id/searchFstatus"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleFlightStatus"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/roundcorner"
-            android:hint="Enter flight number"
-            android:padding="10dp"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@id/buttonSearchFStatus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleFlightStatus" />
 
-        <Button
-            android:id="@+id/buttonSearchFStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/roundcorner"
-            android:fontFamily="sans-serif-light"
-            android:text="Search"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@id/searchFstatus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchFstatus" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationLoading2"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading" />
 
 
 
@@ -91,14 +53,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchFstatus">
+            app:layout_constraintTop_toBottomOf="@+id/titleFlightStatus">
 
 
             <TextView
                 android:id="@+id/flightNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/flightNumberButton"
+
                 android:layout_marginTop="15dp"
                 android:text="" />
 
@@ -137,6 +99,7 @@
                 android:text="" />
 
             <TextView
+                android:id="@+id/airLineInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/arrAirportInfo"

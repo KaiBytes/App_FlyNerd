@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import android.app.Activity
 import android.content.Context
@@ -23,8 +23,11 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.adapter.AirportAdapter
-import no.uio.in2000.team16.flynerd.airportweatherdata.Airport
+import no.uio.in2000.team16.flynerd.Airport
+import no.uio.in2000.team16.flynerd.AirportAdapter
+import no.uio.in2000.team16.flynerd.MapActivity
+import no.uio.in2000.team16.flynerd.R
+
 import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsList
 import no.uio.in2000.team16.flynerd.uidesign.*
 import java.util.*

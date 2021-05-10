@@ -15,6 +15,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
 
 import kotlinx.coroutines.launch
+import no.uio.in2000.team16.flynerd.Airport
 import no.uio.in2000.team16.flynerd.R
 
 /**

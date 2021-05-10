@@ -25,8 +25,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.navigation.NavigationView
+
+
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
-import no.uio.in2000.team16.flynerd.uidesign.*
+import no.uio.in2000.team16.flynerd.uidesign.FlightStatusInfo
+
+import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
+import no.uio.in2000.team16.flynerd.uidesign.WeatherActivity
+
 import java.time.Instant
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
@@ -91,6 +97,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         if (mapLayout) {
             onMapReadyAndLayout()
         }
+        // Set a listener for marker click.
+        map.setOnMarkerClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -205,6 +213,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
 
 
+
+
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true
@@ -230,7 +240,7 @@ private class AircraftMarkers(private val map: GoogleMap, private val bitmap: Bi
 
         for (state in states.states) {
             val marker = markers[state.icao24]
-                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.icao24)))  
+                ?: AircraftMarker(map.addMarker(markerOptions.alpha(0.25F).title(state.callsign)))
                     .also { markers[state.icao24] = it }
 
             marker.stationary.run {

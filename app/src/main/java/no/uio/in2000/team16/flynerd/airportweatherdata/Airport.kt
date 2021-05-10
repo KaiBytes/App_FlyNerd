@@ -1,17 +1,17 @@
-package no.uio.in2000.team16.flynerd.airportweatherdata
+package no.uio.in2000.team16.flynerd
 
 import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
+import no.uio.in2000.team16.flynerd.airportweatherdata.Forecast
+import java.io.Serializable
 
 
 /**
- * Airport class
- * class creation warranted by expert principle
- * responsible for creation of forecast objects and contains
- * methods for fetching and manipulation of forecast related data.
+ * Airport class responsible for creation of forecast objects
+ * contains methods for fetching and manipulation of forecast related data.
  *
  * Used in: AirportsList.kt
  *
@@ -25,7 +25,6 @@ import com.google.gson.Gson
  * @param weatherForecast - holds forecast object reference.
  *                          object contains weather forecast data
  *                          null at initialization. we only want to call api when we need forecast information
- * @param gson - holds gson object. Needed when when parsing json data from resulting from api call.
  */
 class Airport(val ICAO : String,
               val city : String?,
@@ -33,8 +32,7 @@ class Airport(val ICAO : String,
               val country : String,
               val latitude : Double,
               val longtitude : Double,
-              var weatherForecast: Forecast? = null,
-              val gson : Gson = Gson()) {
+              var weatherForecast: Forecast? = null) : Serializable {
 
     /**
      * method: callForecastAPI
@@ -45,6 +43,7 @@ class Airport(val ICAO : String,
         val baseURL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/locationforecast/2.0/compact?"
         val geoLocation = "lat=$latitude&lon=$longtitude"
         val requestURL = "$baseURL$geoLocation"
+        val gson = Gson()
 
         try {
             val response = Fuel.get(requestURL).header("User-Agent", "FLyNerd gjchocopasta@gmail.com").awaitString()
