@@ -50,14 +50,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="Larger Text" />
+                android:text="🔍 Larger Text" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="Bold Text" />
+                android:text="👓 Bold Text" />
         </LinearLayout>
 
     </LinearLayout>
