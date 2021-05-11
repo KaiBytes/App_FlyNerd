@@ -28,7 +28,6 @@ import com.google.android.material.navigation.NavigationView
 
 
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
-import no.uio.in2000.team16.flynerd.uidesign.FlightStatusInfo
 
 import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
 import no.uio.in2000.team16.flynerd.uidesign.SettingsActivity

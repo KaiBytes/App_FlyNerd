@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.preference.PreferenceFragmentCompat
+//import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
@@ -25,7 +25,7 @@ class SettingsActivity : AppCompatActivity() , NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        if (savedInstanceState == null) {
+       /** if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.settings, SettingsFragment())
@@ -62,7 +62,7 @@ class SettingsActivity : AppCompatActivity() , NavigationView.OnNavigationItemSe
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        }
+        }*/
     }
 
     override fun onBackPressed() {
