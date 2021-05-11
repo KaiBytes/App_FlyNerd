@@ -1,36 +1,42 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
+import android.content.ClipData
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
 
 
-class SettingsActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
+class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
     var menu: Menu? = null
+
+
+    var switch2: Switch? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
-                .commit()
-        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -57,12 +63,38 @@ class SettingsActivity : AppCompatActivity() , NavigationView.OnNavigationItemSe
         navigationView?.setCheckedItem(R.id.Setting)
 
 
-    }
+        val setting_tv1: TextView = findViewById(R.id.tv_setting)
+        val mySwitch: SwitchCompat = findViewById(R.id.switch1)
+        val mySwitch2: SwitchCompat = findViewById(R.id.switch2)
+        mySwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // If the switch button is on
+                setting_tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+            } else {
+                // If the switch button is off
+                setting_tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        }
+            }
+        })
+
+        mySwitch2.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // If the switch button is on
+                setting_tv1.setTypeface(null, Typeface.BOLD);
+                mySwitch.setTypeface(null, Typeface.BOLD);
+                mySwitch2.setTypeface(null, Typeface.BOLD);
+            } else {
+                // If the switch button is off
+                setting_tv1.setTypeface(null, Typeface.NORMAL);
+                mySwitch.setTypeface(null, Typeface.NORMAL);
+                mySwitch2.setTypeface(null, Typeface.NORMAL);
+
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -100,3 +132,4 @@ class SettingsActivity : AppCompatActivity() , NavigationView.OnNavigationItemSe
         return true
     }
 }
+
