@@ -11,46 +11,41 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.Airport
+import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.AirportAdapter
+import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsListViewModel
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
 
-import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsList
-import no.uio.in2000.team16.flynerd.uidesign.*
-import java.util.*
+class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    var matchedAirports  = mutableListOf<Airport>()
+    //    var matchedAirports  = mutableListOf<Airport>()
     var recycleAdapter: RecyclerView.Adapter<AirportAdapter.ViewHolder>? = null
+
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
     var menu: Menu? = null
-    var textView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        //soft keyboard pop up covers layout instead of pushing it upwards
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
-        //fetching views to edit
+        //fetching views
         val userInput = findViewById<AutoCompleteTextView>(R.id.searchFstatus)
         val cities: Array<out String> = resources.getStringArray(R.array.cities)
         val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
@@ -59,41 +54,49 @@ class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val layoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(this)
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = layoutManager
 
+        //initializing airports database (without forecast data)
+        val viewModel by viewModels<AirportsListViewModel>()
+        viewModel.createDb(this, R.raw.intair_city)
+
+        //soft keyboard pop up covers layout instead of pushing it upwards
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         //setting up autocomplete functionality
         ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cities).also { adapter ->
             userInput.setAdapter(adapter)
         }
 
-        //initializing airports database (without forecast data)
-        val initializer = AirportsList(this, R.raw.intair_city)
-
-        CoroutineScope(IO).launch {
-            initializer.readAirports()
-        }
-
+        //search button implementation
         searchButton.setOnClickListener {
             //capitalizes all words in string
             val input : String? = userInput.text.toString().capitalizeFirstLetter()
 
-            //clear results previous search
-            matchedAirports.clear()
-
-            CoroutineScope(IO).launch {
-                //search for airports servicing user specified city
-                for (airport in initializer.airports){
-                    if (input == airport.city){
-                        matchedAirports.add(airport)
-                    }
-                }
-
-                runOnUiThread{
-                    //show search results
-                    recycleAdapter = AirportAdapter(matchedAirports)
-                    findViewById<RecyclerView>(R.id.recyclerView).adapter = recycleAdapter
+            //if input run IO coroutine to find airports that match search criteria
+            if (input != null) {
+                CoroutineScope(IO).launch {
+                    viewModel.matchAirportWithCity(input)
                 }
             }
+
+
             dismissKeyboard(this)
         }
+
+        //show results once livedata variable in viewModel signals an update
+        //this means that coroutine above was succesfull
+        viewModel.matchedLiveData.observe(this@AirportsListActivity, Observer {
+
+            //show a toast with warning message when no matched airports have been found
+            if (viewModel.matchedLiveData.value!!.size == 0){
+                Toast.makeText(this,"No airports are servicing this city.\nDid you spell the city name correctly?",
+                    Toast.LENGTH_LONG).show()
+            }
+
+            recycleAdapter = AirportAdapter(viewModel.matchedLiveData.value!!)
+            findViewById<RecyclerView>(R.id.recyclerView).adapter = recycleAdapter
+        })
+
+
 
         // Navigation main menu you find for navigation menus
 
@@ -148,11 +151,11 @@ class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@WeatherActivity, MapActivity::class.java)
+                val intent = Intent(this@AirportsListActivity, MapActivity::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@WeatherActivity, FlightStatusUI::class.java)
+                val intent = Intent(this@AirportsListActivity, FlightStatusUI::class.java)
                 startActivity(intent)
 
             }
@@ -161,7 +164,7 @@ class WeatherActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             }
             R.id.Setting -> {
-                val intent = Intent(this@WeatherActivity, SettingsActivity::class.java)
+                val intent = Intent(this@AirportsListActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }
 

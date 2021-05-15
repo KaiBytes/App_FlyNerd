@@ -1,29 +1,26 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.Airport
-import no.uio.in2000.team16.flynerd.MapActivity
-import no.uio.in2000.team16.flynerd.R
-
+import no.uio.in2000.team16.flynerd.*
+import no.uio.in2000.team16.flynerd.airportweatherdata.ForecastViewModel
 
 class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    //    val airportObject : Airport = item
+    //defining all views
     var temperatureView: TextView? = null
     var nameView: TextView? = null
     var cityName: TextView? = null
@@ -35,18 +32,25 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
     var pictureView : ImageView? = null
     var imageId : Int? = null
 
+
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
     var menu: Menu? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_forecast)
+        setContentView(R.layout.weatherinfo2)
 
+        //importing airport object from intent
         val i = getIntent()
         val airportObject : Airport = i.getSerializableExtra("item") as Airport
 
+        val viewModel by viewModels<ForecastViewModel>()
+        viewModel.callForecastAPI(airportObject)
+
+        //initializing all views
         nameView = findViewById(R.id.airport)
         cityName = findViewById(R.id.city_name)
         longitude = findViewById(R.id.longtitude)
@@ -55,30 +59,29 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         windView = findViewById(R.id.wind)
         skyView = findViewById(R.id.weather)
         temperatureView = findViewById(R.id.temperature)
-
         pictureView = findViewById(R.id.picture)
 
-        CoroutineScope(IO).launch {
-            airportObject.callForecastAPI()
+        //once livedata variable gets updated in forecastActivityViewModel,
+        //information will be displayed. observer sniffs for updates
+        //ui components will be updated with every change registered
+        viewModel.forecastLiveData.observe(this, Observer {
 
-            runOnUiThread {
-                nameView!!.text = "Airport Name : ${airportObject.name}"
-                cityName!!.text = "Serviced City : ${airportObject.city}"
-                longitude!!.text = "LON : ${airportObject.longtitude}"
-                latitude!!.text = "LAT : ${airportObject.latitude}"
-                temperatureView!!.text = "Temperature : ${airportObject.getTemperature()}"
-                precipationView!!.text = "Precipation Amount : ${airportObject.getPrecipationAmount()}"
-                windView!!.text = "Wind Force : ${airportObject.getWindForce()}"
-                skyView!!.text = "Weather : ${airportObject.getCurrentWeather()}"
-
-                imageId = resources.getIdentifier(airportObject.getCurrentWeather().replace(" ", "_"), "drawable", packageName)
-                Log.d("imageId", "imageId = $imageId, name of picture = ${airportObject.getCurrentWeather().replace(" ", "_")}")
-                if (imageId != null){
-                    pictureView!!.setImageResource(imageId!!)
-                }
-
+            nameView!!.text = "Airport Name : ${airportObject.name}"
+            cityName!!.text = "Serviced City : ${airportObject.city}"
+            longitude!!.text = "LON : ${airportObject.longtitude}"
+            latitude!!.text = "LAT : ${airportObject.latitude}"
+            temperatureView!!.text = "Temperature : ${airportObject.getTemperature()}"
+            precipationView!!.text = "Precipation Amount : ${airportObject.getPrecipationAmount()}"
+            windView!!.text = "Wind Force : ${airportObject.getWindForce()}"
+            skyView!!.text = "Weather : ${airportObject.getCurrentWeather()}"
+            imageId = resources.getIdentifier(airportObject.getCurrentWeather().replace(" ", "_"), "drawable", packageName)
+            Log.d("imageId", "imageId = $imageId, name of picture = ${airportObject.getCurrentWeather().replace(" ", "_")}")
+            if (imageId != null){
+                pictureView!!.setImageResource(imageId!!)
             }
-        }
+
+        })
+
 
 
         // Navigation main menu you find for navigation menus
@@ -110,7 +113,9 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         navigationView?.setCheckedItem(R.id.nav_home)
 
 
+
     }
+
 
 
 
@@ -139,7 +144,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
 
 
             R.id.airportweather -> {
-                val intent = Intent(this@ForecastActivity, WeatherActivity::class.java)
+                val intent = Intent(this@ForecastActivity, AirportsListActivity::class.java)
                 startActivity(intent)
 
             }

@@ -21,9 +21,10 @@ import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
 
 import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
-import no.uio.in2000.team16.flynerd.uidesign.WeatherActivity
+
 import java.lang.StringBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -132,10 +133,16 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
         flightStatusInfo(flightStr)
 
 
-        // FUNCTION TO RETURN STRING FLIGHT INFO IN LOG
-        val statusInfo = getFlightStatusInfo(flightStr)
 
-        Log.i(TAG, "flight status info 111111111111 = " + statusInfo );
+
+        runOnUiThread{
+            val statusInfo = getFlightStatusInfo(flightStr)
+
+            Log.i(TAG, "flight status info 111111111111 = " + statusInfo );
+
+        }
+        // FUNCTION TO RETURN STRING FLIGHT INFO IN LOG
+
 
 
 
@@ -212,7 +219,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             + "arr/" + formatted + "?appId=" + AppID
                             + "&appKey=" + AppKey
                             + "&utc=false")
-                    Log.i(TAG, flightUrl_IATA)
+                   // Log.i(TAG, flightUrl_IATA)
 
                     lifecycleScope.launch {
                         val jsonStr = Fuel.get(flightUrl_IATA).awaitString()
@@ -228,7 +235,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
-                                Log.i(TAG, "FlightStatus = " + flightStat.status)
+                               // Log.i(TAG, "FlightStatus = " + flightStat.status)
 
 
                                 // Carrier + flight number
@@ -238,14 +245,14 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                     "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
 
                                 // Departure
-                                Log.i(
-                                    TAG,
+                               // Log.i(
+                                  //  TAG,
                                     "Departure airport = " + flightStat.departureAirportFsCode
-                                );
-                                Log.i(
-                                    TAG,
+                               // );
+                              //  Log.i(
+                                   // TAG,
                                     "Departure date = " + flightStat.departureDate?.dateLocal
-                                );
+                              //  );
 
                                 departureAirport.text =
                                     flightStat.departureAirportFsCode  // "\n datee1: "+flightStat.departureDate?.dateLocal;
@@ -266,8 +273,8 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 )
 
                                 // Arrival
-                                Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
-                                Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
+                               // Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
+                               // Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
                                 arrivalAirport.text = flightStat.arrivalAirportFsCode;
                                 arrivalDate.text = flightStat.arrivalDate?.dateLocal;
                                 // get airport info
@@ -329,7 +336,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             + "arr/" + formatted + "?appId=" + AppID
                             + "&appKey=" + AppKey
                             + "&utc=false")
-                    Log.i(TAG, flightUrl_ICOA)
+                   // Log.i(TAG, flightUrl_ICOA)
 
                     lifecycleScope.launch {
                         val jsonStr = Fuel.get(flightUrl_ICOA).awaitString()
@@ -345,24 +352,24 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
-                                Log.i(TAG, "FlightStatus = " + flightStat.status)
+                             //   Log.i(TAG, "FlightStatus = " + flightStat.status)
 
 
                                 // Carrier + flight number
-                                Log.i(TAG, "Carrier = " + flightStat.carrierFsCode);
-                                Log.i(TAG, "Flight number = " + flightStat.flightNumber);
+                               // Log.i(TAG, "Carrier = " + flightStat.carrierFsCode);
+                               // Log.i(TAG, "Flight number = " + flightStat.flightNumber);
                                 flightNumberRes.text =
                                     "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
 
                                 // Departure
-                                Log.i(
-                                    TAG,
+                              //  Log.i(
+                                  //  TAG,
                                     "Departure airport = " + flightStat.departureAirportFsCode
-                                );
-                                Log.i(
-                                    TAG,
+                               // );
+                               // Log.i(
+                                   // TAG,
                                     "Departure date = " + flightStat.departureDate?.dateLocal
-                                );
+                               // );
 
                                 departureAirport.text =
                                     flightStat.departureAirportFsCode  // "\n datee1: "+flightStat.departureDate?.dateLocal;
@@ -383,8 +390,8 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 )
 
                                 // Arrival
-                                Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
-                                Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
+                             //   Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
+                               // Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
                                 arrivalAirport.text = flightStat.arrivalAirportFsCode;
                                 arrivalDate.text = flightStat.arrivalDate?.dateLocal;
                                 // get airport info
@@ -765,7 +772,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusInfo, WeatherActivity::class.java)
+                val intent = Intent(this@FlightStatusInfo, AirportsListActivity::class.java)
                 startActivity(intent)
             }
 

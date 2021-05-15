@@ -20,7 +20,8 @@
             android:name=".uidesign.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
         <activity android:name=".uidesign.ForecastActivity" />
-        <activity android:name=".uidesign.WeatherActivity" />
+        <activity android:name=".uidesign.AirportsListActivity" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -28,10 +28,12 @@ import com.google.android.material.navigation.NavigationView
 
 
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
+import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
 
 import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
 import no.uio.in2000.team16.flynerd.uidesign.SettingsActivity
-import no.uio.in2000.team16.flynerd.uidesign.WeatherActivity
+//import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
+
 
 import java.time.Instant
 
@@ -220,7 +222,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
 
             R.id.airportweather -> {
-                val intent = Intent(this@MapActivity, WeatherActivity::class.java)
+                val intent = Intent(this@MapActivity, AirportsListActivity::class.java)
                 startActivity(intent)
             }
 

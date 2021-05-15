@@ -1,8 +1,6 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
-import android.content.ClipData
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -12,7 +10,6 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -122,7 +119,7 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
 
             R.id.airportweather -> {
-                val intent = Intent(this@SettingsActivity, WeatherActivity::class.java)
+                val intent = Intent(this@SettingsActivity, AirportsListActivity::class.java)
                 startActivity(intent)
             }
 
