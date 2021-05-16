@@ -29,7 +29,8 @@
 
         <activity android:name=".MapActivity" />
         <activity android:name=".uidesign.FlightStatusUI" />
-        <activity android:name=".FlightStatusInfo" />
+        <activity android:name=".FlightStatusInfo"
+                  android:theme="@style/Theme.AppCompat.Dialog.Alert"/>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -29,18 +29,11 @@ import java.lang.StringBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    // private  val TAG = "FlightInfo"
-    //private val AppID = "1738962c" //  USE YOUR OWN API-ID FROM YOUR SIGN UP ACCOUNT
-    // private  val AppKey = "165179280d479dabbc4596b0269189aa" //  USE YOUR OWN API-key FROM YOUR SIGN UP ACCOUNT
-    // private  val flightApi = "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/"
+class FlightStatusInfo : AppCompatActivity() {
 
 
-    // lateinit var flightNumberStr: EditText // accept from user the flight number
     lateinit var flightStatus: TextView   // display the flight status
     lateinit var flightDelayResult: TextView // display delay result
-    //lateinit var SubmitToCheckFlight: Button
     lateinit var flightNumberRes: TextView
 
     // Departure
@@ -64,19 +57,11 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.flight_status_main2)
+        setContentView(R.layout.flight_status_popupwindow)
 
-
-
-
-
-        // Intialize the buttons and textView and editText for simple UI user intereaction
-        //flightNumberStr = findViewById<EditText>(R.id.flightNumber)  // EditTxt // accept from user
-        //SubmitToCheckFlight = findViewById<Button>(R.id.flightNumberButton) // Button
         flightStatus = findViewById<TextView>(R.id.flightStatus)
         flightDelayResult = findViewById<TextView>(R.id.flightResult)
         flightNumberRes = findViewById<TextView>(R.id.flightNumberText)
-
 
         // Departure
         departureAirport = findViewById<TextView>(R.id.departureAirport)
@@ -94,37 +79,6 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
         arrivalAirportCountry = findViewById<TextView>(R.id.arrivalAirportCountry)
         arrivalAirportLonLat = findViewById<TextView>(R.id.arrivalAirportLonLat)
 
-        //navigation drawer
-        var drawerLayout: DrawerLayout? = null
-        var navigationView: NavigationView? = null
-        var toolbar: Toolbar? = null
-
-
-
-        /**val search = findViewById<EditText>(R.id.searchFstatus)
-        val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
-        val result = findViewById<RelativeLayout>(R.id.result)
-        val loading = findViewById<LottieAnimationView>(R.id.animationLoading2)*/
-
-        // result.setVisibility(View.GONE)
-        //loading.setVisibility(View.GONE)
-
-
-
-
-        // implementation of on clicklistener for check flight button
-        /**searchButton.setOnClickListener(View.OnClickListener {
-
-        loading.setVisibility(View.VISIBLE)
-        val inputManager: InputMethodManager =
-        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(
-        currentFocus!!.windowToken,
-        InputMethodManager.HIDE_NOT_ALWAYS
-        )*/
-        //val flightStr = search.text.toString() //|| intent.getStringExtra(FLIGHT_NUMBER)
-        // condition for checking flight number and user iput string
-
          //Excute onMarkClick function for intent and putExtra methods accessing flight info through flight number from
         // user on tap aircraf on map
         val flightStr = intent.getStringExtra(FLIGHT_NUMBER)
@@ -133,46 +87,13 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
         flightStatusInfo(flightStr)
 
 
-
-
         runOnUiThread{
+            // FUNCTION TO RETURN STRING FLIGHT INFO IN LOG
             val statusInfo = getFlightStatusInfo(flightStr)
 
             Log.i(TAG, "flight status info 111111111111 = " + statusInfo );
 
         }
-        // FUNCTION TO RETURN STRING FLIGHT INFO IN LOG
-
-
-
-
-
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.nav_view)
-        //textView = findViewById(R.id.textView)
-        toolbar = findViewById(R.id.toolbar)
-
-
-        // toolbar
-        setSupportActionBar(toolbar)
-
-        // navigation
-
-        // navigationbar
-        navigationView?.bringToFront()
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-
-        drawerLayout?.addDrawerListener(toggle)
-        toggle.syncState()
-        navigationView?.setNavigationItemSelectedListener(this)
-        navigationView?.setCheckedItem(R.id.nav_home)
 
 
         //}) // end of onclickListener
@@ -245,17 +166,17 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                     "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
 
                                 // Departure
-                               // Log.i(
-                                  //  TAG,
+                                Log.i(
+                                   TAG,
                                     "Departure airport = " + flightStat.departureAirportFsCode
-                               // );
-                              //  Log.i(
-                                   // TAG,
+                                );
+                               Log.i(
+                                   TAG,
                                     "Departure date = " + flightStat.departureDate?.dateLocal
-                              //  );
+                               );
 
                                 departureAirport.text =
-                                    flightStat.departureAirportFsCode  // "\n datee1: "+flightStat.departureDate?.dateLocal;
+                                    flightStat.departureAirportFsCode
                                 departureDate.text = flightStat.departureDate?.dateLocal;
 
                                 getAirportInformation(
@@ -273,8 +194,8 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 )
 
                                 // Arrival
-                               // Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
-                               // Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
+                               Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
+                               Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
                                 arrivalAirport.text = flightStat.arrivalAirportFsCode;
                                 arrivalDate.text = flightStat.arrivalDate?.dateLocal;
                                 // get airport info
@@ -336,7 +257,7 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             + "arr/" + formatted + "?appId=" + AppID
                             + "&appKey=" + AppKey
                             + "&utc=false")
-                   // Log.i(TAG, flightUrl_ICOA)
+                    Log.i(TAG, flightUrl_ICOA)
 
                     lifecycleScope.launch {
                         val jsonStr = Fuel.get(flightUrl_ICOA).awaitString()
@@ -352,27 +273,27 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
-                             //   Log.i(TAG, "FlightStatus = " + flightStat.status)
+                               Log.i(TAG, "FlightStatus = " + flightStat.status)
 
 
                                 // Carrier + flight number
-                               // Log.i(TAG, "Carrier = " + flightStat.carrierFsCode);
-                               // Log.i(TAG, "Flight number = " + flightStat.flightNumber);
+                                Log.i(TAG, "Carrier = " + flightStat.carrierFsCode);
+                               Log.i(TAG, "Flight number = " + flightStat.flightNumber);
                                 flightNumberRes.text =
                                     "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
 
                                 // Departure
-                              //  Log.i(
-                                  //  TAG,
+                               Log.i(
+                                    TAG,
                                     "Departure airport = " + flightStat.departureAirportFsCode
-                               // );
-                               // Log.i(
-                                   // TAG,
+                                );
+                                Log.i(
+                                    TAG,
                                     "Departure date = " + flightStat.departureDate?.dateLocal
-                               // );
+                                );
 
                                 departureAirport.text =
-                                    flightStat.departureAirportFsCode  // "\n datee1: "+flightStat.departureDate?.dateLocal;
+                                    flightStat.departureAirportFsCode
                                 departureDate.text = flightStat.departureDate?.dateLocal;
 
                                 getAirportInformation(
@@ -445,8 +366,6 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 }
             }
         }
-
-
 
     }
 
@@ -755,32 +674,6 @@ class FlightStatusInfo : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         return sb.toString()
     }
-
-
-    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        when (menuItem.itemId) {
-            R.id.nav_home -> {
-                val intent = Intent(this@FlightStatusInfo, MapActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.flightStatus -> {
-                val intent = Intent(this@FlightStatusInfo, FlightStatusUI::class.java)
-                startActivity(intent)
-
-            }
-
-
-
-            R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusInfo, AirportsListActivity::class.java)
-                startActivity(intent)
-            }
-
-
-        }
-        return true
-    }
-
 
     companion object {
         private const val TAG = "FlightInfo"

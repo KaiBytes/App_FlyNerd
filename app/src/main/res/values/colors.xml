@@ -10,5 +10,12 @@
     <color name="primary">#f0efff</color>
     <color name="secondary">#dd8a3c</color>
     <color name="original">#FF6584</color>
+    <color name="background_dark">#ffb8860b</color>
+    <color name="background_light">#ffd2b48c</color>
+    <color name="transparent">#00b8860b</color>
+
+
+
+
 
 </resources>
