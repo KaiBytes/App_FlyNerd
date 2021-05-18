@@ -136,7 +136,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@ForecastActivity, FlightStatusUI::class.java)
+                val intent = Intent(this@ForecastActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
 
             }

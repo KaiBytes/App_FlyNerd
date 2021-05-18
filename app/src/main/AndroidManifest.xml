@@ -28,8 +28,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".uidesign.FlightStatusUI" />
-        <activity android:name=".FlightStatusInfo"
+        <activity android:name=".uidesign.FlightStatusInfoSearchFlight" />
+        <activity android:name=".uidesign.FlightStatusInfoPopUpWindow"
                   android:theme="@style/Theme.AppCompat.Dialog.Alert"/>
         <activity android:name=".SplashScreen">
             <intent-filter>

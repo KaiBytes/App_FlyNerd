@@ -29,8 +29,9 @@ import com.google.android.material.navigation.NavigationView
 
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
 import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
+import no.uio.in2000.team16.flynerd.uidesign.FlightStatusInfoPopUpWindow
 
-import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
+import no.uio.in2000.team16.flynerd.uidesign.FlightStatusInfoSearchFlight
 import no.uio.in2000.team16.flynerd.uidesign.SettingsActivity
 //import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
 
@@ -187,7 +188,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     override fun onMarkerClick(marker: Marker): Boolean {
         Log.i(TAG, marker.title)
-        val intent = Intent(this, FlightStatusInfo::class.java).apply {
+        val intent = Intent(this, FlightStatusInfoPopUpWindow::class.java).apply {
             putExtra(FLIGHT_NUMBER, marker.title)
         }
         startActivity(intent)
@@ -215,7 +216,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@MapActivity, FlightStatusUI::class.java)
+                val intent = Intent(this@MapActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
 
             }

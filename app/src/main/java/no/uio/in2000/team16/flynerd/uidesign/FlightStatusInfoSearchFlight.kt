@@ -26,7 +26,7 @@ import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
 import java.time.LocalDate
 
-class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -67,7 +67,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         flightDisplayAdapter = FlightDisplayAdapter()
         findViewById<RecyclerView>(R.id.flight_display).run {
             adapter = flightDisplayAdapter
-            layoutManager = LinearLayoutManager(this@FlightStatusUI)
+            layoutManager = LinearLayoutManager(this@FlightStatusInfoSearchFlight)
         }
 
         val search = findViewById<EditText>(R.id.searchFstatus)
@@ -133,7 +133,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
-                        this@FlightStatusUI,
+                        this@FlightStatusInfoSearchFlight,
                         e.localizedMessage ?: "$e",
                         Toast.LENGTH_LONG,
                     ).show()
@@ -201,7 +201,7 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@FlightStatusUI, MapActivity::class.java)
+                val intent = Intent(this@FlightStatusInfoSearchFlight, MapActivity::class.java)
                 startActivity(intent)
             }
             R.id.flightStatus -> {
@@ -210,11 +210,11 @@ class FlightStatusUI : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
 
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusUI, AirportsListActivity::class.java)
+                val intent = Intent(this@FlightStatusInfoSearchFlight, AirportsListActivity::class.java)
                 startActivity(intent)
             }
             R.id.Setting -> {
-                val intent = Intent(this@FlightStatusUI, SettingsActivity::class.java)
+                val intent = Intent(this@FlightStatusInfoSearchFlight, SettingsActivity::class.java)
                 startActivity(intent)
             }
 

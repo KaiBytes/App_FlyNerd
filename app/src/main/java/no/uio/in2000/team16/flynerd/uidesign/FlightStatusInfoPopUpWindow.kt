@@ -1,39 +1,36 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.uidesign
 
 import no.uio.in2000.team16.flynerd.flightData.Appendix
 import no.uio.in2000.team16.flynerd.flightData.FlightData
 
 
-
-import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.uidesign.AirportsListActivity
+import no.uio.in2000.team16.flynerd.R
 
-import no.uio.in2000.team16.flynerd.uidesign.FlightStatusUI
-
-import java.lang.StringBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class FlightStatusInfo : AppCompatActivity() {
+
+/**
+ * This class uses to get the flight information and used in displaying flight status as popup window
+ * it is used in first home activity along google map displaying aircraft over given geographycal area
+ * in this case it display the flight status information in popup window on user tap on aircraf on map
+ */
+class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
 
-    lateinit var flightStatus: TextView   // display the flight status
-    lateinit var flightDelayResult: TextView // display delay result
+    lateinit var flightStatus: TextView
+    lateinit var flightDelayResult: TextView
     lateinit var flightNumberRes: TextView
 
     // Departure
@@ -87,18 +84,16 @@ class FlightStatusInfo : AppCompatActivity() {
         flightStatusInfo(flightStr)
 
 
-        runOnUiThread{
-            // FUNCTION TO RETURN STRING FLIGHT INFO IN LOG
-            val statusInfo = getFlightStatusInfo(flightStr)
-
-            Log.i(TAG, "flight status info 111111111111 = " + statusInfo );
-
-        }
-
-
-        //}) // end of onclickListener
-
     }
+
+
+  /**  this function process the most important task in this flight stutus information  class
+   *  straem json api by using fuel library
+   *  purses the data class and get the flight information
+   * excute check flight number function and intace the right flight number as parameter
+   * assign the obtained data class flight data to the textView UI classes
+   *@param flightStr
+  */
 
 
     fun flightStatusInfo(flightStr: String){
@@ -119,12 +114,15 @@ class FlightStatusInfo : AppCompatActivity() {
             if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(flightNumberStr))) {
                 flightStatus.text = "Flight number is invalid!"
                 flightStatus.setTextColor(Color.RED)
+                flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
             }
             // if the above condition not fulfilled it mean we have valid flight number either IATA or ICAO
             // and so the code will continue to parse for json data and operate on functions
             else {
                 flightStatus.text = "Checking $flightNumberStr"
-                flightStatus.setTextColor(Color.BLUE)
+                flightStatus.setTextColor(Color.GREEN)
+                flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
+
 
                 // define time to Get flight data based on the user input current time  in account
                 val current = LocalDateTime.now()
@@ -135,12 +133,17 @@ class FlightStatusInfo : AppCompatActivity() {
                 // conditionally parsing data for flight number type : IATA
                 if (checkFlightNumber_IATA(flightNumberStr)) {
 
+
+                    try{
+
+
+
                     val flightUrl_IATA = (flightApi
                             + flightNumberStr.substring(0, 2) + "/" + flightNumberStr.substring(2) + "/"
                             + "arr/" + formatted + "?appId=" + AppID
                             + "&appKey=" + AppKey
                             + "&utc=false")
-                   // Log.i(TAG, flightUrl_IATA)
+                   Log.i(TAG, flightUrl_IATA)
 
                     lifecycleScope.launch {
                         val jsonStr = Fuel.get(flightUrl_IATA).awaitString()
@@ -186,7 +189,7 @@ class FlightStatusInfo : AppCompatActivity() {
                                     departureAirportCity,
                                     departureAirportCountry,
                                     departureAirportLonLat,
-                                    null
+
                                 )
                                 getAirlineInformation(
                                     flightData.appendix!!,
@@ -206,7 +209,7 @@ class FlightStatusInfo : AppCompatActivity() {
                                     arrivalAirportCity,
                                     arrivalAirportCountry,
                                     arrivalAirportLonLat,
-                                    null
+
                                 )
 
                                 //  get airline info
@@ -229,15 +232,20 @@ class FlightStatusInfo : AppCompatActivity() {
                                         flightStatus.text = flightStat.status
                                     }
                                 }
-                                flightStatus.setTextColor(Color.BLUE)
+                                flightStatus.setTextColor(Color.GREEN)
+                                flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                 if (flightStat.delays == null) {
                                     flightDelayResult.text = "No delay!"
-                                    flightDelayResult.setTextColor(Color.BLUE)
+                                    flightDelayResult.setTextColor(Color.GREEN)
+                                    flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                 } else {
                                     flightDelayResult.text =
                                         "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
-                                    flightDelayResult.setTextColor(Color.RED)
+                                    flightDelayResult.setTextColor(Color.YELLOW)
+                                    flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
+
+
                                 }
                             }
                         }
@@ -245,12 +253,17 @@ class FlightStatusInfo : AppCompatActivity() {
 
                     }
 
+                    }
+                    catch (e: Exception){
+
+                    }
 
                 }// end for flightnumber type IATA
 
 
                 // conditionally parsing data for flight number type : ICOA
                 else {
+                    try{
 
                     val flightUrl_ICOA = (flightApi
                             + flightNumberStr.substring(0, 3) + "/" + flightNumberStr.substring(3) + "/"
@@ -271,6 +284,7 @@ class FlightStatusInfo : AppCompatActivity() {
                             if (flightData.flightStatuses.isNullOrEmpty()) {
                                 flightStatus.text = "This is  non-commercial aircraft, \nCurrently We  provide flight status information for commercial flight! "
                                 flightStatus.setTextColor(Color.RED)
+                                flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
                                Log.i(TAG, "FlightStatus = " + flightStat.status)
@@ -303,7 +317,7 @@ class FlightStatusInfo : AppCompatActivity() {
                                     departureAirportCity,
                                     departureAirportCountry,
                                     departureAirportLonLat,
-                                    null
+
                                 )
                                 getAirlineInformation(
                                     flightData.appendix!!,
@@ -311,8 +325,7 @@ class FlightStatusInfo : AppCompatActivity() {
                                 )
 
                                 // Arrival
-                             //   Log.i(TAG, "Arrival airport = " + flightStat.arrivalAirportFsCode);
-                               // Log.i(TAG, "Arrival date = " + flightStat.arrivalDate?.dateLocal);
+
                                 arrivalAirport.text = flightStat.arrivalAirportFsCode;
                                 arrivalDate.text = flightStat.arrivalDate?.dateLocal;
                                 // get airport info
@@ -323,7 +336,7 @@ class FlightStatusInfo : AppCompatActivity() {
                                     arrivalAirportCity,
                                     arrivalAirportCountry,
                                     arrivalAirportLonLat,
-                                    null
+
                                 )
 
                                 //  get airline info
@@ -346,15 +359,18 @@ class FlightStatusInfo : AppCompatActivity() {
                                         flightStatus.text = flightStat.status
                                     }
                                 }
-                                flightStatus.setTextColor(Color.BLUE)
+                                flightStatus.setTextColor(Color.GREEN)
+                                flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                 if (flightStat.delays == null) {
                                     flightDelayResult.text = "No delay!"
-                                    flightDelayResult.setTextColor(Color.BLUE)
+                                    flightDelayResult.setTextColor(Color.GREEN)
+                                    flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                 } else {
                                     flightDelayResult.text =
                                         "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
-                                    flightDelayResult.setTextColor(Color.RED)
+                                    flightDelayResult.setTextColor(Color.YELLOW)
+                                    flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                 }
                             }
                         }
@@ -362,18 +378,27 @@ class FlightStatusInfo : AppCompatActivity() {
 
                     }
 
+                }
+                catch (e: Exception){
 
                 }
+
+                } // end of checking ICAO and purse data
             }
         }
 
     }
 
+    /**
+     * This function check if the flight number is valid standerd flight number type of IATA
+     * Flight number should have 2first characters as carrier and followed a number, ex: AFR454
+     *In the aviation industry, a flight number or flight designator is a code for an airline service
+     *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
+     * https://en.wikipedia.org/wiki/Flight_number
+     *@param flightNumber
+     *@return true, boolean value
+     */
 
-    // Flight number should have 2 first characters as carrier and followed a number, ex: AF100
-//In the aviation industry, a flight number or flight designator is a code for an airline service
-// consisting of two-character airline designator and a 1 to 4 digit number for IATA Flight No.
-    // https://en.wikipedia.org/wiki/Flight_number
     private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 3) {
             return false
@@ -390,11 +415,16 @@ class FlightStatusInfo : AppCompatActivity() {
         }
         return true
     }
+    /**
+     * This function check if the flight number is valid standerd flight number type of ICAO
+     * Flight number should have 3 first characters as carrier and followed a number, ex: AFR454
+     *In the aviation industry, a flight number or flight designator is a code for an airline service
+     *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
+    * https://en.wikipedia.org/wiki/Flight_number
+     *@param flightNumber
+     *@return true, boolean value
+     */
 
-    // Flight number should have 3 first characters as carrier and followed a number, ex: AFR454
-//In the aviation industry, a flight number or flight designator is a code for an airline service
-// consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
-    // https://en.wikipedia.org/wiki/Flight_number
     private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 4) {
             return false
@@ -412,6 +442,15 @@ class FlightStatusInfo : AppCompatActivity() {
         return true
     }
 
+    /**
+     * this get the airport info from the airport list in appendix data class
+     *@param appendix
+     *@param airportfs
+     *@param airportName
+     *@param airportName
+     *@param airportCountry
+     *@param  airportLonLat
+     */
     private fun getAirportInformation(
         appendix: Appendix,
         airportfs: String,
@@ -419,7 +458,7 @@ class FlightStatusInfo : AppCompatActivity() {
         airportCity: TextView,
         airportCountry: TextView,
         airportLonLat: TextView,
-        sb: StringBuilder?
+
     ) {
         for (airport in appendix.airports!!) {
             if (airport.fs == airportfs) {
@@ -430,30 +469,23 @@ class FlightStatusInfo : AppCompatActivity() {
                 Log.i(TAG, "Latitude = " + airport.latitude)
                 Log.i(TAG, "Weather link = " + airport.weatherUrl)
 
-
                 airportName.text = airport.name;
                 airportCity.text = airport.city;
                 airportCountry.text = airport.countryName;
                 airportLonLat.text = "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude;
 
-                if (sb != null) {
-                    sb.append(airport.name)
-                    sb.append("\n")
-                    sb.append(airport.city)
-                    sb.append("\n")
-                    sb.append(airport.countryName)
-                    sb.append("\n")
-                    sb.append("Longitude = ")
-                    sb.append(airport.longitude)
-                    sb.append(" - Latitude = ")
-                    sb.append(airport.latitude)
-                    sb.append("\n")
-                }
+
             }
         }
 
     }
 
+
+    /**
+     * this get the airline info from the airline list in appendix data class
+     *@param appendix
+     *@param airlinefs
+     */
     private fun getAirlineInformation(appendix: Appendix, airlinefs: String){
         for (airline in appendix.airlines!!) {
             if (airline.fs == airlinefs) {
@@ -465,215 +497,6 @@ class FlightStatusInfo : AppCompatActivity() {
 
     }
 
-    fun getFlightStatusInfo(flightNum: String) : String {
-        var sb = StringBuilder()
-
-        if (flightNum.isEmpty()) {
-            sb.append("Flight number is empty!")
-        } else {
-            var flightNumberStr = "";
-            for (c in flightNum) {
-                if (Character.isLetterOrDigit(c)) {
-                    flightNumberStr += c;
-                }
-            }
-
-            // checking if the flight number is valid with checkFlightNumber function and use the flight number
-            if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(flightNumberStr))) {
-                sb.append("Flight number is invalid!")
-            }
-            // if the above condition not fulfilled it mean we have valid flight number either IATA or ICAO
-            // and so the code will continue to parse for json data and operate on functions
-            else {
-                // define time to Get flight data based on the user input current time  in account
-                val current = LocalDateTime.now()
-                val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
-                val formatted = current.format(formatter)
-
-                // conditionally parsing data for flight number type : IATA
-                if (checkFlightNumber_IATA(flightNumberStr)) {
-
-                    val flightUrl_IATA = (flightApi
-                            + flightNumberStr.substring(0, 2) + "/" + flightNumberStr.substring(2) + "/"
-                            + "arr/" + formatted + "?appId=" + AppID
-                            + "&appKey=" + AppKey
-                            + "&utc=false")
-                    lifecycleScope.launch {
-                        val jsonStr = Fuel.get(flightUrl_IATA).awaitString()
-
-                        if (jsonStr.isNotEmpty()) {
-                            // parsing json data & intialize inner class data
-                            val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
-
-                            if (flightData.flightStatuses.isNullOrEmpty()) {
-                                sb.append("No info about the flight!")
-                            } else {
-                                val flightStat = flightData.flightStatuses!![0]
-
-                                sb.append("Flight number : ")
-                                sb.append(flightStat.carrierFsCode)
-                                sb.append(flightStat.flightNumber)
-                                sb.append("\n")
-
-                                // Departure
-                                sb.append(flightStat.departureAirportFsCode)
-                                sb.append(flightStat.departureDate?.dateLocal)
-                                sb.append("\n")
-
-                                // get airport info
-                                getAirportInformation(
-                                    flightData.appendix!!,
-                                    flightStat.departureAirportFsCode!!,
-                                    departureAirportName,
-                                    departureAirportCity,
-                                    departureAirportCountry,
-                                    departureAirportLonLat,
-                                    sb
-                                )
-                                sb.append("\n")
-
-                                // Arrival
-                                sb.append(flightStat.arrivalAirportFsCode)
-                                sb.append(flightStat.arrivalDate?.dateLocal)
-                                sb.append("\n")
-
-                                // get airport info
-                                getAirportInformation(
-                                    flightData.appendix!!,
-                                    flightStat.arrivalAirportFsCode!!,
-                                    arrivalAirportName,
-                                    arrivalAirportCity,
-                                    arrivalAirportCountry,
-                                    arrivalAirportLonLat,
-                                    sb
-                                )
-                                sb.append("\n")
-
-                                when (flightStat.status) {
-                                    "S" -> {
-                                        sb.append("Flight scheduled")
-                                    }
-                                    "A" -> {
-                                        sb.append("Flight on Air")
-                                    }
-                                    "L" -> {
-                                        sb.append("Flight landed")
-                                    }
-                                    else -> {
-                                        sb.append(flightStat.status)
-                                    }
-                                }
-                                sb.append("\n")
-
-                                if (flightStat.delays == null) {
-                                    sb.append("No delay!")
-                                } else {
-                                    sb.append("Delay: ")
-                                    sb.append(flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes)
-                                    sb.append(" minutes")
-                                }
-                                sb.append("\n")
-                            }
-                        }
-                    }
-                }// end for flightnumber type IATA
-
-                // conditionally parsing data for flight number type : ICOA
-                else {
-
-                    val flightUrl_ICOA = (flightApi
-                            + flightNumberStr.substring(0, 3) + "/" + flightNumberStr.substring(3) + "/"
-                            + "arr/" + formatted + "?appId=" + AppID
-                            + "&appKey=" + AppKey
-                            + "&utc=false")
-
-                    lifecycleScope.launch {
-                        val jsonStr = Fuel.get(flightUrl_ICOA).awaitString()
-
-                        if (jsonStr.isNotEmpty()) {
-                            // parsing json data & intialize inner class data
-                            val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
-
-                            if (flightData.flightStatuses.isNullOrEmpty()) {
-                                sb.append("No info about the flight!")
-                            } else {
-                                val flightStat = flightData.flightStatuses!![0]
-
-                                // Carrier + flight number
-                                sb.append("Flight number : ")
-                                sb.append(flightStat.carrierFsCode)
-                                sb.append(flightStat.flightNumber)
-                                sb.append("\n")
-
-                                // Departure
-                                sb.append(flightStat.departureAirportFsCode)
-                                sb.append(flightStat.departureDate?.dateLocal)
-                                sb.append("\n")
-
-                                getAirportInformation(
-                                    flightData.appendix!!,
-                                    flightStat.departureAirportFsCode!!,
-                                    departureAirportName,
-                                    departureAirportCity,
-                                    departureAirportCountry,
-                                    departureAirportLonLat,
-                                    sb
-                                )
-
-                                sb.append("\n")
-
-                                // Arrival
-                                sb.append(flightStat.arrivalAirportFsCode)
-                                sb.append(flightStat.arrivalDate?.dateLocal)
-                                sb.append("\n")
-
-                                // get airport info
-                                getAirportInformation(
-                                    flightData.appendix!!,
-                                    flightStat.arrivalAirportFsCode!!,
-                                    arrivalAirportName,
-                                    arrivalAirportCity,
-                                    arrivalAirportCountry,
-                                    arrivalAirportLonLat,
-                                    sb
-                                )
-
-                                sb.append("\n")
-
-                                when (flightStat.status) {
-                                    "S" -> {
-                                        sb.append("Flight scheduled")
-                                    }
-                                    "A" -> {
-                                        sb.append("Flight on Air")
-                                    }
-                                    "L" -> {
-                                        sb.append("Flight landed")
-                                    }
-                                    else -> {
-                                        sb.append(flightStat.status)
-                                    }
-                                }
-
-                                sb.append("\n")
-
-                                if (flightStat.delays == null) {
-                                    sb.append("No delay!")
-                                } else {
-                                    sb.append("Delay: ")
-                                    sb.append(flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes)
-                                    sb.append(" minutes")
-                                }
-                                sb.append("\n")
-                            }
-                        }
-                    }
-                }//end for flightnumber type  ICOA
-            }
-        }
-
-        return sb.toString()
-    }
 
     companion object {
         private const val TAG = "FlightInfo"

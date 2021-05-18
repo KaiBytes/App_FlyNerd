@@ -155,7 +155,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@AirportsListActivity, FlightStatusUI::class.java)
+                val intent = Intent(this@AirportsListActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
 
             }

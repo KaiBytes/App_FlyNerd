@@ -109,7 +109,7 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@SettingsActivity, FlightStatusUI::class.java)
+                val intent = Intent(this@SettingsActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
 
             }
