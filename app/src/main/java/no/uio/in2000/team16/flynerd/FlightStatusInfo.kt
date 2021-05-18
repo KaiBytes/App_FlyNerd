@@ -152,7 +152,7 @@ class FlightStatusInfo : AppCompatActivity() {
                             val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
 
                             if (flightData.flightStatuses.isNullOrEmpty()) {
-                                flightStatus.text = "No info about the flight!"
+                                flightStatus.text = "This is  non-commercial aircraft \n Currently We  provide flight status information for commercial flight!"
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
@@ -269,7 +269,7 @@ class FlightStatusInfo : AppCompatActivity() {
                             val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
 
                             if (flightData.flightStatuses.isNullOrEmpty()) {
-                                flightStatus.text = "No info about the flight!"
+                                flightStatus.text = "This is  non-commercial aircraft, \nCurrently We  provide flight status information for commercial flight! "
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]

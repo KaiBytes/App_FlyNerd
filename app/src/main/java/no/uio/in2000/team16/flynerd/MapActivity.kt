@@ -56,7 +56,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.home_map)
+        setContentView(R.layout.activity_map)
 
         (supportFragmentManager.findFragmentById(R.id.map)!! as SupportMapFragment).let {
             it.getMapAsync(this)

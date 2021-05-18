@@ -33,9 +33,10 @@
         android:id="@+id/titleinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Region and Geographical Info"
+        android:text=" Weather forecast info"
         android:textStyle="bold"
-        android:textSize="18dp"
+        android:fontFamily="sans-serif-light"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -48,7 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:text="city"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,45 +64,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Airport"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/city_name" />
 
-    <TextView
-        android:id="@+id/longtitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/airport" />
 
-    <TextView
-        android:id="@+id/latitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longtitude" />
 
-    <TextView
-        android:id="@+id/Weartherinfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Weather Information"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.433"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitude" />
+
 
     <TextView
         android:id="@+id/weather"
@@ -106,10 +82,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:text="Current Weather "
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Weartherinfo" />
+        app:layout_constraintTop_toBottomOf="@+id/airport" />
 
 
     <TextView
@@ -118,6 +97,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="temperature"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,17 +107,18 @@
 
         <ImageView
             android:id="@+id/picture"
-            android:layout_width="134dp"
-            android:layout_height="138dp"
+            android:layout_width="149dp"
+            android:layout_height="175dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="172dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.794"
+            app:layout_constraintHorizontal_bias="0.701"
             app:layout_constraintStart_toEndOf="@+id/weather"
-            app:layout_constraintTop_toBottomOf="@+id/Weartherinfo"
-            app:layout_constraintVertical_bias="0.186"
+            app:layout_constraintTop_toBottomOf="@+id/airport"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_popup_sync" />
 
         <TextView
@@ -144,6 +127,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="precipation"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
@@ -155,6 +141,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Wind"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,14 +151,16 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<com.google.android.material.navigation.NavigationView
-android:id="@+id/nav_view"
-android:layout_gravity="start"
-android:layout_height="match_parent"
-android:layout_width="wrap_content"
-app:headerLayout="@layout/header"
-app:menu="@menu/main_menu" >
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu">
 
-</com.google.android.material.navigation.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
+
+
 
     </androidx.drawerlayout.widget.DrawerLayout>

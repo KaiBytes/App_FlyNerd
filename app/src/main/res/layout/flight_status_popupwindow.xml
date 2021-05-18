@@ -18,8 +18,8 @@
 
         android:fontFamily="sans-serif-light"
         android:text="Flight Status"
-        android:textColor="@color/black"
-        android:textSize="28sp"/>
+        android:textColor="@color/white"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/flightNumberText"

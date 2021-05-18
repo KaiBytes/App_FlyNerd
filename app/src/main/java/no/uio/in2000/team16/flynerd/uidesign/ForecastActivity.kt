@@ -41,7 +41,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.weatherinfo2)
+        setContentView(R.layout.activity_forecast_updated)
 
         //importing airport object from intent
         val i = getIntent()
@@ -53,8 +53,8 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         //initializing all views
         nameView = findViewById(R.id.airport)
         cityName = findViewById(R.id.city_name)
-        longitude = findViewById(R.id.longtitude)
-        latitude = findViewById(R.id.latitude)
+       // longitude = findViewById(R.id.longtitude)
+       // latitude = findViewById(R.id.latitude)
         precipationView = findViewById(R.id.precipation)
         windView = findViewById(R.id.wind)
         skyView = findViewById(R.id.weather)
@@ -68,12 +68,12 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
 
             nameView!!.text = "Airport Name : ${airportObject.name}"
             cityName!!.text = "Serviced City : ${airportObject.city}"
-            longitude!!.text = "LON : ${airportObject.longtitude}"
-            latitude!!.text = "LAT : ${airportObject.latitude}"
+            //longitude!!.text = "LON : ${airportObject.longtitude}"
+            //latitude!!.text = "LAT : ${airportObject.latitude}"
             temperatureView!!.text = "Temperature : ${airportObject.getTemperature()}"
             precipationView!!.text = "Precipation Amount : ${airportObject.getPrecipationAmount()}"
             windView!!.text = "Wind Force : ${airportObject.getWindForce()}"
-            skyView!!.text = "Weather : ${airportObject.getCurrentWeather()}"
+            skyView!!.text = "Current Weather : ${airportObject.getCurrentWeather()}"
             imageId = resources.getIdentifier(airportObject.getCurrentWeather().replace(" ", "_"), "drawable", packageName)
             Log.d("imageId", "imageId = $imageId, name of picture = ${airportObject.getCurrentWeather().replace(" ", "_")}")
             if (imageId != null){
