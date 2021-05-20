@@ -1,6 +1,3 @@
-// Retrofit service acting as REST backend for flight status API, and associated response data
-// structures.
-
 package no.uio.in2000.team16.flynerd.api
 
 import no.uio.in2000.team16.flynerd.FlightStatus
@@ -10,6 +7,9 @@ import retrofit2.http.Query
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
+/**
+ * Retrofit service acting as REST backend for flight status API.
+ */
 internal interface FlightStatusService {
     @GET("v2/json/flight/status/{carrier}/{flight}/arr/{year}/{month}/{day}")
     suspend fun byFlightNumberArrivingOn(
@@ -21,6 +21,8 @@ internal interface FlightStatusService {
         @Query("airport") airport: String?,
     ): FlightStatusResponse
 }
+
+// Rest of file contains the data structures to convert JSON responses into.
 
 internal class FlightStatusResponse(
     val flightStatuses: Array<FlightStatusFlightStatus>?,

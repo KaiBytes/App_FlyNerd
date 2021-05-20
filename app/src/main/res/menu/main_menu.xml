@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <group>
+            <item
+                android:id="@+id/nav_home"
+                android:title="✈️ Home" />
+
+            <item
+                android:id="@+id/flightStatus"
+
+                android:title="🌍 Flight Status" />
+
+
+
+            <item
+                android:id="@+id/airportweather"
+
+                android:title="☀️ Airport Weather" />
+            <item
+                android:id="@+id/Setting"
+
+                android:title="🔍 Setting" />
+
+
+
+        </group>
+
+
+
+    </group>
+
+</menu>
