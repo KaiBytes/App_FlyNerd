@@ -15,7 +15,7 @@ Flynerd is an app which can assist you with your flights. It can give you inform
 
 ### Others  🛩️
 
-### Others : API and how to use keys 🛩️
+###  API and how to use keys 🛩️
 
 NB. Current api key for flightstatus valid from May 20-2021 to June 20-2021
 
@@ -27,17 +27,15 @@ in this project we used three API for different data fetching purposes
 2 OpenSky api for displaying airplane in air over Norway at moment  
     https://opensky-network.org/
 	
-3. FlightStatus api from Flightstatus by  Cirium
-
-for flight status checking we fetch flight status data and  used FlightStatus API from provider
-https://www.flightstats.com/v2  
-and created developer account on
+3. FlightStatus api from Flightstatus by  Cirium for flight status checking 
+    https://www.flightstats.com/v2  
+    
+We fetch flight status data and  used FlightStatus API from provider and 
+created developer account on
 https://developer.flightstats.com/ 
 
-
 The current flight Status API account is created as evaluation plan 
-for free and valid for one month evaluation period
-account which is valid for only one month (20th May -2021 to 20th June 2021)
+for free and valid for one month , the evaluation period:  valid (20th May -2021 to 20th June 2021)
 
 After this evaluation period if one try to run the apps flight status may not work
 so in this case you may need to use your account by signing app at
