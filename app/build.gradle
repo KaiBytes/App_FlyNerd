@@ -4,13 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "no.uio.in2000.team16.flynerd"
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -44,7 +43,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
-    implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'androidx.preference:preference:1.1.1'
@@ -61,7 +59,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
-    implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //for testing

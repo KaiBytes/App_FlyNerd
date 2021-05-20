@@ -1,8 +1,5 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
-import no.uio.in2000.team16.flynerd.flightData.Appendix
-import no.uio.in2000.team16.flynerd.flightData.FlightData
-
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -16,7 +13,8 @@ import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import no.uio.in2000.team16.flynerd.R
-
+import no.uio.in2000.team16.flynerd.flightData.Appendix
+import no.uio.in2000.team16.flynerd.flightData.FlightData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -78,7 +76,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
          //Excute onMarkClick function for intent and putExtra methods accessing flight info through flight number from
         // user on tap aircraf on map
-        val flightStr = intent.getStringExtra(FLIGHT_NUMBER)
+        val flightStr = intent.getStringExtra(FLIGHT_NUMBER)!!
 
         // function to display flight status info on the popup window on aircraft onclick
         flightStatusInfo(flightStr)
