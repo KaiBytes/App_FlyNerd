@@ -113,7 +113,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
             }
 
             // checking if the flight number is valid with checkFlightNumber function and use the flight number
-            val any = if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(
+           if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(
                     flightNumberStr
                 ))
             ) {
