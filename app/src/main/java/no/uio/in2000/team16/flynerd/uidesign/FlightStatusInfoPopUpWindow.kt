@@ -23,8 +23,8 @@ import java.time.format.DateTimeFormatter
 
 /**
  * This class uses to get the flight information and used in displaying flight status as popup window
- * it is used in first home activity along google map displaying aircraft over given geographycal area
- * in this case it display the flight status information in popup window on user tap on aircraf on map
+ * it is used in first home activity along google map displaying aircraft over given geographycal area , Norway & scandnivian region,
+ *  it display the flight status information in popup window on user tap on aircraf on map
  */
 class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
@@ -80,7 +80,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
         // user on tap aircraf on map
         val flightStr = intent.getStringExtra(FLIGHT_NUMBER)
 
-        // FUNCTION TO RETURN FLIGHT INFO AS ON UI LAYOUT
+        // function to display flight status info on the popup window on aircraft onclick
         flightStatusInfo(flightStr)
 
 
@@ -159,7 +159,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                 flightStatus.setTextColor(Color.RED)
                             } else {
                                 val flightStat = flightData.flightStatuses!![0]
-                               // Log.i(TAG, "FlightStatus = " + flightStat.status)
+
 
 
                                 // Carrier + flight number
@@ -446,7 +446,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      * this get the airport info from the airport list in appendix data class
      *@param appendix
      *@param airportfs
-     *@param airportName
      *@param airportName
      *@param airportCountry
      *@param  airportLonLat

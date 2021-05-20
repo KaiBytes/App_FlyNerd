@@ -98,11 +98,11 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
 
 
-        // Navigation main menu you find for navigation menus
+        // Navigation main menu
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
-        //textView = findViewById(R.id.textView)
+
         toolbar = findViewById(R.id.toolbar)
 
 
@@ -167,8 +167,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 val intent = Intent(this@AirportsListActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }
-
-
 
 
         }

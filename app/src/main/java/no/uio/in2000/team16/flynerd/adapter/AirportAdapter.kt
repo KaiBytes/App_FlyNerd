@@ -44,14 +44,7 @@ class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<A
             context.startActivity(intent)
         }
 
-//        holder.itemView.setOnClickListener(object : View.OnClickListener {
-//            override fun onClick(v: View?){
-//
-////                val activity = v!!.context as AppCompatActivity
-////                val forecastFragment = AirportFragment(dataSet[position])
-////                activity.supportFragmentManager.beginTransaction().replace(R.id.flContainer, forecastFragment).addToBackStack(null).commit()
-//            }
-//        })
+
     }
 
 
@@ -63,7 +56,7 @@ class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<A
             airportName = itemView.findViewById(R.id.airport_name)
             airportInfo = itemView.findViewById(R.id.airport_info)
 
-//            intent.putExtra("item", dataSet[adapterPosition])
+
 
         }
     }

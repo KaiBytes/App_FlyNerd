@@ -1,6 +1,10 @@
 package no.uio.in2000.team16.flynerd.flightData
 
-class FlightData {
-    var appendix: Appendix? = null
-    var flightStatuses: List<FlightStatus>? = null
-}
+
+/**
+ * flifht data class holding list of flight stustus and apendix from internal classes
+ */
+class FlightData (
+    var appendix: Appendix?,
+    var flightStatuses: List<FlightStatus>?
+)

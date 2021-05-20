@@ -1,39 +1,52 @@
 package no.uio.in2000.team16.flynerd.flightData
 
-class Appendix {
-    var airlines: List<Airline>? = null
-    var airports: List<Airport>? = null
 
-    class Airline {
-        var fs: String? = null
-        var iata: String? = null
-        var icao: String? = null
-        var name: String? = null
-        var active: Boolean = false
-    }
+/**
+ * an internal class holding information list of airline & airport as obtained from flightstatus API
+ */
 
-    class Airport {
-        var fs: String? = null
-        var iata: String? = null
-        var icao: String? = null
-        var faa: String? = null
-        var name: String? = null
-        var city: String? = null
-        var cityCode: String? = null
-        var stateCode: String? = null
-        var countryCode: String? = null
-        var countryName: String? = null
-        var regionName: String? = null
-        var timeZoneRegionName: String? = null
-        var weatherZone: String? = null
-        var localTime: String? = null
-        var utcOffsetHours: Double? = 0.0
-        var latitude: Double? = 0.0
-        var longitude: Double? = 0.0
-        var elevationFeet: Int? = 0
-        var classification: Int? = 0
-        var active: Boolean? = false
-        var weatherUrl: String? = null
-        var delayIndexUrl: String? = null
-    }
+class Appendix(var airlines: List<Airline>?, var airports: List<Airport>?) {
+
+
+    /**
+     * an internal class reprasentation of Airline and its standeard flight number designation iata & icao
+     */
+    class Airline (
+        var fs: String? ,
+        var iata: String? ,
+        var icao: String? ,
+        var name: String? ,
+        var active: Boolean
+        )
+
+
+    /**
+     * an internal class reprasentation of Airport and its info as obtained from flight staus json API
+
+     */
+
+    class Airport (
+        var fs: String? ,
+        var iata: String? ,
+        var icao: String? ,
+        var faa: String? ,
+        var name: String? ,
+        var city: String?,
+        var cityCode: String? ,
+        var stateCode: String? ,
+        var countryCode: String? ,
+        var countryName: String? ,
+        var regionName: String? ,
+        var timeZoneRegionName: String? ,
+        var weatherZone: String? ,
+        var localTime: String? ,
+        var utcOffsetHours: Double?,
+        var latitude: Double? ,
+        var longitude: Double? ,
+        var elevationFeet: Int? ,
+        var classification: Int? ,
+        var active: Boolean?,
+        var weatherUrl: String?,
+        var delayIndexUrl: String?
+    )
 }

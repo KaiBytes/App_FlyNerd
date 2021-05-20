@@ -1,23 +1,35 @@
 package no.uio.in2000.team16.flynerd.flightData
 
-class FlightStatus {
-    var flightId: Long = 0
-    var carrierFsCode: String? = null
-    var flightNumber: String? = null
-    var departureAirportFsCode: String? = null
-    var arrivalAirportFsCode: String? = null
-    var departureDate: Date? = null
-    var arrivalDate: Date? = null
-    var status: String? = null
-    var delays: Delays? = null
+/**
+ * a data class for represantation of flight status as obtained from api Json
+ */
 
-    class Date {
-        var dateUtc: String? = null
-        var dateLocal: String? = null
-    }
+class FlightStatus(
+    var flightId: Long,
+    var carrierFsCode: String?,
+    var flightNumber: String?,
+    var departureAirportFsCode: String?,
+    var arrivalAirportFsCode: String?,
+    var departureDate: Date?,
+    var arrivalDate: Date?,
+    var status: String?,
+    var delays: Delays?
+) {
 
-    class Delays {
-        var departureRunwayDelayMinutes = 0
-        var arrivalGateDelayMinutes = 0
-    }
+
+    /**
+     * internal data class for date
+     */
+    class Date (
+        var dateUtc: String? ,
+        var dateLocal: String?
+    )
+
+    /**
+     * internal data class for delay information as obtained from api
+     */
+    class Delays (
+        var departureRunwayDelayMinutes: Int =0,
+        var arrivalGateDelayMinutes: Int = 0
+    )
 }
