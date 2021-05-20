@@ -38,6 +38,8 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
     var toolbar: Toolbar? = null
     var menu: Menu? = null
 
+    val viewModel by viewModels<ForecastViewModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,6 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         val i = getIntent()
         val airportObject : Airport = i.getSerializableExtra("item") as Airport
 
-        val viewModel by viewModels<ForecastViewModel>()
         viewModel.callForecastAPI(airportObject)
 
         //initializing all views

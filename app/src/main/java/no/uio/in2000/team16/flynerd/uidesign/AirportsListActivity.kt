@@ -34,7 +34,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     //    var matchedAirports  = mutableListOf<Airport>()
     var recycleAdapter: RecyclerView.Adapter<AirportAdapter.ViewHolder>? = null
-
+    val viewModel by viewModels<AirportsListViewModel>()
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -55,7 +55,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = layoutManager
 
         //initializing airports database (without forecast data)
-        val viewModel by viewModels<AirportsListViewModel>()
+
         viewModel.createDb(this, R.raw.intair_city)
 
         //soft keyboard pop up covers layout instead of pushing it upwards
