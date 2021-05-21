@@ -2,7 +2,7 @@ package no.uio.in2000.team16.flynerd.airportweatherdata
 
 import android.content.Context
 import org.junit.Test
-
+import no.uio.in2000.team16.flynerd.Airport
 import org.junit.Assert.*
 import org.mockito.Mockito
 
