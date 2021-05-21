@@ -396,7 +396,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      */
     private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 3) {
-            throw Exception(" too short flight number!")
+            return false
         }
         if (!Character.isLetterOrDigit(flightNumberStr[0]) || !Character.isLetterOrDigit(
                 flightNumberStr[1]
@@ -423,7 +423,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      */
     private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 4) {
-            throw Exception(" too short flight number!")
+            return false
         }
         if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(
                 flightNumberStr[2]
