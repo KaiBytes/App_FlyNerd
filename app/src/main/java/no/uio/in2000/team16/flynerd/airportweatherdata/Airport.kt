@@ -1,10 +1,5 @@
 package no.uio.in2000.team16.flynerd.airportweatherdata
 
-import android.util.Log
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.core.FuelError
-import com.github.kittinunf.fuel.coroutines.awaitString
-import com.google.gson.Gson
 import java.io.Serializable
 
 /**
@@ -33,27 +28,6 @@ class Airport(
     val longtitude: Double,
     var weatherForecast: Forecast? = null
 ) : Serializable {
-
-    /**
-     * method: callForecastAPI
-     * makes api call to locationforecast api offered by MET
-     */
-    suspend fun callForecastAPI() {
-        val baseURL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/locationforecast/2.0/compact?"
-        val geoLocation = "lat=$latitude&lon=$longtitude"
-        val requestURL = "$baseURL$geoLocation"
-        val gson = Gson()
-
-        try {
-            val response =
-                Fuel.get(requestURL).header("User-Agent", "FLyNerd gjchocopasta@gmail.com")
-                    .awaitString()
-            Log.d("output", response)
-            weatherForecast = gson.fromJson(response, Forecast::class.java)
-        } catch (exception: FuelError) {
-            Log.d("Fuel", "ERROR FETCHING DATA")
-        }
-    }
 
     /**
      * Getter method section

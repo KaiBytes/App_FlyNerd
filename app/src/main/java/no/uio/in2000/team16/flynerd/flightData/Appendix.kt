@@ -19,6 +19,7 @@ class Appendix(var airlines: List<Airline>?, var airports: List<Airport>?) {
     /**
      * an internal class reprasentation of Airport and its info as obtained from flight staus json API
      */
+    @Suppress("unused")
     class Airport(
         var fs: String?,
         var iata: String?,
