@@ -455,9 +455,10 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 airportName.text = airport.name
                 airportCity.text = airport.city
                 airportCountry.text = airport.countryName
+                // // "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude warnning error
                 val geoLocation = "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
                 airportLonLat.text = geoLocation
-                   // "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
+
             }
         }
 
