@@ -1,7 +1,6 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -84,10 +83,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      * assign the obtained data class flight data to the textView UI classes
      *@param flightStr
      */
-    @SuppressLint("SetTextI18n")
     fun flightStatusInfo(flightStr: String) {
         if (flightStr.isEmpty()) {
-            flightStatus.text = "Flight number is empty!"
+            flightStatus.text = getString(R.string.flight_popup_flight_id_empty)
             flightStatus.setTextColor(Color.RED)
         } else {
             var flightNumberStr = ""
@@ -102,14 +100,15 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                     flightNumberStr
                 ))
             ) {
-                flightStatus.text = "Flight number is invalid!"
+                flightStatus.text = getString(R.string.flight_popup_flight_id_invalid)
                 flightStatus.setTextColor(Color.RED)
                 flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
             }
             // if the above condition not fulfilled it mean we have valid flight number either IATA or ICAO
             // and so the code will continue to parse for json data and operate on functions
             else {
-                flightStatus.text = "Checking $flightNumberStr"
+                flightStatus.text =
+                    getString(R.string.flight_popup_flight_id_checking, flightNumberStr)
                 flightStatus.setTextColor(Color.GREEN)
                 flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
@@ -141,7 +140,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                 if (flightData.flightStatuses.isNullOrEmpty()) {
                                     flightStatus.text =
-                                        "This is  non-commercial aircraft \n Currently We  provide flight status information for commercial flight!"
+                                        getString(R.string.flight_popup_flight_id_non_commercial)
                                     flightStatus.setTextColor(Color.RED)
                                 } else {
                                     val flightStat = flightData.flightStatuses!![0]
@@ -149,8 +148,11 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
                                     Log.i(TAG, "Flight number = " + flightStat.flightNumber)
-                                    flightNumberRes.text =
-                                        "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    flightNumberRes.text = getString(
+                                        R.string.flight_popup_flight_id_text,
+                                        flightStat.carrierFsCode,
+                                        flightStat.flightNumber
+                                    )
 
                                     // Departure
                                     Log.i(
@@ -210,13 +212,16 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                     when (flightStat.status) {
                                         "S" -> {
-                                            flightStatus.text = "Flight scheduled"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_scheduled)
                                         }
                                         "A" -> {
-                                            flightStatus.text = "Flight on Air"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_in_air)
                                         }
                                         "L" -> {
-                                            flightStatus.text = "Flight landed"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_landed)
                                         }
                                         else -> {
                                             flightStatus.text = flightStat.status
@@ -226,12 +231,15 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                     if (flightStat.delays == null) {
-                                        flightDelayResult.text = "No delay!"
+                                        flightDelayResult.text =
+                                            getString(R.string.flight_popup_delay_none)
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text =
-                                            "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        flightDelayResult.text = getString(
+                                            R.string.flight_popup_delay,
+                                            flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes
+                                        )
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     }
@@ -269,7 +277,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                 if (flightData.flightStatuses.isNullOrEmpty()) {
                                     flightStatus.text =
-                                        "This is  non-commercial aircraft, \nCurrently We  provide flight status information for commercial flight! "
+                                        getString(R.string.flight_popup_flight_id_non_commercial)
                                     flightStatus.setTextColor(Color.RED)
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
                                 } else {
@@ -279,8 +287,11 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
                                     Log.i(TAG, "Flight number = " + flightStat.flightNumber)
-                                    flightNumberRes.text =
-                                        "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    flightNumberRes.text = getString(
+                                        R.string.flight_popup_flight_id_text,
+                                        flightStat.carrierFsCode,
+                                        flightStat.flightNumber
+                                    )
 
                                     // Departure
                                     Log.i(
@@ -333,13 +344,16 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                     when (flightStat.status) {
                                         "S" -> {
-                                            flightStatus.text = "Flight scheduled"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_scheduled)
                                         }
                                         "A" -> {
-                                            flightStatus.text = "Flight on Air"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_in_air)
                                         }
                                         "L" -> {
-                                            flightStatus.text = "Flight landed"
+                                            flightStatus.text =
+                                                getString(R.string.flight_popup_flight_status_landed)
                                         }
                                         else -> {
                                             flightStatus.text = flightStat.status
@@ -349,12 +363,15 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                     if (flightStat.delays == null) {
-                                        flightDelayResult.text = "No delay!"
+                                        flightDelayResult.text =
+                                            getString(R.string.flight_popup_delay_none)
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text =
-                                            "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        flightDelayResult.text = getString(
+                                            R.string.flight_popup_delay,
+                                            flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes
+                                        )
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     }
@@ -453,7 +470,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 airportCity.text = airport.city
                 airportCountry.text = airport.countryName
                 airportLonLat.text =
-                    "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
+                    getString(R.string.flight_popup_lon_lat, airport.longitude, airport.latitude)
             }
         }
 

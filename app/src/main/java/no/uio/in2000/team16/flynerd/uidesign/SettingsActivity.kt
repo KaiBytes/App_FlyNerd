@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         setSupportActionBar(toolbar)
         val textView = findViewById<View>(R.id.toolbarTextView) as TextView
-        textView.text = "Setting"
+        textView.text = getString(R.string.activity_settings_title)
 
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         navigationView?.bringToFront()

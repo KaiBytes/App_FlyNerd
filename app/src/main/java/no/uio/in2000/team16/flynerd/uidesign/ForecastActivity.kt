@@ -65,14 +65,20 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         //ui components will be updated with every change registered
         viewModel.forecastLiveData.observe(this, Observer {
 
-            nameView!!.text = "Airport Name : ${airportObject.name}"
-            cityName!!.text = "Serviced City : ${airportObject.city}"
+            nameView!!.text = getString(R.string.activity_forecast_airport, airportObject.name)
+            cityName!!.text = getString(R.string.activity_forecast_city, airportObject.city)
             //longitude!!.text = "LON : ${airportObject.longtitude}"
             //latitude!!.text = "LAT : ${airportObject.latitude}"
-            temperatureView!!.text = "Temperature : ${airportObject.getTemperature()}"
-            precipationView!!.text = "Precipation Amount : ${airportObject.getPrecipationAmount()}"
-            windView!!.text = "Wind Force : ${airportObject.getWindForce()}"
-            skyView!!.text = "Current Weather : ${airportObject.getCurrentWeather()}"
+            temperatureView!!.text =
+                getString(R.string.activity_forecast_temperature, airportObject.getTemperature())
+            precipationView!!.text = getString(
+                R.string.activity_forecast_precipitation,
+                airportObject.getPrecipationAmount()
+            )
+            windView!!.text =
+                getString(R.string.activity_forecast_wind, airportObject.getWindForce())
+            skyView!!.text =
+                getString(R.string.activity_forecast_weather, airportObject.getCurrentWeather())
             imageId = resources.getIdentifier(
                 airportObject.getCurrentWeather().replace(" ", "_"),
                 "drawable",

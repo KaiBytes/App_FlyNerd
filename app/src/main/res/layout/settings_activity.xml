@@ -38,21 +38,21 @@
                 android:id="@+id/tv_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Accessibility" />
+                android:text="@string/activity_settings_accessibility" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="🔍 Larger Text" />
+                android:text="@string/activity_settings_text_size" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="👓 Bold Text" />
+                android:text="@string/activity_settings_text_bold" />
         </LinearLayout>
 
     </LinearLayout>

@@ -129,8 +129,13 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
             timesDeparture.view.visibility = View.GONE
 
             airportIATA.text = airport.iata
-            airportName.text = airport.name ?: "(unknown)"
-            airportPlace.text = "${airport.city}, ${airport.country}"
+            airportName.text = airport.name
+                ?: itemView.context.getString(R.string.flight_display_unknown)
+            airportPlace.text = itemView.context.getString(
+                R.string.flight_display_airport_place,
+                airport.city,
+                airport.country
+            )
         }
 
         private fun bindDeparture(departureTimes: FlightJunctureTimes) {
@@ -166,20 +171,26 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
              * Fill underlying view with given times and delay information.
              */
             fun bind(times: FlightJunctureTimes) {
-                actualLabel.text = times.actual?.let { "actual" } ?: "estimated"
+                actualLabel.text =
+                    times.actual?.let { view.context.getString(R.string.flight_display_juncture_actual) }
+                        ?: view.context.getString(
+                            R.string.flight_display_juncture_estimated
+                        )
                 scheduledLocal.text = times.scheduled?.local?.let(this::formatTime)
-                    ?.let { "$it " }
-                    ?: "(unknown)"
+                    ?.let { view.context.getString(R.string.flight_display_time_local, it) }
+                    ?: view.context.getString(R.string.flight_display_unknown)
                 scheduledUtc.text = times.scheduled?.utc?.let(this::formatTime)
-                    ?.let { "($it UTC)" }
+                    ?.let { view.context.getString(R.string.flight_display_time_utc, it) }
                     ?: ""
                 actualLocal.text = (times.actual ?: times.estimated)?.local?.let(this::formatTime)
-                    ?.let { "$it " }
-                    ?: "(unknown)"
+                    ?.let { view.context.getString(R.string.flight_display_time_local, it) }
+                    ?: view.context.getString(R.string.flight_display_unknown)
                 actualUtc.text = (times.actual ?: times.estimated)?.utc?.let(this::formatTime)
-                    ?.let { "($it UTC)" }
+                    ?.let { view.context.getString(R.string.flight_display_time_utc, it) }
                     ?: ""
-                delay.text = times.delay?.toMinutes()?.let { "$it min" } ?: "on time"
+                delay.text = times.delay?.toMinutes()
+                    ?.let { view.context.getString(R.string.flight_display_delay, it) }
+                    ?: view.context.getString(R.string.flight_display_delay_none)
             }
 
             private fun formatTime(time: TemporalAccessor) =
@@ -205,11 +216,15 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
                 FlightStatus.ACTIVE, FlightStatus.DIVERTED, FlightStatus.REDIRECTED -> {
                     next.arrivalTimes.run { actual ?: estimated ?: scheduled }?.let { arrival ->
                         val label = next.arrivalTimes.run {
-                            actual?.let { "actual" } ?: estimated?.let { "estimated" }
-                            ?: "scheduled"
+                            actual?.let { itemView.context.getString(R.string.flight_display_juncture_actual) }
+                                ?: estimated?.let { itemView.context.getString(R.string.flight_display_juncture_estimated) }
+                                ?: itemView.context.getString(R.string.flight_display_juncture_scheduled)
                         }
                         val duration = Duration.between(Instant.now(), arrival.utc.toInstant())
-                        remainingLabel.text = "$label remaining"
+                        remainingLabel.text = itemView.context.getString(
+                            R.string.flight_display_remaining_label,
+                            label
+                        )
                         remaining.text = formatDuration(duration)
                     }
                 }

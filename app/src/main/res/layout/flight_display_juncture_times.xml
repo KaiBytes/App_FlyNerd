@@ -9,7 +9,7 @@
         android:id="@+id/flight_display_juncture_scheduled_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="scheduled"
+        android:text="@string/flight_display_juncture_scheduled_label"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:id="@+id/flight_display_juncture_delay_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="delay"
+        android:text="@string/flight_display_juncture_delay_label"
         android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"

@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-smallcaps"
         android:includeFontPadding="false"
-        android:text="Welcome to Flynerd!"
+        android:text="@string/activity_splash_screen_title_app"
         android:textColor="@color/black"
         android:textSize="30sp" />
 

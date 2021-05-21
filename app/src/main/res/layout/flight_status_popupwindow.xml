@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
 
         android:fontFamily="sans-serif-light"
-        android:text="Flight Status"
+        android:text="@string/flight_popup_title"
         android:textColor="@color/white"
         android:textSize="24sp" />
 
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/flightResult"
-        android:text="Departure:"
+        android:text="@string/flight_popup_departure_label"
         android:textSize="32dp" />
 
     <TextView
@@ -121,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/departureAirportLonLat"
-        android:text="Arrival:"
+        android:text="@string/flight_popup_arrival_label"
         android:textSize="32dp" />
 
     <TextView
