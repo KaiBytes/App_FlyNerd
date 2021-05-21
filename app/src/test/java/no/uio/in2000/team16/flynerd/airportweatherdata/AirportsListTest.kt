@@ -1,7 +1,6 @@
 package no.uio.in2000.team16.flynerd.airportweatherdata
 
 import android.content.Context
-import no.uio.in2000.team16.flynerd.Airport
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito

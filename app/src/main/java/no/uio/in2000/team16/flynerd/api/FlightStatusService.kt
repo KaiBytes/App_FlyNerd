@@ -1,6 +1,5 @@
 package no.uio.in2000.team16.flynerd.api
 
-import no.uio.in2000.team16.flynerd.FlightStatus
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

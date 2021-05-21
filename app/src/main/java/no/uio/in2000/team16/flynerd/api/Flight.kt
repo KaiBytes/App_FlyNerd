@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.api
 
 import com.google.gson.annotations.SerializedName
 import java.time.Duration

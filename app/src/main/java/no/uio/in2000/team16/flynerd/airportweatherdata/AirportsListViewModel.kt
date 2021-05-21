@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.Airport
 
 /**
  * Class acts as a container to collect and store all airport objects to be created from hard coded
@@ -80,8 +79,7 @@ class AirportsListViewModel : ViewModel() {
         latitude: Double,
         longtitude: Double
     ): Airport {
-        val tmp = Airport(ICAO, city, name, country, latitude, longtitude)
-        return tmp
+        return Airport(ICAO, city, name, country, latitude, longtitude)
     }
 
     //coroutine function which will match a user defined city to airports that service it.

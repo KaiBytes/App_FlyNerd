@@ -9,7 +9,6 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.Airport
 
 /**
  * partner class to the forecast activity class.

@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import kotlinx.coroutines.*
 import no.uio.in2000.team16.flynerd.api.OpenSkyRepository
+import no.uio.in2000.team16.flynerd.mapdata.AircraftState
+import no.uio.in2000.team16.flynerd.mapdata.AircraftStates
 import java.io.IOException
 import java.time.Duration
 import java.time.Instant

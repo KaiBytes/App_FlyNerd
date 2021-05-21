@@ -7,7 +7,6 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -53,38 +52,38 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         navigationView?.setNavigationItemSelectedListener(this)
         navigationView?.setCheckedItem(R.id.Setting)
 
-        val setting_tv1: TextView = findViewById(R.id.tv_setting)
+        val settingTv1: TextView = findViewById(R.id.tv_setting)
         val mySwitch: SwitchCompat = findViewById(R.id.switch1)
         val mySwitch2: SwitchCompat = findViewById(R.id.switch2)
-        mySwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+        mySwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // If the switch button is on
-                setting_tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
-                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
-                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
+                settingTv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
+                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
+                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
             } else {
                 // If the switch button is off
-                setting_tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
-                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
-                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+                settingTv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+                mySwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+                mySwitch2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
 
             }
-        })
+        }
 
-        mySwitch2.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+        mySwitch2.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // If the switch button is on
-                setting_tv1.setTypeface(null, Typeface.BOLD);
-                mySwitch.setTypeface(null, Typeface.BOLD);
-                mySwitch2.setTypeface(null, Typeface.BOLD);
+                settingTv1.setTypeface(null, Typeface.BOLD)
+                mySwitch.setTypeface(null, Typeface.BOLD)
+                mySwitch2.setTypeface(null, Typeface.BOLD)
             } else {
                 // If the switch button is off
-                setting_tv1.setTypeface(null, Typeface.NORMAL);
-                mySwitch.setTypeface(null, Typeface.NORMAL);
-                mySwitch2.setTypeface(null, Typeface.NORMAL);
+                settingTv1.setTypeface(null, Typeface.NORMAL)
+                mySwitch.setTypeface(null, Typeface.NORMAL)
+                mySwitch2.setTypeface(null, Typeface.NORMAL)
 
             }
-        })
+        }
     }
 
     override fun onBackPressed() {

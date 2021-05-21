@@ -18,16 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import no.uio.in2000.team16.flynerd.AirportAdapter
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.adapter.AirportAdapter
 import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsListViewModel
 
 class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -51,7 +50,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
 
         //Setting up recyclerview
-        val layoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(this)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView).also {
             it.layoutManager = layoutManager
         }
@@ -61,17 +60,17 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         viewModel.createDb(this, R.raw.intair_city)
 
         //soft keyboard pop up covers layout instead of pushing it upwards
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         //setting up autocomplete functionality
-        ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cities).also { adapter ->
+        ArrayAdapter(this, android.R.layout.simple_list_item_1, cities).also { adapter ->
             userInput.setAdapter(adapter)
         }
 
         //search button implementation
         searchButton.setOnClickListener {
             //capitalizes all words in string
-            val input: String? = userInput.text.toString().capitalizeFirstLetter()
+            val input: String = userInput.text.toString().capitalizeFirstLetter()
 
             //if input run IO coroutine to find airports that match search criteria
             if (input != null) {
@@ -85,7 +84,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         //show results once livedata variable in viewModel signals an update
         //this means that coroutine above was succesfull
-        viewModel.matchedLiveData.observe(this@AirportsListActivity, Observer {
+        viewModel.matchedLiveData.observe(this@AirportsListActivity) {
 
             //show a toast with warning message when no matched airports have been found
             if (viewModel.matchedLiveData.value!!.size == 0) {
@@ -98,7 +97,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
             recycleAdapter = AirportAdapter(viewModel.matchedLiveData.value!!)
             recyclerView.adapter = recycleAdapter
-        })
+        }
 
         // Navigation main menu
 

@@ -47,25 +47,25 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flight_status_popupwindow)
 
-        flightStatus = findViewById<TextView>(R.id.flightStatus)
-        flightDelayResult = findViewById<TextView>(R.id.flightResult)
-        flightNumberRes = findViewById<TextView>(R.id.flightNumberText)
+        flightStatus = findViewById(R.id.flightStatus)
+        flightDelayResult = findViewById(R.id.flightResult)
+        flightNumberRes = findViewById(R.id.flightNumberText)
 
         // Departure
-        departureAirport = findViewById<TextView>(R.id.departureAirport)
-        departureDate = findViewById<TextView>(R.id.departureDate)
-        departureAirportName = findViewById<TextView>(R.id.departureAirportName)
-        departureAirportCity = findViewById<TextView>(R.id.departureAirportCity)
-        departureAirportCountry = findViewById<TextView>(R.id.departureAirportCountry)
-        departureAirportLonLat = findViewById<TextView>(R.id.departureAirportLonLat)
+        departureAirport = findViewById(R.id.departureAirport)
+        departureDate = findViewById(R.id.departureDate)
+        departureAirportName = findViewById(R.id.departureAirportName)
+        departureAirportCity = findViewById(R.id.departureAirportCity)
+        departureAirportCountry = findViewById(R.id.departureAirportCountry)
+        departureAirportLonLat = findViewById(R.id.departureAirportLonLat)
 
         // Arrival
-        arrivalAirport = findViewById<TextView>(R.id.arrivalAirport)
-        arrivalDate = findViewById<TextView>(R.id.arrivalDate)
-        arrivalAirportName = findViewById<TextView>(R.id.arrivalAirportName)
-        arrivalAirportCity = findViewById<TextView>(R.id.arrivalAirportCity)
-        arrivalAirportCountry = findViewById<TextView>(R.id.arrivalAirportCountry)
-        arrivalAirportLonLat = findViewById<TextView>(R.id.arrivalAirportLonLat)
+        arrivalAirport = findViewById(R.id.arrivalAirport)
+        arrivalDate = findViewById(R.id.arrivalDate)
+        arrivalAirportName = findViewById(R.id.arrivalAirportName)
+        arrivalAirportCity = findViewById(R.id.arrivalAirportCity)
+        arrivalAirportCountry = findViewById(R.id.arrivalAirportCountry)
+        arrivalAirportLonLat = findViewById(R.id.arrivalAirportLonLat)
 
         //Excute onMarkClick function for intent and putExtra methods accessing flight info through flight number from
         // user on tap aircraf on map
@@ -95,7 +95,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
             }
 
             // checking if the flight number is valid with checkFlightNumber function and use the flight number
-            if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(
+            if (!(checkFlightNumberICAO(flightNumberStr) || checkFlightNumberIATA(
                     flightNumberStr
                 ))
             ) {
@@ -117,19 +117,19 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 val formatted = current.format(formatter)
 
                 // conditionally parsing data for flight number type : IATA
-                if (checkFlightNumber_IATA(flightNumberStr)) {
+                if (checkFlightNumberIATA(flightNumberStr)) {
                     try {
-                        val flightUrl_IATA = (flightApi
+                        val flightUrlIATA = (flightApi
                                 + flightNumberStr.substring(0, 2) + "/" + flightNumberStr.substring(
                             2
                         ) + "/"
                                 + "arr/" + formatted + "?appId=" + AppID
                                 + "&appKey=" + AppKey
                                 + "&utc=false")
-                        Log.i(TAG, flightUrl_IATA)
+                        Log.i(TAG, flightUrlIATA)
 
                         lifecycleScope.launch {
-                            val jsonStr = Fuel.get(flightUrl_IATA).awaitString()
+                            val jsonStr = Fuel.get(flightUrlIATA).awaitString()
 
                             if (jsonStr.isNotEmpty()) {
                                 Log.i(TAG, jsonStr)
@@ -258,17 +258,17 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 else {
                     try {
 
-                        val flightUrl_ICOA = (flightApi
+                        val flightUrlICOA = (flightApi
                                 + flightNumberStr.substring(0, 3) + "/" + flightNumberStr.substring(
                             3
                         ) + "/"
                                 + "arr/" + formatted + "?appId=" + AppID
                                 + "&appKey=" + AppKey
                                 + "&utc=false")
-                        Log.i(TAG, flightUrl_ICOA)
+                        Log.i(TAG, flightUrlICOA)
 
                         lifecycleScope.launch {
-                            val jsonStr = Fuel.get(flightUrl_ICOA).awaitString()
+                            val jsonStr = Fuel.get(flightUrlICOA).awaitString()
 
                             if (jsonStr.isNotEmpty()) {
                                 Log.i(TAG, jsonStr)
@@ -399,7 +399,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *@param flightNumberStr
      *@return true, boolean value
      */
-    private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
+    private fun checkFlightNumberIATA(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 3) {
             return false
         }
@@ -426,7 +426,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *@param flightNumberStr
      *@return true, boolean value
      */
-    private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
+    private fun checkFlightNumberICAO(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 4) {
             return false
         }

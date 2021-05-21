@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import no.uio.in2000.team16.flynerd.*
+import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.api.*
 import java.time.Duration
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -18,7 +19,7 @@ import java.time.temporal.TemporalAmount
 /**
  * For displaying the junctures and progress of a [Flight] in a [RecyclerView].
  */
-internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapter.ViewHolder>() {
+internal class FlightDisplayAdapter : RecyclerView.Adapter<FlightDisplayAdapter.ViewHolder>() {
     internal var flight: Flight? = null
         set(value) {
             field = value

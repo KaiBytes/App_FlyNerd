@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.mapdata
 
 import com.google.android.gms.maps.model.LatLng
 import java.time.Instant

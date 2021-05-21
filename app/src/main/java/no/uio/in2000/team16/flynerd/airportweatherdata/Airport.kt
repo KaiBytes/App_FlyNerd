@@ -1,11 +1,10 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.airportweatherdata
 
 import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
-import no.uio.in2000.team16.flynerd.airportweatherdata.Forecast
 import java.io.Serializable
 
 /**

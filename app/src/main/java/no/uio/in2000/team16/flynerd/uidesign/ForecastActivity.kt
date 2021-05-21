@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.*
+import no.uio.in2000.team16.flynerd.airportweatherdata.Airport
 import no.uio.in2000.team16.flynerd.airportweatherdata.ForecastViewModel
 
-class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ForecastActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //defining all views
     var temperatureView: TextView? = null
@@ -44,7 +44,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         setContentView(R.layout.activity_forecast_updated)
 
         //importing airport object from intent
-        val i = getIntent()
+        val i = intent
         val airportObject: Airport = i.getSerializableExtra("item") as Airport
 
         viewModel.callForecastAPI(airportObject)
@@ -63,7 +63,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         //once livedata variable gets updated in forecastActivityViewModel,
         //information will be displayed. observer sniffs for updates
         //ui components will be updated with every change registered
-        viewModel.forecastLiveData.observe(this, Observer {
+        viewModel.forecastLiveData.observe(this) {
 
             nameView!!.text = getString(R.string.activity_forecast_airport, airportObject.name)
             cityName!!.text = getString(R.string.activity_forecast_city, airportObject.city)
@@ -94,7 +94,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
                 pictureView!!.setImageResource(imageId!!)
             }
 
-        })
+        }
 
         // Navigation main menu you find for navigation menus
 

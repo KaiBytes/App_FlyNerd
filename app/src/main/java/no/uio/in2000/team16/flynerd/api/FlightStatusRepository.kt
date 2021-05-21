@@ -1,7 +1,6 @@
 package no.uio.in2000.team16.flynerd.api
 
 import com.google.gson.GsonBuilder
-import no.uio.in2000.team16.flynerd.*
 import no.uio.in2000.team16.flynerd.util.registerLocalDateTime
 import no.uio.in2000.team16.flynerd.util.registerZonedDateTime
 import okhttp3.HttpUrl

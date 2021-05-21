@@ -2,7 +2,6 @@ package no.uio.in2000.team16.flynerd.airportweatherdata
 
 import android.content.Context
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
-import no.uio.in2000.team16.flynerd.Airport
 
 /**
  * AirportsList class

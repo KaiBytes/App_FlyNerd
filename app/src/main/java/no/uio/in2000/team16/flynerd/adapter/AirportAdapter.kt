@@ -1,4 +1,4 @@
-package no.uio.in2000.team16.flynerd
+package no.uio.in2000.team16.flynerd.adapter
 
 import android.content.Intent
 import android.util.Log
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
+import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.airportweatherdata.Airport
 import no.uio.in2000.team16.flynerd.uidesign.ForecastActivity
 
 /**
@@ -23,7 +25,7 @@ class AirportAdapter(val dataSet: MutableList<Airport>) :
     RecyclerView.Adapter<AirportAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AirportAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = LayoutInflater.from(parent.context).inflate(R.layout.element, parent, false)
         return ViewHolder(layout)
     }
@@ -32,11 +34,11 @@ class AirportAdapter(val dataSet: MutableList<Airport>) :
         return dataSet.size
     }
 
-    override fun onBindViewHolder(holder: AirportAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.airportName.text = dataSet[position].name
         holder.airportInfo.text = dataSet[position].country
         val context = holder.itemView.context
-        val intent: Intent = Intent(context, ForecastActivity::class.java)
+        val intent = Intent(context, ForecastActivity::class.java)
         Log.d("position", position.toString())
 
         intent.putExtra("item", dataSet[position])
@@ -46,12 +48,7 @@ class AirportAdapter(val dataSet: MutableList<Airport>) :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var airportName: TextView
-        var airportInfo: TextView
-
-        init {
-            airportName = itemView.findViewById(R.id.airport_name)
-            airportInfo = itemView.findViewById(R.id.airport_info)
-        }
+        var airportName: TextView = itemView.findViewById(R.id.airport_name)
+        var airportInfo: TextView = itemView.findViewById(R.id.airport_info)
     }
 }

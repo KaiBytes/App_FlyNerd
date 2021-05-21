@@ -4,6 +4,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import kotlinx.coroutines.delay
 import no.uio.in2000.team16.flynerd.*
+import no.uio.in2000.team16.flynerd.mapdata.AircraftPositionSource
+import no.uio.in2000.team16.flynerd.mapdata.AircraftState
+import no.uio.in2000.team16.flynerd.mapdata.AircraftStates
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

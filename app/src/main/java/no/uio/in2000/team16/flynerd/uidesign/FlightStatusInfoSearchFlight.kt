@@ -22,6 +22,8 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.*
 import no.uio.in2000.team16.flynerd.*
 import no.uio.in2000.team16.flynerd.adapter.FlightDisplayAdapter
+import no.uio.in2000.team16.flynerd.api.Flight
+import no.uio.in2000.team16.flynerd.api.FlightId
 import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
 import java.time.LocalDate
@@ -74,7 +76,7 @@ class FlightStatusInfoSearchFlight : AppCompatActivity(),
         val searchButton = findViewById<Button>(R.id.buttonSearchFStatus)
         val loading = findViewById<LottieAnimationView>(R.id.animationLoading2)
 
-        loading.setVisibility(View.GONE)
+        loading.visibility = View.GONE
         searchButton.setOnClickListener {
             val inputManager: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
