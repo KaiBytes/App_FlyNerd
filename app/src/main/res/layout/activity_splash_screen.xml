@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen"
-    >
+    tools:context=".SplashScreen">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation"
@@ -15,8 +14,7 @@
         android:layout_marginTop="100dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/airplane"
-        />
+        app:lottie_rawRes="@raw/airplane" />
 
     <TextView
         android:id="@+id/titleApp"
@@ -41,6 +39,5 @@
         android:text="@string/appDescription"
         android:textColor="@color/black"
         android:textSize="20sp" />
-
 
 </RelativeLayout>

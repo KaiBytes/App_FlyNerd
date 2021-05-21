@@ -4,7 +4,6 @@ import android.content.Context
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import no.uio.in2000.team16.flynerd.Airport
 
-
 /**
  * AirportsList class
  * class creation warranted by creator principle
@@ -16,12 +15,12 @@ import no.uio.in2000.team16.flynerd.Airport
  * @param context - contains activity context of activity where this class is called.
  * @param databaseId - reference to the database to be read into airport objects
  * @param airports - variabl defined and initialized when creating an AirportsList object
-
  */
-
-class AirportsList (val context : Context, var databaseId : Int, var airports : MutableList<Airport> = mutableListOf()){
-
-
+class AirportsList(
+    val context: Context,
+    var databaseId: Int,
+    var airports: MutableList<Airport> = mutableListOf()
+) {
     /**
      * uses 3rd party package to read csv data.
      * information can be found by following the link below
@@ -37,18 +36,34 @@ class AirportsList (val context : Context, var databaseId : Int, var airports : 
 
         tsvReader.open(context.resources.openRawResource(databaseId)) {
             readAllAsSequence().forEach { row ->
-                appendToList(createAirport(row[0], row[1], row[2], row[3], row[4].toDouble(), row[5].toDouble()))
+                appendToList(
+                    createAirport(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4].toDouble(),
+                        row[5].toDouble()
+                    )
+                )
             }
         }
     }
 
-    fun createAirport(ICAO : String, city : String?,  name : String, country : String, latitude : Double, longtitude : Double) : Airport {
-        val tmp = Airport(ICAO,city, name, country, latitude, longtitude)
+    fun createAirport(
+        ICAO: String,
+        city: String?,
+        name: String,
+        country: String,
+        latitude: Double,
+        longtitude: Double
+    ): Airport {
+        val tmp = Airport(ICAO, city, name, country, latitude, longtitude)
         println(tmp)
         return tmp
     }
 
-    fun appendToList(airportObject : Airport) {
+    fun appendToList(airportObject: Airport) {
         airports.add(airportObject)
     }
 }

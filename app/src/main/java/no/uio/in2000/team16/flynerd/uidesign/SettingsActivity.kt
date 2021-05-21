@@ -20,13 +20,11 @@ import com.google.android.material.navigation.NavigationView
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
 
-
 class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
     var menu: Menu? = null
-
 
     var switch2: Switch? = null
 
@@ -53,12 +51,10 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.string.navigation_drawer_close
         )
 
-
         drawerLayout?.addDrawerListener(toggle)
         toggle.syncState()
         navigationView?.setNavigationItemSelectedListener(this)
         navigationView?.setCheckedItem(R.id.Setting)
-
 
         val setting_tv1: TextView = findViewById(R.id.tv_setting)
         val mySwitch: SwitchCompat = findViewById(R.id.switch1)
@@ -111,18 +107,15 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.flightStatus -> {
                 val intent = Intent(this@SettingsActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
-
             }
 
             R.id.Setting -> {
-
             }
 
             R.id.airportweather -> {
                 val intent = Intent(this@SettingsActivity, AirportsListActivity::class.java)
                 startActivity(intent)
             }
-
 
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)

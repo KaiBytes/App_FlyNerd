@@ -12,23 +12,23 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import no.uio.in2000.team16.flynerd.AirportAdapter
-import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsListViewModel
 import no.uio.in2000.team16.flynerd.MapActivity
 import no.uio.in2000.team16.flynerd.R
+import no.uio.in2000.team16.flynerd.airportweatherdata.AirportsListViewModel
 
 class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,7 +69,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         //search button implementation
         searchButton.setOnClickListener {
             //capitalizes all words in string
-            val input : String? = userInput.text.toString().capitalizeFirstLetter()
+            val input: String? = userInput.text.toString().capitalizeFirstLetter()
 
             //if input run IO coroutine to find airports that match search criteria
             if (input != null) {
@@ -77,7 +77,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                     viewModel.matchAirportWithCity(input)
                 }
             }
-
 
             dismissKeyboard(this)
         }
@@ -87,16 +86,17 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         viewModel.matchedLiveData.observe(this@AirportsListActivity, Observer {
 
             //show a toast with warning message when no matched airports have been found
-            if (viewModel.matchedLiveData.value!!.size == 0){
-                Toast.makeText(this,"No airports are servicing this city.\nDid you spell the city name correctly?",
-                    Toast.LENGTH_LONG).show()
+            if (viewModel.matchedLiveData.value!!.size == 0) {
+                Toast.makeText(
+                    this,
+                    "No airports are servicing this city.\nDid you spell the city name correctly?",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
             recycleAdapter = AirportAdapter(viewModel.matchedLiveData.value!!)
             findViewById<RecyclerView>(R.id.recyclerView).adapter = recycleAdapter
         })
-
-
 
         // Navigation main menu
 
@@ -104,7 +104,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         navigationView = findViewById(R.id.nav_view)
 
         toolbar = findViewById(R.id.toolbar)
-
 
         // toolbar
         setSupportActionBar(toolbar)
@@ -128,7 +127,8 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
     //function that capitalizes all words in a string. Needed in city names.
-    private fun String.capitalizeFirstLetter() = this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
+    private fun String.capitalizeFirstLetter() =
+        this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
 
     private fun dismissKeyboard(activity: Activity) {
         val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -136,8 +136,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             activity.currentFocus!!.applicationWindowToken, 0
         )
     }
-
-
 
     override fun onBackPressed() {
         if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
@@ -147,7 +145,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         }
     }
 
-
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
@@ -155,7 +152,8 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 startActivity(intent)
             }
             R.id.flightStatus -> {
-                val intent = Intent(this@AirportsListActivity, FlightStatusInfoSearchFlight::class.java)
+                val intent =
+                    Intent(this@AirportsListActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
 
             }
@@ -167,8 +165,6 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 val intent = Intent(this@AirportsListActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }
-
-
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true

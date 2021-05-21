@@ -26,7 +26,8 @@ import no.uio.in2000.team16.flynerd.api.FlightStatusRepository
 import okhttp3.HttpUrl
 import java.time.LocalDate
 
-class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FlightStatusInfoSearchFlight : AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener {
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -42,7 +43,6 @@ class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavig
         navigationView = findViewById(R.id.nav_view)
         //textView = findViewById(R.id.textView)
         toolbar = findViewById(R.id.toolbar)
-
 
         // toolbar
         setSupportActionBar(toolbar)
@@ -197,7 +197,6 @@ class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavig
         }
     }
 
-
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.nav_home -> {
@@ -208,19 +207,15 @@ class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavig
 
             }
 
-
             R.id.airportweather -> {
-                val intent = Intent(this@FlightStatusInfoSearchFlight, AirportsListActivity::class.java)
+                val intent =
+                    Intent(this@FlightStatusInfoSearchFlight, AirportsListActivity::class.java)
                 startActivity(intent)
             }
             R.id.Setting -> {
                 val intent = Intent(this@FlightStatusInfoSearchFlight, SettingsActivity::class.java)
                 startActivity(intent)
             }
-
-
-
-
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true
@@ -228,7 +223,5 @@ class FlightStatusInfoSearchFlight : AppCompatActivity(), NavigationView.OnNavig
 
     companion object {
         const val TAG = "FlightStatusUI"
-
-
     }
 }

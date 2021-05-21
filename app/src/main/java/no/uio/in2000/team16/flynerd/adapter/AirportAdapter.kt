@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import no.uio.in2000.team16.flynerd.uidesign.ForecastActivity
 
-
 /**
  * Needed for recyclerview in main activity.
  * https://developer.android.com/guide/topics/ui/layout/recyclerview#kotlin
@@ -20,7 +19,8 @@ import no.uio.in2000.team16.flynerd.uidesign.ForecastActivity
  * @param dataSet - passed from main activity. contains all airports that service a user specified city
  */
 
-class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<AirportAdapter.ViewHolder>() {
+class AirportAdapter(val dataSet: MutableList<Airport>) :
+    RecyclerView.Adapter<AirportAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AirportAdapter.ViewHolder {
@@ -36,30 +36,22 @@ class AirportAdapter(val dataSet: MutableList<Airport>) : RecyclerView.Adapter<A
         holder.airportName.text = dataSet[position].name
         holder.airportInfo.text = dataSet[position].country
         val context = holder.itemView.context
-        val intent : Intent = Intent(context, ForecastActivity::class.java)
+        val intent: Intent = Intent(context, ForecastActivity::class.java)
         Log.d("position", position.toString())
 
         intent.putExtra("item", dataSet[position])
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             context.startActivity(intent)
         }
-
-
     }
 
-
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var airportName : TextView
-        var airportInfo : TextView
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var airportName: TextView
+        var airportInfo: TextView
 
         init {
             airportName = itemView.findViewById(R.id.airport_name)
             airportInfo = itemView.findViewById(R.id.airport_info)
-
-
-
         }
     }
-
-
 }

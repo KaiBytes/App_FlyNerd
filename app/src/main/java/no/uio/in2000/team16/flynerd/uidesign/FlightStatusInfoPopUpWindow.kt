@@ -1,10 +1,7 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
+
 import android.annotation.SuppressLint
-import no.uio.in2000.team16.flynerd.flightData.Appendix
-import no.uio.in2000.team16.flynerd.flightData.FlightData
-
-
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -17,10 +14,10 @@ import com.github.kittinunf.fuel.coroutines.awaitString
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import no.uio.in2000.team16.flynerd.R
-
+import no.uio.in2000.team16.flynerd.flightData.Appendix
+import no.uio.in2000.team16.flynerd.flightData.FlightData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 /**
  * This class uses to get the flight information and used in displaying flight status as popup window
@@ -28,8 +25,6 @@ import java.time.format.DateTimeFormatter
  *  it display the flight status information in popup window on user tap on aircraf on map
  */
 class FlightStatusInfoPopUpWindow : AppCompatActivity() {
-
-
     lateinit var flightStatus: TextView
     lateinit var flightDelayResult: TextView
     lateinit var flightNumberRes: TextView
@@ -49,9 +44,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
     lateinit var arrivalAirportCity: TextView
     lateinit var arrivalAirportCountry: TextView
     lateinit var arrivalAirportLonLat: TextView
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,10 +75,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
         // function to display flight status info on the popup window on aircraft onclick
         flightStatusInfo(flightStr)
-
-
     }
-
 
     /**  this function process the most important task in this flight stutus information  class
      *  straem json api by using fuel library
@@ -95,12 +84,8 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      * assign the obtained data class flight data to the textView UI classes
      *@param flightStr
      */
-
-
     @SuppressLint("SetTextI18n")
-    fun flightStatusInfo(flightStr: String){
-
-
+    fun flightStatusInfo(flightStr: String) {
         if (flightStr.isEmpty()) {
             flightStatus.text = "Flight number is empty!"
             flightStatus.setTextColor(Color.RED)
@@ -113,7 +98,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
             }
 
             // checking if the flight number is valid with checkFlightNumber function and use the flight number
-           if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(
+            if (!(checkFlightNumber_ICAO(flightNumberStr) || checkFlightNumber_IATA(
                     flightNumberStr
                 ))
             ) {
@@ -128,20 +113,14 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 flightStatus.setTextColor(Color.GREEN)
                 flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
-
                 // define time to Get flight data based on the user input current time  in account
                 val current = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
                 val formatted = current.format(formatter)
 
-
                 // conditionally parsing data for flight number type : IATA
                 if (checkFlightNumber_IATA(flightNumberStr)) {
-
-
                     try {
-
-
                         val flightUrl_IATA = (flightApi
                                 + flightNumberStr.substring(0, 2) + "/" + flightNumberStr.substring(
                             2
@@ -166,7 +145,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     flightStatus.setTextColor(Color.RED)
                                 } else {
                                     val flightStat = flightData.flightStatuses!![0]
-
 
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
@@ -256,13 +234,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                             "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
-
-
                                     }
                                 }
                             }
-
-
                         }
 
                     } catch (e: Exception) {
@@ -270,7 +244,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                     }
 
                 }// end for flightnumber type IATA
-
 
                 // conditionally parsing data for flight number type : ICOA
                 else {
@@ -302,7 +275,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                 } else {
                                     val flightStat = flightData.flightStatuses!![0]
                                     Log.i(TAG, "FlightStatus = " + flightStat.status)
-
 
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
@@ -388,14 +360,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     }
                                 }
                             }
-
-
                         }
-
                     } catch (e: Exception) {
-
                     }
-
                 } // end of checking ICAO and purse data
             }
         }
@@ -411,14 +378,14 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *@param flightNumber
      *@return true, boolean value
      */
-
     private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 3) {
             return false
         }
         if (!Character.isLetterOrDigit(flightNumberStr[0]) || !Character.isLetterOrDigit(
                 flightNumberStr[1]
-            )) {
+            )
+        ) {
             return false
         }
         for (i in 2 until flightNumberStr.length) {
@@ -428,6 +395,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
         }
         return true
     }
+
     /**
      * This function check if the flight number is valid standerd flight number type of ICAO
      * Flight number should have 3 first characters as carrier and followed a number, ex: AFR454
@@ -437,14 +405,14 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *@param flightNumber
      *@return true, boolean value
      */
-
     private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 4) {
             return false
         }
         if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(
                 flightNumberStr[2]
-            )) {
+            )
+        ) {
             return false
         }
         for (i in 3 until flightNumberStr.length) {
@@ -484,21 +452,19 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 airportName.text = airport.name
                 airportCity.text = airport.city
                 airportCountry.text = airport.countryName
-                airportLonLat.text = "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
-
-
+                airportLonLat.text =
+                    "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
             }
         }
 
     }
-
 
     /**
      * this get the airline info from the airline list in appendix data class
      *@param appendix
      *@param airlinefs
      */
-    private fun getAirlineInformation(appendix: Appendix, airlinefs: String){
+    private fun getAirlineInformation(appendix: Appendix, airlinefs: String) {
         for (airline in appendix.airlines!!) {
             if (airline.fs == airlinefs) {
 
@@ -509,13 +475,13 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
     }
 
-
     companion object {
         private const val TAG = "FlightInfo"
         private const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.FLIGHT_NUMBER"
         private const val AppID = "f3304cbc"
         private const val AppKey = "85c5265447ef5293103d939ce04e8cd8"
-        private const val flightApi = "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/"
+        private const val flightApi =
+            "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/"
     }
 
 }

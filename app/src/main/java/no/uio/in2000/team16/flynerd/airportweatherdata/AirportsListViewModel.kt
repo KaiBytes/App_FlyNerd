@@ -9,7 +9,6 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.coroutines.launch
 import no.uio.in2000.team16.flynerd.Airport
 
-
 /**
  * Class acts as a container to collect and store all airport objects to be created from hard coded
  * database intair_city.csv. Database can be found in the raw resource folder.
@@ -32,8 +31,7 @@ import no.uio.in2000.team16.flynerd.Airport
  * 1. prepare data for ui controller by reading csv database-> main activity
  * 2. retains the data when screen layout is reconfigured
  */
-
-class AirportsListViewModel : ViewModel(){
+class AirportsListViewModel : ViewModel() {
 
     //livedata variables. These are awesome because they retain information even when layout configuration changes
     //they also destroy old values with every update.
@@ -41,7 +39,7 @@ class AirportsListViewModel : ViewModel(){
     var matchedLiveData = MutableLiveData<MutableList<Airport>>()
 
     //create database containing airport objects from csv file
-    fun createDb(context : Context, databaseId : Int) = viewModelScope.launch {
+    fun createDb(context: Context, databaseId: Int) = viewModelScope.launch {
 
         // using 3rd party csv parser to create objects
         // documentation https://github.com/doyaaaaaken/kotlin-csv
@@ -55,31 +53,46 @@ class AirportsListViewModel : ViewModel(){
         }
 
         //read csv file and create airport objects asynchronously
-        csvReader.openAsync(context.resources.openRawResource(databaseId)){
+        csvReader.openAsync(context.resources.openRawResource(databaseId)) {
             val airportDb = mutableListOf<Airport>()
             readAllAsSequence().forEach { row ->
-                airportDb.add(createAirport(row[0], row[1], row[2], row[3], row[4].toDouble(), row[5].toDouble()))
+                airportDb.add(
+                    createAirport(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4].toDouble(),
+                        row[5].toDouble()
+                    )
+                )
                 airportsLiveData.postValue(airportDb)
             }
         }
     }
 
     //helper method for creating airport object.
-    fun createAirport(ICAO : String, city : String?,  name : String, country : String, latitude : Double, longtitude : Double) : Airport {
-        val tmp = Airport(ICAO,city, name, country, latitude, longtitude)
-//        println(tmp)
+    fun createAirport(
+        ICAO: String,
+        city: String?,
+        name: String,
+        country: String,
+        latitude: Double,
+        longtitude: Double
+    ): Airport {
+        val tmp = Airport(ICAO, city, name, country, latitude, longtitude)
         return tmp
     }
 
     //coroutine function which will match a user defined city to airports that service it.
     //result is stored in matchedLiveData variable
-    fun matchAirportWithCity(cityName : String) = viewModelScope.launch {
+    fun matchAirportWithCity(cityName: String) = viewModelScope.launch {
         val matchedAirports = mutableListOf<Airport>()
 
         //only search if user defined a cityname, else add empty mutablelist to matchedlivedata.
-        if (cityName.isNotBlank()){
-            for (airport in airportsLiveData.value!!){
-                if (airport.city == cityName){
+        if (cityName.isNotBlank()) {
+            for (airport in airportsLiveData.value!!) {
+                if (airport.city == cityName) {
                     Log.d("name of airport", airport.name)
                     matchedAirports.add(airport)
                 }
@@ -88,11 +101,5 @@ class AirportsListViewModel : ViewModel(){
         } else {
             matchedLiveData.postValue(matchedAirports)
         }
-
-
-
     }
-
-
-
 }

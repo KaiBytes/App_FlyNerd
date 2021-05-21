@@ -1,7 +1,6 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -29,9 +29,8 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
     var precipationView: TextView? = null
     var windView: TextView? = null
     var skyView: TextView? = null
-    var pictureView : ImageView? = null
-    var imageId : Int? = null
-
+    var pictureView: ImageView? = null
+    var imageId: Int? = null
 
     var drawerLayout: DrawerLayout? = null
     var navigationView: NavigationView? = null
@@ -40,22 +39,21 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     val viewModel by viewModels<ForecastViewModel>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forecast_updated)
 
         //importing airport object from intent
         val i = getIntent()
-        val airportObject : Airport = i.getSerializableExtra("item") as Airport
+        val airportObject: Airport = i.getSerializableExtra("item") as Airport
 
         viewModel.callForecastAPI(airportObject)
 
         //initializing all views
         nameView = findViewById(R.id.airport)
         cityName = findViewById(R.id.city_name)
-       // longitude = findViewById(R.id.longtitude)
-       // latitude = findViewById(R.id.latitude)
+        // longitude = findViewById(R.id.longtitude)
+        // latitude = findViewById(R.id.latitude)
         precipationView = findViewById(R.id.precipation)
         windView = findViewById(R.id.wind)
         skyView = findViewById(R.id.weather)
@@ -75,15 +73,22 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
             precipationView!!.text = "Precipation Amount : ${airportObject.getPrecipationAmount()}"
             windView!!.text = "Wind Force : ${airportObject.getWindForce()}"
             skyView!!.text = "Current Weather : ${airportObject.getCurrentWeather()}"
-            imageId = resources.getIdentifier(airportObject.getCurrentWeather().replace(" ", "_"), "drawable", packageName)
-            Log.d("imageId", "imageId = $imageId, name of picture = ${airportObject.getCurrentWeather().replace(" ", "_")}")
-            if (imageId != null){
+            imageId = resources.getIdentifier(
+                airportObject.getCurrentWeather().replace(" ", "_"),
+                "drawable",
+                packageName
+            )
+            Log.d(
+                "imageId",
+                "imageId = $imageId, name of picture = ${
+                    airportObject.getCurrentWeather().replace(" ", "_")
+                }"
+            )
+            if (imageId != null) {
                 pictureView!!.setImageResource(imageId!!)
             }
 
         })
-
-
 
         // Navigation main menu you find for navigation menus
 
@@ -91,7 +96,6 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         navigationView = findViewById(R.id.nav_view)
         //textView = findViewById(R.id.textView)
         toolbar = findViewById(R.id.toolbar)
-
 
         // toolbar
         setSupportActionBar(toolbar)
@@ -112,14 +116,7 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
         toggle.syncState()
         navigationView?.setNavigationItemSelectedListener(this)
         navigationView?.setCheckedItem(R.id.nav_home)
-
-
-
     }
-
-
-
-
 
     override fun onBackPressed() {
         if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
@@ -128,7 +125,6 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
             super.onBackPressed()
         }
     }
-
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -139,18 +135,12 @@ class ForecastActivity() : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.flightStatus -> {
                 val intent = Intent(this@ForecastActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
-
             }
-
-
 
             R.id.airportweather -> {
                 val intent = Intent(this@ForecastActivity, AirportsListActivity::class.java)
                 startActivity(intent)
-
             }
-
-
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true

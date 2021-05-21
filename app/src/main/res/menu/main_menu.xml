@@ -7,28 +7,16 @@
             <item
                 android:id="@+id/nav_home"
                 android:title="✈️ Home" />
-
             <item
                 android:id="@+id/flightStatus"
-
                 android:title="🌍 Flight Status" />
-
-
-
             <item
                 android:id="@+id/airportweather"
-
                 android:title="☀️ Airport Weather" />
             <item
                 android:id="@+id/Setting"
-
                 android:title="🔍 Setting" />
-
-
-
         </group>
-
-
 
     </group>
 

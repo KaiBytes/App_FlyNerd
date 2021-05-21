@@ -11,7 +11,6 @@ import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import no.uio.in2000.team16.flynerd.Airport
 
-
 /**
  * partner class to the forecast activity class.
  * this particular class implements the viewmodel interface
@@ -28,15 +27,13 @@ import no.uio.in2000.team16.flynerd.Airport
  * 2. retains the data when screen layout is reconfigured
  *
  */
-
-class ForecastViewModel : ViewModel(){
+class ForecastViewModel : ViewModel() {
 
     //manages and retains data for forecast activity
     val forecastLiveData = MutableLiveData<Forecast>()
 
-    fun callForecastAPI(instance : Airport) {
-
-//        "lat=${String.format("%.4f", instance.latitude)}&lon=${String.format("%.4f", instance.longtitude)}"
+    fun callForecastAPI(instance: Airport) {
+        // "lat=${String.format("%.4f", instance.latitude)}&lon=${String.format("%.4f", instance.longtitude)}"
         val baseURL = "https://in2000-apiproxy.ifi.uio.no/weatherapi/locationforecast/2.0/compact?"
         //formatted lat/lon coordinates to satisfy conditions set by MET
         //arguments to parameters
@@ -47,16 +44,15 @@ class ForecastViewModel : ViewModel(){
 
         viewModelScope.launch {
             try {
-                val response = Fuel.get(requestURL).header("User-Agent", "FLyNerd gjchocopasta@gmail.com").awaitString()
+                val response =
+                    Fuel.get(requestURL).header("User-Agent", "FLyNerd gjchocopasta@gmail.com")
+                        .awaitString()
                 Log.d("output", response)
                 instance.weatherForecast = gson.fromJson(response, Forecast::class.java)
                 forecastLiveData.postValue(instance.weatherForecast)
-            }
-            catch(exception: FuelError) {
+            } catch (exception: FuelError) {
                 Log.d("Fuel", "[ERROR] could not fetch data! $exception")
             }
         }
-
     }
-
 }

@@ -64,13 +64,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             it.requireView().viewTreeObserver.addOnGlobalLayoutListener(this::onMapLayout)
         }
 
-
-
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         //textView = findViewById(R.id.textView)
         toolbar = findViewById(R.id.toolbar)
-
 
         // toolbar
         setSupportActionBar(toolbar)
@@ -200,7 +197,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         const val FLIGHT_NUMBER = "no.uio.in2000.team16.flynerd.FLIGHT_NUMBER"
     }
 
-
     override fun onBackPressed() {
         if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
             drawerLayout!!.closeDrawer(GravityCompat.START)
@@ -208,7 +204,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             super.onBackPressed()
         }
     }
-
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -218,9 +213,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             R.id.flightStatus -> {
                 val intent = Intent(this@MapActivity, FlightStatusInfoSearchFlight::class.java)
                 startActivity(intent)
-
             }
-
 
             R.id.airportweather -> {
                 val intent = Intent(this@MapActivity, AirportsListActivity::class.java)
@@ -231,15 +224,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 val intent = Intent(this@MapActivity, SettingsActivity::class.java)
                 startActivity(intent)
             }
-
-
-
         }
         drawerLayout!!.closeDrawer(GravityCompat.START)
         return true
     }
-
-
 }
 
 /**
