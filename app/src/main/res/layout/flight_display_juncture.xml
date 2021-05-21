@@ -59,7 +59,8 @@
         android:src="@drawable/flight_display_endpoint"
         app:layout_constraintEnd_toEndOf="@id/flight_display_mid_v"
         app:layout_constraintStart_toStartOf="@id/flight_display_mid_v"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/flight_display_endpoint_departure"
@@ -68,7 +69,8 @@
         android:src="@drawable/flight_display_endpoint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/flight_display_mid_v"
-        app:layout_constraintStart_toStartOf="@id/flight_display_mid_v" />
+        app:layout_constraintStart_toStartOf="@id/flight_display_mid_v"
+        tools:ignore="ContentDescription" />
 
     <include
         android:id="@+id/flight_display_times_arrival"

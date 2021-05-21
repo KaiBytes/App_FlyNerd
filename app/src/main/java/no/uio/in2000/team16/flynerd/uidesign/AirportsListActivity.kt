@@ -52,7 +52,9 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         //Setting up recyclerview
         val layoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(this)
-        findViewById<RecyclerView>(R.id.recyclerView).layoutManager = layoutManager
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView).also {
+            it.layoutManager = layoutManager
+        }
 
         //initializing airports database (without forecast data)
 
@@ -95,7 +97,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
 
             recycleAdapter = AirportAdapter(viewModel.matchedLiveData.value!!)
-            findViewById<RecyclerView>(R.id.recyclerView).adapter = recycleAdapter
+            recyclerView.adapter = recycleAdapter
         })
 
         // Navigation main menu

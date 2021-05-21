@@ -1,6 +1,5 @@
 package no.uio.in2000.team16.flynerd.uidesign
 
-
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -235,9 +234,12 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text = getString(
-                                            R.string.flight_popup_delay,
+                                        val minutes =
                                             flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes
+                                        flightDelayResult.text = resources.getQuantityString(
+                                            R.plurals.flight_popup_delay,
+                                            minutes,
+                                            minutes
                                         )
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
@@ -367,9 +369,12 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text = getString(
-                                            R.string.flight_popup_delay,
+                                        val minutes =
                                             flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes
+                                        flightDelayResult.text = resources.getQuantityString(
+                                            R.plurals.flight_popup_delay,
+                                            minutes,
+                                            minutes
                                         )
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
@@ -464,9 +469,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 Log.i(TAG, "Longitude = " + airport.longitude)
                 Log.i(TAG, "Latitude = " + airport.latitude)
                 Log.i(TAG, "Weather link = " + airport.weatherUrl)
-
-
-
 
                 airportName.text = airport.name
                 airportCity.text = airport.city

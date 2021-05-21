@@ -49,7 +49,7 @@ class ForecastViewModel : ViewModel() {
                         .awaitString()
                 Log.d("output", response)
                 instance.weatherForecast = gson.fromJson(response, Forecast::class.java)
-                forecastLiveData.postValue(instance.weatherForecast)
+                forecastLiveData.postValue(instance.weatherForecast!!)
             } catch (exception: FuelError) {
                 Log.d("Fuel", "[ERROR] could not fetch data! $exception")
             }

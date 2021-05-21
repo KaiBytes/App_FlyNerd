@@ -47,6 +47,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/roundcorner"
             android:hint="@string/flight_status_search_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:padding="10dp"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/buttonSearchFStatus"

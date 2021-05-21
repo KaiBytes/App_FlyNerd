@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,8 +24,6 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     var navigationView: NavigationView? = null
     var toolbar: Toolbar? = null
     var menu: Menu? = null
-
-    var switch2: Switch? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

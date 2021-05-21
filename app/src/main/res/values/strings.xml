@@ -116,7 +116,10 @@
     <string name="flight_popup_flight_status_in_air">Flight on Air</string>
     <string name="flight_popup_flight_status_landed">Flight landed</string>
     <string name="flight_popup_delay_none">No delay!</string>
-    <string name="flight_popup_delay">Delay: %1$d minutes</string>
+    <plurals name="flight_popup_delay">
+        <item quantity="one">Delay: %1$d minute</item>
+        <item quantity="other">Delay: %1$d minutes</item>
+    </plurals>
     <string name="activity_forecast_airport">Airport Name : %1$s</string>
     <string name="activity_forecast_city">Serviced City : %1$s</string>
     <string name="activity_forecast_temperature">Temperature : %1$s</string>
@@ -124,4 +127,6 @@
     <string name="activity_forecast_wind">Wind Force : %1$s</string>
     <string name="activity_forecast_weather">Current Weather : %1$s</string>
     <string name="activity_settings_title">Settings</string>
+    <string name="activity_forecast_sync_description">synchronizing</string>
+    <string name="header_logo_description">application logo</string>
 </resources>
