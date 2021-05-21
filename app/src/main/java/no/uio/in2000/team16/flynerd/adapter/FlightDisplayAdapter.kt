@@ -213,6 +213,9 @@ internal class FlightDisplayAdapter() : RecyclerView.Adapter<FlightDisplayAdapte
                         remaining.text = formatDuration(duration)
                     }
                 }
+                else -> {
+                    // do nothing
+                }
             }
         }
 

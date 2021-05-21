@@ -240,7 +240,7 @@ internal abstract class FlightId(val airlineCode: String, val flightNumber: Int)
                 // Remove any whitespace.
                 .filterNot(Char::isWhitespace)
                 // Convert all to uppercase.
-                .map(Char::toUpperCase)
+                .map(Char::uppercaseChar)
                 .toList()
                 .toCharArray()
                 .let(::String)

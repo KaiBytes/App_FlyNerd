@@ -128,7 +128,7 @@ class AirportsListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     //function that capitalizes all words in a string. Needed in city names.
     private fun String.capitalizeFirstLetter() =
-        this.split(" ").joinToString(" ") { it.capitalize() }.trimEnd()
+        this.split(" ").joinToString(" ") { it.replaceFirstChar(Char::titlecaseChar) }.trimEnd()
 
     private fun dismissKeyboard(activity: Activity) {
         val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

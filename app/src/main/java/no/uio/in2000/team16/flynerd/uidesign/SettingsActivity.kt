@@ -59,7 +59,7 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val setting_tv1: TextView = findViewById(R.id.tv_setting)
         val mySwitch: SwitchCompat = findViewById(R.id.switch1)
         val mySwitch2: SwitchCompat = findViewById(R.id.switch2)
-        mySwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        mySwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // If the switch button is on
                 setting_tv1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f);
@@ -74,7 +74,7 @@ class SettingsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
         })
 
-        mySwitch2.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        mySwitch2.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // If the switch button is on
                 setting_tv1.setTypeface(null, Typeface.BOLD);
