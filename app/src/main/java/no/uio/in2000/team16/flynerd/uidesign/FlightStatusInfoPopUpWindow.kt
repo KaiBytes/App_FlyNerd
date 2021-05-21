@@ -26,6 +26,8 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
     lateinit var flightStatus: TextView
     lateinit var flightDelayResult: TextView
     lateinit var flightNumberRes: TextView
+    // airline
+    lateinit var airLineName: TextView
 
     // Departure
     lateinit var departureAirport: TextView
@@ -50,6 +52,8 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
         flightStatus = findViewById(R.id.flightStatus)
         flightDelayResult = findViewById(R.id.flightResult)
         flightNumberRes = findViewById(R.id.flightNumberText)
+
+        airLineName  = findViewById(R.id.airlineName)
 
         // Departure
         departureAirport = findViewById(R.id.departureAirport)
@@ -177,7 +181,8 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                         )
                                     getAirlineInformation(
                                         flightData.appendix!!,
-                                        flightStat.carrierFsCode!!
+                                        flightStat.carrierFsCode!!,
+                                        airLineName
                                     )
 
                                     // Arrival
@@ -205,7 +210,8 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     //  get airline info
                                     getAirlineInformation(
                                         flightData.appendix!!,
-                                        flightStat.carrierFsCode!!
+                                        flightStat.carrierFsCode!!,
+                                                airLineName
                                     )
 
                                     when (flightStat.status) {
@@ -319,7 +325,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                         )
                                     getAirlineInformation(
                                         flightData.appendix!!,
-                                        flightStat.carrierFsCode!!
+                                        flightStat.carrierFsCode!!,
+                                        airLineName
+
                                     )
 
                                     // Arrival
@@ -340,7 +348,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     //  get airline info
                                     getAirlineInformation(
                                         flightData.appendix!!,
-                                        flightStat.carrierFsCode!!
+                                        flightStat.carrierFsCode!!,
+                                        airLineName
+
                                     )
 
                                     when (flightStat.status) {
@@ -485,9 +495,11 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *@param appendix
      *@param airlinefs
      */
-    private fun getAirlineInformation(appendix: Appendix, airlinefs: String) {
+    private fun getAirlineInformation(appendix: Appendix, airlinefs: String,  airLineName : TextView) {
         for (airline in appendix.airlines!!) {
             if (airline.fs == airlinefs) {
+                val airLinetxt= "AirLine name = " + airline.name
+                airLineName.text = airLinetxt
 
                 Log.i(TAG, "AirLine name = " + airline.name)
 

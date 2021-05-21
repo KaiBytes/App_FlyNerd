@@ -27,10 +27,18 @@
         android:text="" />
 
     <TextView
-        android:id="@+id/flightStatus"
+        android:id="@+id/airlineName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/flightNumberText"
+        android:layout_marginTop="15dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/flightStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/airlineName"
         android:layout_marginTop="15dp"
         android:text="" />
 
