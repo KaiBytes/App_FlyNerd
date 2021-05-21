@@ -84,10 +84,11 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      * assign the obtained data class flight data to the textView UI classes
      *@param flightStr
      */
-    @SuppressLint("SetTextI18n")
+
     fun flightStatusInfo(flightStr: String) {
         if (flightStr.isEmpty()) {
-            flightStatus.text = "Flight number is empty!"
+            val fnStr = "Flight number is empty!"
+            flightStatus.text = fnStr
             flightStatus.setTextColor(Color.RED)
         } else {
             var flightNumberStr = ""
@@ -102,14 +103,16 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                     flightNumberStr
                 ))
             ) {
-                flightStatus.text = "Flight number is invalid!"
+                val fnInv = "Flight number is invalid!"
+                flightStatus.text = fnInv
                 flightStatus.setTextColor(Color.RED)
                 flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
             }
             // if the above condition not fulfilled it mean we have valid flight number either IATA or ICAO
             // and so the code will continue to parse for json data and operate on functions
             else {
-                flightStatus.text = "Checking $flightNumberStr"
+                val checkFNum = "Checking $flightNumberStr"
+                flightStatus.text = checkFNum
                 flightStatus.setTextColor(Color.GREEN)
                 flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
@@ -140,8 +143,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                 val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
 
                                 if (flightData.flightStatuses.isNullOrEmpty()) {
-                                    flightStatus.text =
-                                        "This is  non-commercial aircraft \n Currently We  provide flight status information for commercial flight!"
+                                    val nonAirCraftCommericialNotFound =  "This is  non-commercial aircraft \n Currently We  provide flight status information for commercial flight!"
+                                    flightStatus.text =nonAirCraftCommericialNotFound
+
                                     flightStatus.setTextColor(Color.RED)
                                 } else {
                                     val flightStat = flightData.flightStatuses!![0]
@@ -149,8 +153,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
                                     Log.i(TAG, "Flight number = " + flightStat.flightNumber)
-                                    flightNumberRes.text =
-                                        "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    val flNumResu = "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    flightNumberRes.text = flNumResu
+
 
                                     // Departure
                                     Log.i(
@@ -210,13 +215,16 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                     when (flightStat.status) {
                                         "S" -> {
-                                            flightStatus.text = "Flight scheduled"
+                                            val fltSc = "Flight scheduled"
+                                            flightStatus.text = fltSc
                                         }
                                         "A" -> {
-                                            flightStatus.text = "Flight on Air"
+                                            val flInAir = "Flight on Air"
+                                            flightStatus.text =  flInAir
                                         }
                                         "L" -> {
-                                            flightStatus.text = "Flight landed"
+                                            val Fllanded = "Flight landed"
+                                            flightStatus.text = Fllanded
                                         }
                                         else -> {
                                             flightStatus.text = flightStat.status
@@ -226,12 +234,13 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                     if (flightStat.delays == null) {
-                                        flightDelayResult.text = "No delay!"
+                                        val noDelatText = "No delay!"
+                                        flightDelayResult.text = noDelatText
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text =
-                                            "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        val delayTxt = "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        flightDelayResult.text = delayTxt
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     }
@@ -268,8 +277,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                 val flightData = Gson().fromJson(jsonStr, FlightData::class.java)
 
                                 if (flightData.flightStatuses.isNullOrEmpty()) {
-                                    flightStatus.text =
-                                        "This is  non-commercial aircraft, \nCurrently We  provide flight status information for commercial flight! "
+                                    val nonCommricialAirCraftNotFound =  "This is  non-commercial aircraft, \nCurrently We  provide flight status information for commercial flight! "
+                                    flightStatus.text = nonCommricialAirCraftNotFound
+
                                     flightStatus.setTextColor(Color.RED)
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
                                 } else {
@@ -279,8 +289,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     // Carrier + flight number
                                     Log.i(TAG, "Carrier = " + flightStat.carrierFsCode)
                                     Log.i(TAG, "Flight number = " + flightStat.flightNumber)
-                                    flightNumberRes.text =
-                                        "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    val flRsult =  "Flight number : " + flightStat.carrierFsCode + flightStat.flightNumber
+                                    flightNumberRes.text =  flRsult
+
 
                                     // Departure
                                     Log.i(
@@ -333,13 +344,16 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
 
                                     when (flightStat.status) {
                                         "S" -> {
-                                            flightStatus.text = "Flight scheduled"
+                                            val fltSc = "Flight scheduled"
+                                            flightStatus.text = fltSc
                                         }
                                         "A" -> {
-                                            flightStatus.text = "Flight on Air"
+                                            val flInAir = "Flight on Air"
+                                            flightStatus.text =  flInAir
                                         }
                                         "L" -> {
-                                            flightStatus.text = "Flight landed"
+                                            val Fllanded = "Flight landed"
+                                            flightStatus.text = Fllanded
                                         }
                                         else -> {
                                             flightStatus.text = flightStat.status
@@ -349,12 +363,14 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                     flightStatus.setTypeface(null, Typeface.BOLD_ITALIC)
 
                                     if (flightStat.delays == null) {
-                                        flightDelayResult.text = "No delay!"
+                                        val noDelatText = "No delay!"
+                                        flightDelayResult.text = noDelatText
                                         flightDelayResult.setTextColor(Color.GREEN)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     } else {
-                                        flightDelayResult.text =
-                                            "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        val delayTxt = "Delay: " + (flightStat.delays!!.departureRunwayDelayMinutes + flightStat.delays!!.arrivalGateDelayMinutes) + " minutes"
+                                        flightDelayResult.text = delayTxt
+
                                         flightDelayResult.setTextColor(Color.YELLOW)
                                         flightDelayResult.setTypeface(null, Typeface.BOLD_ITALIC)
                                     }
