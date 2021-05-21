@@ -153,7 +153,6 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                                         flightStat.carrierFsCode,
                                         flightStat.flightNumber
                                     )
-
                                     // Departure
                                     Log.i(
                                         TAG,
@@ -392,7 +391,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *In the aviation industry, a flight number or flight designator is a code for an airline service
      *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
      * https://en.wikipedia.org/wiki/Flight_number
-     *@param flightNumber
+     *@param flightNumberStr
      *@return true, boolean value
      */
     private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
@@ -419,7 +418,7 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *In the aviation industry, a flight number or flight designator is a code for an airline service
      *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
      * https://en.wikipedia.org/wiki/Flight_number
-     *@param flightNumber
+     *@param flightNumberStr
      *@return true, boolean value
      */
     private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
@@ -465,6 +464,9 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 Log.i(TAG, "Longitude = " + airport.longitude)
                 Log.i(TAG, "Latitude = " + airport.latitude)
                 Log.i(TAG, "Weather link = " + airport.weatherUrl)
+
+
+
 
                 airportName.text = airport.name
                 airportCity.text = airport.city
