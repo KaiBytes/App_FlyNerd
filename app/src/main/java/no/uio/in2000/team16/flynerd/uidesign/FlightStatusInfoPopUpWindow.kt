@@ -375,12 +375,12 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *In the aviation industry, a flight number or flight designator is a code for an airline service
      *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
      * https://en.wikipedia.org/wiki/Flight_number
-     *@param flightNumber
+     *@param flightNumberStr
      *@return true, boolean value
      */
     private fun checkFlightNumber_IATA(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 3) {
-            return false
+            throw Exception(" too short flight number!")
         }
         if (!Character.isLetterOrDigit(flightNumberStr[0]) || !Character.isLetterOrDigit(
                 flightNumberStr[1]
@@ -402,12 +402,12 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
      *In the aviation industry, a flight number or flight designator is a code for an airline service
      *consisting of three-character airline designator and a 1 to 4 digit number for  ICAO Flight No.
      * https://en.wikipedia.org/wiki/Flight_number
-     *@param flightNumber
+     *@param flightNumberStr
      *@return true, boolean value
      */
     private fun checkFlightNumber_ICAO(flightNumberStr: String): Boolean {
         if (flightNumberStr.length < 4) {
-            return false
+            throw Exception(" too short flight number!")
         }
         if (!Character.isLetter(flightNumberStr[0]) || !Character.isLetter(flightNumberStr[1]) || !Character.isLetter(
                 flightNumberStr[2]
@@ -449,11 +449,15 @@ class FlightStatusInfoPopUpWindow : AppCompatActivity() {
                 Log.i(TAG, "Latitude = " + airport.latitude)
                 Log.i(TAG, "Weather link = " + airport.weatherUrl)
 
+
+
+
                 airportName.text = airport.name
                 airportCity.text = airport.city
                 airportCountry.text = airport.countryName
-                airportLonLat.text =
-                    "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
+                val geoLocation = "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
+                airportLonLat.text = geoLocation
+                   // "Longitude = " + airport.longitude + " - Latitude = " + airport.latitude
             }
         }
 
